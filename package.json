@@ -1,0 +1,47 @@
+{
+  "name": "form-builder",
+  "version": "0.0.1",
+  "description": "Form builder library",
+  "homepage": "http://tsv2013.github.io/form-builder",
+  "authors": [
+    "Serge T <@domain.com>"
+  ],
+  "private": false,
+  "license": "MIT",
+  "main": "dist/form-builder.js",
+  "keywords": [
+    "expression",
+    "evaluator"
+  ],
+  "moduleType": "umd",
+  "ignore": [
+    ".travis.yml",
+    ".coveralls.yml",
+    ".bithoundrc",
+    "deploy-ghpages.cmd"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsv2013/form-builder.git"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "jest",
+    "testDev": "jest --watch",
+    "release": "standard-version --message \"Release: %s\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^23.3.3",
+    "@types/node": "^7.0.5",
+    "jest": "^23.6.0",
+    "json-loader": "latest",
+    "standard-version": "^4.0.0",
+    "ts-jest": "^23.10.3",
+    "ts-loader": "latest",
+    "typescript": "latest",
+    "underscore": "^1.8.3",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}
