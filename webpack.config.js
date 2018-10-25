@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var webpack = require('webpack');
 var packageJson = require('./package.json');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var libraryName = 'form-builder';
 var banner = [
@@ -34,6 +35,10 @@ var BASE_CFG = {
 var DEV_CFG = _.extend({}, BASE_CFG, {
   mode: "development",
   plugins: [
+    new HtmlWebpackPlugin({
+      title: "Demo",
+      filename: "index.debug.html"
+    })
   ],
   output: {
     library: libraryName,
@@ -48,6 +53,10 @@ var DEV_CFG = _.extend({}, BASE_CFG, {
 var PROD_CFG = _.extend({}, BASE_CFG, {
   mode: "production",
   plugins: [
+    new HtmlWebpackPlugin({
+      title: "Demo",
+      filename: "index.html"
+    }),
     new webpack.BannerPlugin(banner),
     //new webpack.optimize.UglifyJsPlugin()
   ],
