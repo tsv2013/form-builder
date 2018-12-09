@@ -1,9 +1,10 @@
 var _ = require('underscore');
 var webpack = require('webpack');
 var packageJson = require('./package.json');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var libraryName = 'form-builder';
+var libraryName = 'FormBuilder';
 var banner = [
     "form-builder - Form builder library v" + packageJson.version,
     "Copyright (c) 2018-2019 TSV  - http://github.com/tsv2013/form-builder",
@@ -13,31 +14,44 @@ var banner = [
 var BASE_CFG = {
   target: 'web',
   resolve: {
-    extensions: ['.ts'],
+    extensions: ['.ts', '.js'],
   },
   module: {
       rules: [
           {
-              test: /\.(ts|tsx)$/,
-              loader: 'ts-loader',
-              options: {
-                  compilerOptions: {
-                      //'declaration': true,
-                      //'outDir': 'typings/'
-                  }
+            test: /\.(css|scss)$/,
+            use: ExtractTextPlugin.extract(
+              {
+                fallback: 'style-loader',
+                use: [{ loader: 'css-loader', options: { sourceMap: true } }, { loader: 'sass-loader', options: { sourceMap: true } }]
+              })
+          },
+          {
+            test: /\.(ts|tsx)$/,
+            loader: 'ts-loader',
+            options: {
+              compilerOptions: {
+                  //'declaration': true,
+                  //'outDir': 'typings/'
               }
+            }
           }
       ]
   },
-  entry: './sources/index.ts',
+  entry: './sources/' + packageJson.name + '.ts',
 };
 
 var DEV_CFG = _.extend({}, BASE_CFG, {
-  mode: "development",
+  mode: 'development',
   plugins: [
+    new ExtractTextPlugin(
+      { filename: '[name].css', disable: false, allChunks: true }
+    ),
     new HtmlWebpackPlugin({
-      title: "Demo",
-      filename: "index.debug.html"
+      title: libraryName,
+      filename: 'index.debug.html',
+      inject: 'head',
+      template: 'index.html'
     })
   ],
   output: {
@@ -45,17 +59,22 @@ var DEV_CFG = _.extend({}, BASE_CFG, {
     libraryTarget: 'umd',
     umdNamedDefine: true,
     path: __dirname + '/dist',
-    filename: libraryName + '.js'
+    filename: packageJson.name + '.js'
   },
   devtool: 'inline-source-map'
 });
 
 var PROD_CFG = _.extend({}, BASE_CFG, {
-  mode: "production",
+  mode: 'production',
   plugins: [
+    new ExtractTextPlugin(
+      { filename: '[name].min.css', disable: false, allChunks: true }
+    ),
     new HtmlWebpackPlugin({
-      title: "Demo",
-      filename: "index.html"
+      title: libraryName,
+      filename: 'index.html',
+      inject: 'head',
+      template: 'index.html'
     }),
     new webpack.BannerPlugin(banner),
     //new webpack.optimize.UglifyJsPlugin()
@@ -65,7 +84,7 @@ var PROD_CFG = _.extend({}, BASE_CFG, {
     libraryTarget: 'umd',
     umdNamedDefine: true,
     path: __dirname + '/dist',
-    filename: libraryName + '.min.js'
+    filename: packageJson.name + '.min.js'
   }
 });
 

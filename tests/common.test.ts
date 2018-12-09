@@ -1,4 +1,4 @@
-import { FormBuilder } from "../sources";
+import { FormBuilder } from "../sources/form-builder";
 
 test("first", () => {
 });

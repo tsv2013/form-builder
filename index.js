@@ -1,0 +1,1 @@
+FormBuilder.FormBuilder.render(document.getElementById("form-builder"));
