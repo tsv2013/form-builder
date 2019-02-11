@@ -1,0 +1,10 @@
+<div>
+    <!-- ko if: isContainer -->
+    <div data-bind="foreach: items">
+        <layout-item params="item: $data"></layout-item>
+    </div>
+    <!-- /ko -->
+    <!-- ko if not: isContainer -->
+    <div class="bf-item-placeholder" data-bind="event: { dragover: dragover, drop: drop }"></div>
+    <!-- /ko -->
+</div>
