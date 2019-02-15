@@ -17,10 +17,31 @@ export class FormBuilder {
             if(!Array.isArray(layoutValue)) layoutValue = [layoutValue];
             UimlLayoutSerializer.createElements(this.root.elements, layoutValue);
         });
+        this.toolbox.push({
+            title: "row",
+            json: {
+                partclass: "layoutRow",
+                cssClasses: "row",
+                parts: [
+                    
+                ]
+            }
+        });
+        this.toolbox.push({
+            title: "column",
+            json: {
+                partclass: "layoutColumn",
+                cssClasses: "column",
+                parts: [
+                    
+                ]
+            }
+        });
     }
+    toolbox = ko.observableArray();
     root = new FormElement();
     dragstart(model, event) {
-        event.dataTransfer.setData("bf-item-json", JSON.stringify(model));
+        event.dataTransfer.setData("bf-item-json", JSON.stringify(model.json));
         return true;
     }
 }
