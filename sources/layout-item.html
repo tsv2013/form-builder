@@ -1,7 +1,7 @@
 <div>
     <!-- ko if: isContainer -->
-    <div data-bind="foreach: items">
-        <layout-item params="item: $data"></layout-item>
+    <div data-bind="foreach: elements">
+        <layout-item params="element: $data"></layout-item>
     </div>
     <!-- /ko -->
     <!-- ko if not: isContainer -->
