@@ -1,8 +1,23 @@
 import * as ko from "knockout";
 
-export class UimlPart {
+import { IRenderable } from "./form-element";
+
+import "./uiml-parts.scss";
+
+export class UimlPart implements IRenderable {
+    static counter = 1;
+    private id: number;
     constructor(private _partclass: string) {
+        this.id = UimlPart.counter++;
     }
+    initialize(json: any) {
+        this.cssclass = json.cssClasses;
+    }
+    render(htmlElement: HTMLElement) {
+        htmlElement.className += (" " + this.cssclass);
+        htmlElement.innerHTML = this.partclass + this.id;
+    }
+    cssclass = "";
     get partclass() { return this._partclass; }
     parts = ko.observableArray<UimlPart>();
 }
