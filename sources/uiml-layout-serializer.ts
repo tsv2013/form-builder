@@ -3,8 +3,7 @@ import { UimlPartsRepository } from "./uiml-parts";
 
 export class UimlLayoutSerializer {
     static createElement(element: any, parent?: FormElement): FormElement {
-        var part = UimlPartsRepository.create(element.partclass);
-        part.initialize(element);
+        var part = UimlPartsRepository.create(element.partclass, element);
         var formElement = new FormElement(parent);
         formElement.content = part;
         UimlLayoutSerializer.createElements(formElement.elements, element.parts, formElement);

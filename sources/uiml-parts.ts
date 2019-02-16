@@ -7,11 +7,9 @@ import "./uiml-parts.scss";
 export class UimlPart implements IRenderable {
     static counter = 1;
     private id: number;
-    constructor(private _partclass: string) {
+    constructor(private _partclass: string, ...params: any) {
         this.id = UimlPart.counter++;
-    }
-    initialize(json: any) {
-        this.cssclass = json.cssClasses;
+        this.cssclass = params[0].cssClasses;
     }
     render(htmlElement: HTMLElement) {
         htmlElement.className += (" " + this.cssclass);
@@ -33,6 +31,6 @@ export class UimlPartsRepository {
         if(!!UimlPartsRepository.parts[partclass]) {
             return new UimlPartsRepository.parts[partclass](...params);
         }
-        return new UimlPart(partclass);
+        return new UimlPart(partclass, ...params);
     }
 }
