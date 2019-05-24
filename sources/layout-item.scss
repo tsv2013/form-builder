@@ -2,7 +2,8 @@ layout-item {
     display: unset;
 }
 
-.bf-item-placeholder {
-    min-width: 200px;
+.bf-item-content {
+    min-width: 100px;
+    min-height: 100px;
     border: 1px solid lightgray;
 }

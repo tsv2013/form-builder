@@ -11,6 +11,7 @@ export class FormBuilder {
         ko.applyBindings({ layout: layout }, node);
     }
     constructor(layout: KnockoutObservable<any> | any = {}) {
+        this.root = UimlLayoutSerializer.createRoot();
         ko.computed(() => {
             this.root.elements([]);
             var layoutValue = ko.unwrap(layout);
@@ -39,7 +40,7 @@ export class FormBuilder {
         });
     }
     toolbox = ko.observableArray();
-    root = new FormElement();
+    root: FormElement;
     dragstart(model, event) {
         event.dataTransfer.setData("bf-item-json", JSON.stringify(model.json));
         return true;
@@ -56,3 +57,4 @@ ko.components.register("form-builder", {
 });
 
 export { LayoutItem } from "./layout-item";
+export { PlaceholderComponent } from "./placeholder-item";

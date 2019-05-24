@@ -4,13 +4,27 @@ export interface IRenderable {
     render(htmlElement: HTMLElement);
 }
 
-export class PlaceHolder implements IRenderable {
-    render(htmlElement: HTMLElement) { }
+export interface IFormElement extends IRenderable {
+    parent: IFormElement;
+    elements: KnockoutObservableArray<IFormElement>;
 }
-export class FormElement {
-    constructor(public parent?: FormElement) {
+
+export class PlaceHolder implements IFormElement {
+    constructor(public parent: IFormElement) {
 
     }
-    content: IRenderable = new PlaceHolder();
-    elements = ko.observableArray<FormElement>();
+    elements = ko.observableArray<IFormElement>();
+    render(htmlElement: HTMLElement) {
+        htmlElement.innerHTML = "Drop items here";
+    }
+}
+export class FormElement implements IFormElement {
+    constructor(public parent: IFormElement) {
+
+    }
+    render(htmlElement: HTMLElement) {
+        this.content.render(htmlElement);
+    }
+    content: IRenderable = new PlaceHolder(this);
+    elements = ko.observableArray<IFormElement>();
 }

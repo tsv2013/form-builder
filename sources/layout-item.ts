@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 
-import { FormElement } from "./form-element";
+import { IFormElement } from "./form-element";
 import { UimlLayoutSerializer } from "./uiml-layout-serializer";
 
 import "./layout-item.scss";
@@ -8,14 +8,15 @@ var template = require("text-loader!./layout-item.html");
 
 export class LayoutItem {
 
-    constructor(private formElement: FormElement, htmlElement: HTMLElement) {
-        formElement.content.render(htmlElement);
+    constructor(private formElement: IFormElement, htmlElement: HTMLElement) {
+        formElement.render(htmlElement);
     }
 
     get elements() { return this.formElement.elements; }
     get isContainer() {
-        return this.elements().length > 0;
+        return this.formElement.elements().length > 0;
     }
+    isSelected = ko.observable<boolean>(false);
 
     dragover(model, ev) {
         ev.preventDefault();
@@ -24,17 +25,16 @@ export class LayoutItem {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("bf-item-json");
         var holder = this.formElement.parent || this.formElement;
-        holder.elements.push(UimlLayoutSerializer.createElement(JSON.parse(data), holder));
-        //ev.target.appendChild(document.getElementById(data));
-        //this.items.push(new LayoutItem());
+        holder.elements.splice(holder.elements.indexOf(this.formElement) + 1, 0, UimlLayoutSerializer.createElement(JSON.parse(data), holder));
     }
 }
 
 ko.components.register("layout-item", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            var itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-placeholder")[0]
-            return  new LayoutItem(params.element, <HTMLElement>itemElelemt);
+            var itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content")[0]
+            let formElement = params.element;
+            return  new LayoutItem(formElement, <HTMLElement>itemElelemt);
         }
     },
     template
