@@ -7,6 +7,8 @@ import "./layout-item.scss";
 var template = require("text-loader!./layout-item.html");
 
 export class LayoutItem {
+    private static draggedElement: IFormElement = null;
+    private static selectedElement = ko.observable<LayoutItem>();
 
     constructor(private formElement: IFormElement, htmlElement: HTMLElement) {
         formElement.render(htmlElement);
@@ -18,14 +20,33 @@ export class LayoutItem {
     }
     isSelected = ko.observable<boolean>(false);
 
-    dragover(model, ev) {
+    dragstart(model: LayoutItem, ev) {
+        ev.dataTransfer.setData("bf-item-json", JSON.stringify(UimlLayoutSerializer.serialize(model.formElement)));
+        LayoutItem.draggedElement = model.formElement;
+        return true;
+    }
+    dragover(model: LayoutItem, ev) {
         ev.preventDefault();
     }
-    drop(model, ev) {
+    drop(model: LayoutItem, ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("bf-item-json");
-        var holder = this.formElement.parent || this.formElement;
-        holder.elements.splice(holder.elements.indexOf(this.formElement) + 1, 0, UimlLayoutSerializer.createElement(JSON.parse(data), holder));
+        if(!!data) {
+            var holder = this.formElement.parent || this.formElement;
+            var newElement = UimlLayoutSerializer.createElement(JSON.parse(data), holder);
+            holder.elements.splice(holder.elements.indexOf(this.formElement) + 1, 0, newElement);
+            if(!!LayoutItem.draggedElement) {
+                LayoutItem.draggedElement.parent.elements.remove(LayoutItem.draggedElement);
+                LayoutItem.draggedElement = null;
+            }
+        }
+    }
+    select(model, ev) {
+        if(!!LayoutItem.selectedElement()) {
+            LayoutItem.selectedElement().isSelected(false);
+        }
+        model.isSelected(true);
+        LayoutItem.selectedElement(model);
     }
 }
 

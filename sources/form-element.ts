@@ -7,6 +7,7 @@ export interface IRenderable {
 export interface IFormElement extends IRenderable {
     parent: IFormElement;
     elements: KnockoutObservableArray<IFormElement>;
+    content?: IRenderable;
 }
 
 export class PlaceHolder implements IFormElement {

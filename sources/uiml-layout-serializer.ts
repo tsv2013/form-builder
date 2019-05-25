@@ -1,5 +1,5 @@
 import { FormElement, IFormElement } from "./form-element";
-import { UimlPartsRepository } from "./uiml-parts";
+import { UimlPartsRepository, UimlPart } from "./uiml-parts";
 
 export class UimlLayoutSerializer {
     static createRoot(): FormElement {
@@ -18,7 +18,11 @@ export class UimlLayoutSerializer {
             collection.push(UimlLayoutSerializer.createElement(element));
         });
     }
-    static serialize(root: FormElement): any {
-        
+    static serialize(formElement: IFormElement): any {
+        return {
+            partclass: (<UimlPart>formElement.content).partclass,
+            cssClasses: (<UimlPart>formElement.content).cssclass,
+            parts: formElement.elements().map(fe => UimlLayoutSerializer.serialize(fe))
+        }
     }
 }
