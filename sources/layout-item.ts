@@ -15,6 +15,7 @@ export class LayoutItem {
 
     get elements() { return this.formElement.elements; }
     get isContainer() { return this.formElement.isContainer; }
+    get width() { return this.formElement.width && this.formElement.width(); }
     isSelected = ko.observable<boolean>(false);
 
     dragstart(model: LayoutItem, ev) {
