@@ -1,11 +1,12 @@
-import * as ko from "knockout";
-
-import { IRenderable } from "./form-element";
-
 import "./uiml-parts.scss";
 
+export interface IRenderable {
+    render(htmlElement: HTMLElement);
+    isContainer: boolean;
+}
+
 export class UimlPart implements IRenderable {
-    static counter = 1;
+    private static counter = 1;
     private id: number;
     constructor(private _partclass: string, ...params: any) {
         this.id = UimlPart.counter++;
@@ -13,11 +14,13 @@ export class UimlPart implements IRenderable {
     }
     render(htmlElement: HTMLElement) {
         htmlElement.className += (" " + this.cssclass);
-        htmlElement.innerHTML = this.partclass + this.id;
+        if(!this.isContainer) {
+            htmlElement.innerHTML = this.partclass + this.id;
+        }
     }
     cssclass = "";
+    get isContainer() { return ["layout", "layoutRoot", "layoutRow", "layoutColumn"].indexOf(this._partclass) !== -1; }
     get partclass() { return this._partclass; }
-    parts = ko.observableArray<UimlPart>();
 }
 
 export class UimlPartsRepository {

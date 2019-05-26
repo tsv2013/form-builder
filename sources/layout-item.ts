@@ -10,14 +10,11 @@ export class LayoutItem {
     private static draggedElement: IFormElement = null;
     private static selectedElement = ko.observable<LayoutItem>();
 
-    constructor(private formElement: IFormElement, htmlElement: HTMLElement) {
-        formElement.render(htmlElement);
+    constructor(private formElement: IFormElement) {
     }
 
     get elements() { return this.formElement.elements; }
-    get isContainer() {
-        return this.formElement.elements().length > 0;
-    }
+    get isContainer() { return this.formElement.isContainer; }
     isSelected = ko.observable<boolean>(false);
 
     dragstart(model: LayoutItem, ev) {
@@ -32,9 +29,7 @@ export class LayoutItem {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("bf-item-json");
         if(!!data) {
-            var holder = this.formElement.parent || this.formElement;
-            var newElement = UimlLayoutSerializer.createElement(JSON.parse(data), holder);
-            holder.elements.splice(holder.elements.indexOf(this.formElement) + 1, 0, newElement);
+            this.formElement.addElement(JSON.parse(data));
             if(!!LayoutItem.draggedElement) {
                 LayoutItem.draggedElement.parent.elements.remove(LayoutItem.draggedElement);
                 LayoutItem.draggedElement = null;
@@ -53,9 +48,10 @@ export class LayoutItem {
 ko.components.register("layout-item", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            var itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content")[0]
-            let formElement = params.element;
-            return  new LayoutItem(formElement, <HTMLElement>itemElelemt);
+            let itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content")[0]
+            let formElement: IFormElement = params.element;
+            formElement.render(<HTMLElement>itemElelemt);
+            return new LayoutItem(formElement);
         }
     },
     template

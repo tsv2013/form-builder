@@ -9,8 +9,10 @@ var template = require("text-loader!./placeholder-item.html");
 ko.components.register("placeholder-item", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            var itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-placeholder")[0]
-            return  new LayoutItem(new PlaceHolder(params.parent), <HTMLElement>itemElelemt);
+            let itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-placeholder")[0];
+            let formElement = new PlaceHolder(params.element);
+            formElement.render(<HTMLElement>itemElelemt);
+            return new LayoutItem(formElement);
         }
     },
     template

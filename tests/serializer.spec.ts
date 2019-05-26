@@ -2,7 +2,7 @@ import { UimlLayoutSerializer } from "../sources/uiml-layout-serializer";
 
 test("deserialize/serialize basic uiml", () => {
     var json = [{
-        partclass: "form",
+        partclass: "layout",
         parts: [
             {
                 partclass: "layoutRow",
@@ -19,7 +19,7 @@ test("deserialize/serialize basic uiml", () => {
         ]
     }];
     var elements = [];
-    UimlLayoutSerializer.createElements(elements, json);
+    UimlLayoutSerializer.createElements(elements, json, null);
     expect(elements.length).toBe(1);
     expect(elements[0].content.partclass).toBe("form");
     expect(elements[0].elements().length).toBe(2);

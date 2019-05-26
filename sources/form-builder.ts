@@ -16,7 +16,7 @@ export class FormBuilder {
             this.root.elements([]);
             var layoutValue = ko.unwrap(layout);
             if(!Array.isArray(layoutValue)) layoutValue = [layoutValue];
-            UimlLayoutSerializer.createElements(this.root.elements, layoutValue);
+            UimlLayoutSerializer.createElements(this.root.elements, layoutValue, null);
         });
         this.toolbox.push({
             title: "row",
@@ -33,6 +33,16 @@ export class FormBuilder {
             json: {
                 partclass: "layoutColumn",
                 cssClasses: "column",
+                parts: [
+                    
+                ]
+            }
+        });
+        this.toolbox.push({
+            title: "item",
+            json: {
+                partclass: "layoutItem",
+                cssClasses: "item",
                 parts: [
                     
                 ]

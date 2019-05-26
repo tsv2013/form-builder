@@ -1,5 +1,6 @@
 var layoutJson = ko.observable({
-    partclass: "form",
+    partclass: "layout",
+    cssClasses: "root",
     parts: [
         {
             partclass: "layoutRow",

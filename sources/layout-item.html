@@ -1,10 +1,12 @@
 <!-- ko if: isContainer -->
+<div class="bf-item-content" draggable="true" data-bind="event: { dragstart: dragstart }, click: select, css: { 'bf-item--selected': isSelected }">
 <!-- ko foreach: elements -->
 <layout-item params="element: $data"></layout-item>
 <!-- /ko -->
 <!-- ko if: elements().length === 0 -->
-<placeholder-item params="parent: formElement"></placeholder-item>
+<placeholder-item params="element: formElement"></placeholder-item>
 <!-- /ko -->
+</div>
 <!-- /ko -->
 <!-- ko ifnot: isContainer -->
 <div class="bf-item-content" draggable="true" data-bind="event: { dragover: dragover, drop: drop, dragstart: dragstart }, click: select, css: { 'bf-item--selected': isSelected }">
