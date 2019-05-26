@@ -6,11 +6,22 @@ import { UimlLayoutSerializer } from "./uiml-layout-serializer";
 import "./layout-item.scss";
 var template = require("text-loader!./layout-item.html");
 
+export interface IMenuItem {
+    title: string;
+    action: () => void;
+    visible?: KnockoutObservable<boolean>;
+}
+
 export class LayoutItem {
     private static draggedElement: IFormElement = null;
     private static selectedElement = ko.observable<LayoutItem>();
 
     constructor(private formElement: IFormElement) {
+        this.menuItems.push({
+            title: "x",
+            action: () => { !!formElement.parent && formElement.parent.elements.remove(formElement); },
+            visible: ko.computed(() => !!formElement.parent)
+        });
     }
 
     get elements() { return this.formElement.elements; }
@@ -44,6 +55,7 @@ export class LayoutItem {
         model.isSelected(true);
         LayoutItem.selectedElement(model);
     }
+    menuItems = ko.observableArray<IMenuItem>();
 }
 
 ko.components.register("layout-item", {
