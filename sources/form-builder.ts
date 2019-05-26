@@ -20,6 +20,7 @@ export class FormBuilder {
         });
         this.toolbox.push({
             title: "row",
+            hint: "Drag to add row",
             json: {
                 partclass: "layoutRow",
                 cssClasses: "row",
@@ -30,6 +31,7 @@ export class FormBuilder {
         });
         this.toolbox.push({
             title: "column",
+            hint: "Drag to add column",
             json: {
                 partclass: "layoutColumn",
                 cssClasses: "column",
@@ -40,6 +42,7 @@ export class FormBuilder {
         });
         this.toolbox.push({
             title: "item",
+            hint: "Drag to add item",
             json: {
                 partclass: "layoutItem",
                 cssClasses: "item",

@@ -1,6 +1,6 @@
 <div>
     <div class="bf-toolbox" data-bind="foreach: toolbox">
-        <div class="bf-toolbox__item" draggable="true" data-bind="text: title, event: { dragstart: $parent.dragstart }">
+        <div class="bf-toolbox__item" draggable="true" data-bind="text: title, event: { dragstart: $parent.dragstart }, attr: { title: hint }">
     </div>
     </div>
     <div>
