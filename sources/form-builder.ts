@@ -55,6 +55,9 @@ export class FormBuilder {
         event.dataTransfer.setData("bf-item-json", JSON.stringify(model.json));
         return true;
     }
+    get json() {
+        return JSON.stringify(UimlLayoutSerializer.serialize(this.root), null, 2);
+    }
 }
 
 ko.components.register("form-builder", {

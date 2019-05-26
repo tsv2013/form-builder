@@ -1,7 +1,22 @@
-.bf-toolbox-item {
-    min-width: 20px;
-    min-height: 20px;
+.bf-toolbox {
+    padding-bottom: 15px;
+}
+
+.bf-toolbox__item {
+    min-width: 50px;
+    min-height: 50px;
+    line-height: 50px;
     border: 1px solid lightgray;
     display: inline-block;
     text-align: center;
+    vertical-align: middle;
+}
+
+.bf-layout-json {
+    height: 300px;
+    padding-top: 15px;
+    textarea {
+        width: 100%;
+        height: 100%;
+    }
 }
