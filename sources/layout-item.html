@@ -1,20 +1,17 @@
 <!-- ko if: isContainer -->
-<div class="bf-item-content" data-bind="click: select, css: { 'bf-item--selected': isSelected }, style: { width: width }">
-<!-- ko foreach: elements -->
-<layout-item params="element: $data"></layout-item>
-<!-- /ko -->
-<!-- ko if: elements().length === 0 -->
-<placeholder-item params="element: formElement"></placeholder-item>
-<!-- /ko -->
+<div class="bf-item-content" data-bind="click: select, css: css">
+    <!-- ko foreach: elements -->
+    <layout-item params="element: $data" data-bind="style: { width: width }"></layout-item>
+    <!-- /ko -->
+    <!-- ko if: elements().length === 0 -->
+    <placeholder-item params="element: formElement"></placeholder-item>
+    <!-- /ko -->
 </div>
 <!-- /ko -->
 <!-- ko ifnot: isContainer -->
-<div class="bf-item-content" draggable="true" data-bind="event: { dragover: dragover, drop: drop, dragstart: dragstart }, click: select, clickBubble: false, css: { 'bf-item--selected': isSelected }">
+<div class="bf-item-content" draggable="true" data-bind="event: { dragenter: dragenter, dragover: dragover, dragleave: dragleave, drop: drop, dragstart: dragstart }, click: select, clickBubble: false, css: css">
 </div>
 <!-- /ko -->
-<div class="bf-item-menu">
-<!-- ko foreach: menuItems -->
-<div class="bf-item-menu__item" data-bind="text: title, click: action, clickBubble: false, visible: !$data.visible || $data.visible()"></div>
+<!-- ko if: isSelected -->
+<item-menu params="element: formElement"></item-menu>
 <!-- /ko -->
-</div>
-        

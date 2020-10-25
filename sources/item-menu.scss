@@ -1,0 +1,21 @@
+.bf-item-menu {
+    // display: none;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+
+.bf-item-menu__item {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: rgba(150, 150, 150, 0.3);
+    margin: 5px;
+}
+
+// .bf-item--selected+.bf-item-menu {
+//     display: block;
+// }

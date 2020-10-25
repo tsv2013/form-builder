@@ -4,7 +4,7 @@ import { UimlPartsRepository, UimlPart } from "./uiml-parts";
 export class UimlLayoutSerializer {
     static createRoot(): FormElement {
         var formElement = new FormElement(null);
-        formElement.content = UimlPartsRepository.create("layoutRoot", { });
+        formElement.content = UimlPartsRepository.create("layout", { cssClasses: "root" });
         return formElement;
     }
     static createElement(element: any, parent: IFormElement): IFormElement {

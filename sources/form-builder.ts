@@ -7,15 +7,19 @@ import "./form-builder.scss";
 var template = require("text-loader!./form-builder.html");
 
 export class FormBuilder {
-    static render(layout: any, node: HTMLElement) {
+    static render(layout: KnockoutObservable<any> | any, node?: HTMLElement) {
+        if(!ko.isWritableObservable(layout)) {
+            layout = ko.observable(layout);
+        }
         ko.applyBindings({ layout: layout }, node);
     }
-    constructor(layout: KnockoutObservable<any> | any = {}) {
-        this.root = UimlLayoutSerializer.createRoot();
+    constructor(private layout: KnockoutObservable<any>) {
         ko.computed(() => {
             this.root.elements([]);
-            var layoutValue = ko.unwrap(layout);
-            if(!Array.isArray(layoutValue)) layoutValue = [layoutValue];
+            var layoutValue: any = ko.unwrap(layout);
+            if(!Array.isArray(layoutValue)) {
+                layoutValue = [layoutValue];
+            }
             UimlLayoutSerializer.createElements(this.root.elements, layoutValue, null);
         });
         this.toolbox.push({
@@ -53,20 +57,27 @@ export class FormBuilder {
         });
     }
     toolbox = ko.observableArray();
-    root: FormElement;
+    root: FormElement = UimlLayoutSerializer.createRoot();
     dragstart(model, event) {
         event.dataTransfer.setData("bf-item-json", JSON.stringify(model.json));
         return true;
     }
-    get json() {
-        return JSON.stringify(UimlLayoutSerializer.serialize(this.root), null, 2);
+    private static defaultText = '{"partclass": "layoutRow","cssClasses": "row","parts": []}';
+    get jsonText() {
+        if(this.root.elements().length > 0) {
+            return JSON.stringify(UimlLayoutSerializer.serialize(this.root.elements()[0]), null, 2);
+        }
+        return FormBuilder.defaultText;
+    }
+    set jsonText(json: string) {
+        this.layout(JSON.parse(json || FormBuilder.defaultText));
     }
 }
 
 ko.components.register("form-builder", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            return new FormBuilder(params.layout());
+            return new FormBuilder(params.layout);
         }
     },
     template
@@ -74,3 +85,4 @@ ko.components.register("form-builder", {
 
 export { LayoutItem } from "./layout-item";
 export { PlaceholderComponent } from "./placeholder-item";
+export { IMenuItem, ItemMenu } from "./item-menu";

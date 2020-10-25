@@ -1,12 +1,12 @@
 <div>
     <div class="bf-toolbox" data-bind="foreach: toolbox">
         <div class="bf-toolbox__item" draggable="true" data-bind="text: title, event: { dragstart: $parent.dragstart }, attr: { title: hint }">
-    </div>
+        </div>
     </div>
     <div>
         <layout-item params="element: root"></layout-item>
     </div>
     <div class="bf-layout-json">
-        <textarea data-bind="value: json"></textarea>
+        <textarea data-bind="value: jsonText"></textarea>
     </div>
 </div>

@@ -1,0 +1,6 @@
+<div class="bf-item-menu">
+    <!-- ko foreach: menuItems -->
+    <div class="bf-item-menu__item" data-bind="text: title, click: action, clickBubble: false, visible: !$data.visible || $data.visible()"></div>
+    <!-- /ko -->
+</div>
+    

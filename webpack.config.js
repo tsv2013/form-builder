@@ -38,7 +38,15 @@ var BASE_CFG = {
           }
       ]
   },
-  entry: './sources/' + packageJson.name + '.ts',
+  externals: {
+    knockout: {
+      root: "ko",
+      commonjs2: "knockout",
+      commonjs: "knockout",
+      amd: "knockout"
+    },
+  },
+entry: './sources/' + packageJson.name + '.ts',
 };
 
 var DEV_CFG = _.extend({}, BASE_CFG, {

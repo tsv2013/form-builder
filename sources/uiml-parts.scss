@@ -1,8 +1,10 @@
 .row {
     min-height: 100px;
     white-space: nowrap;
+    // border: 1px dotted red;
 }
 .column {
     display: inline-block;
     vertical-align: top;
+    // border: 1px dotted blue;
 }
