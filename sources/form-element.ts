@@ -27,16 +27,16 @@ export class PlaceHolder implements IFormElement {
 
 export class FormElement implements IFormElement {
     constructor(public parent: IFormElement) {
-        ko.computed(() => {       
-            let width = 99 / this.elements().length + "%";
-            this.elements().forEach(element => {
-                if(this.content["partclass"] === "layoutRow") {
-                    element.width(width);
-                } else {
-                    element.width(undefined);
-                }
-            });
-        });
+        // ko.computed(() => {       
+        //     let width = 99 / this.elements().length + "%";
+        //     this.elements().forEach(element => {
+        //         if(this.content["partclass"] === "layoutRow") {
+        //             element.width(width);
+        //         } else {
+        //             element.width(undefined);
+        //         }
+        //     });
+        // });
     }
     render(htmlElement: HTMLElement) {
         this.content.render(htmlElement);
