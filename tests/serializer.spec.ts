@@ -2,7 +2,7 @@ import { UimlLayoutSerializer } from "../sources/uiml-layout-serializer";
 
 test("deserialize/serialize basic uiml", () => {
     var json = [{
-        partclass: "layout",
+        partclass: "form",
         parts: [
             {
                 partclass: "layoutRow",

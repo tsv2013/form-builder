@@ -46,7 +46,7 @@ var BASE_CFG = {
       amd: "knockout"
     },
   },
-entry: './sources/' + packageJson.name + '.ts',
+  entry: './sources/' + packageJson.name + '.ts',
 };
 
 var DEV_CFG = _.extend({}, BASE_CFG, {
