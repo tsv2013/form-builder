@@ -11,5 +11,7 @@ exports[`render input 1`] = `
 exports[`render label 1`] = `
 <label
   class=" "
-/>
+>
+  undefined
+</label>
 `;
