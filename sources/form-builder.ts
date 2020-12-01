@@ -7,12 +7,6 @@ import "./form-builder.scss";
 var template = require("text-loader!./form-builder.html");
 
 export class FormBuilder {
-    static render(layout: KnockoutObservable<any> | any, node?: HTMLElement) {
-        if(!ko.isWritableObservable(layout)) {
-            layout = ko.observable(layout);
-        }
-        ko.applyBindings({ layout: layout }, node);
-    }
     constructor(private layout: KnockoutObservable<any>, toolboxItems: Array<any> = []) {
         ko.computed(() => {
             this.root.elements([]);
@@ -84,6 +78,15 @@ ko.components.register("form-builder", {
     template
 });
 
-export { LayoutItem } from "./layout-item";
-export { PlaceholderComponent } from "./placeholder-item";
-export { IMenuItem, ItemMenu } from "./item-menu";
+export function render(layout: KnockoutObservable<any> | any, items: Array<any>, node?: HTMLElement) {
+    if(!ko.isWritableObservable(layout)) {
+        layout = ko.observable(layout);
+    }
+    ko.applyBindings({ layout: layout, items: items }, node);
+}
+
+export * from "./uiml-parts";
+export * from "./form-element";
+export * from "./layout-item";
+export * from "./placeholder-item";
+export * from "./item-menu";
