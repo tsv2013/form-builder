@@ -13,7 +13,7 @@ export class FormBuilder {
         }
         ko.applyBindings({ layout: layout }, node);
     }
-    constructor(private layout: KnockoutObservable<any>) {
+    constructor(private layout: KnockoutObservable<any>, toolboxItems: Array<any> = []) {
         ko.computed(() => {
             this.root.elements([]);
             var layoutValue: any = ko.unwrap(layout);
@@ -55,6 +55,7 @@ export class FormBuilder {
                 ]
             }
         });
+        toolboxItems.forEach(item => this.toolbox.push(item));
     }
     toolbox = ko.observableArray();
     root: FormElement = UimlLayoutSerializer.createRoot();
@@ -77,7 +78,7 @@ export class FormBuilder {
 ko.components.register("form-builder", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            return new FormBuilder(params.layout);
+            return new FormBuilder(params.layout, params.items);
         }
     },
     template
