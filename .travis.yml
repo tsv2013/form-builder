@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '6'
+- '12'
 env:
   global:
   - GH_REF: github.com/tsv2013/form-builder.git
