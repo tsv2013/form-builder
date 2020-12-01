@@ -20,10 +20,15 @@ export class UimlLayoutSerializer {
         });
     }
     static serialize(formElement: IFormElement): any {
-        return {
+        var element: any = {
             partclass: (<UimlPart>formElement.content).partclass,
-            cssClasses: (<UimlPart>formElement.content).cssclass,
-            parts: formElement.elements().map(fe => UimlLayoutSerializer.serialize(fe))
+        };
+        if((<UimlPart>formElement.content).cssclass) {
+            element.cssClasses = (<UimlPart>formElement.content).cssclass;
         }
+        if(formElement.elements().length) {
+            element.parts = formElement.elements().map(fe => UimlLayoutSerializer.serialize(fe));
+        }
+        return element;
     }
 }

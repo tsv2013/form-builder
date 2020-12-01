@@ -6,15 +6,9 @@ test("deserialize/serialize basic uiml", () => {
         parts: [
             {
                 partclass: "layoutRow",
-                parts: [
-                    
-                ]
             },
             {
                 partclass: "layoutRow",
-                parts: [
-                    
-                ]
             }
         ]
     }];
