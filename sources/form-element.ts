@@ -39,7 +39,12 @@ export class FormElement implements IFormElement {
         // });
     }
     render(htmlElement: HTMLElement) {
-        this.content.render(htmlElement);
+        if(this.isContainer) {
+            this.content.render(htmlElement);
+        }
+        else {
+            this.elements().forEach(element => element.content.render(htmlElement));
+        }
     }
     addElement(json: any, location: string = "bottom") {
         if((this.content["partclass"] === "layoutRow" && json.partclass === "layoutColumn") || (this.isContainer && json.partclass === "layoutItem")) {
@@ -52,9 +57,7 @@ export class FormElement implements IFormElement {
                     var newRow = UimlLayoutSerializer.createElement({
                         partclass: "layoutColumn",
                         cssClasses: "column",
-                        parts: [
-                            
-                        ]
+                        parts: [ ]
                     }, holder);
                     holder.elements.splice(holder.elements.indexOf(this), 1, newRow);
                     this.parent = newRow;
@@ -74,9 +77,7 @@ export class FormElement implements IFormElement {
                     var newRow = UimlLayoutSerializer.createElement({
                         partclass: "layoutRow",
                         cssClasses: "row",
-                        parts: [
-                            
-                        ]
+                        parts: [ ]
                     }, holder);
                     holder.elements.splice(holder.elements.indexOf(this), 1, newRow);
                     this.parent = newRow;

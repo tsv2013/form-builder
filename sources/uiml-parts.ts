@@ -6,21 +6,31 @@ export interface IRenderable {
 }
 
 export class UimlPart implements IRenderable {
+    public static render: (part: any, container?: HTMLElement) => HTMLElement = undefined;
     private static counter = 1;
     private id: number;
+    private _part: any;
     constructor(private _partclass: string, ...params: any) {
         this.id = UimlPart.counter++;
+        this._part = params[0];
         this.cssclass = params[0].cssClasses;
     }
     render(htmlElement: HTMLElement) {
-        htmlElement.className += (" " + this.cssclass);
-        if(!this.isContainer) {
-            htmlElement.innerHTML = this.partclass + this.id;
+        if(UimlPart.render) {
+            UimlPart.render(this.part, htmlElement);
+        } else {
+            htmlElement.className += (" " + this.cssclass);
+            if(!this.isContainer) {
+                htmlElement.innerHTML = this.partclass + this.id;
+            }
         }
     }
     cssclass = "";
     get isContainer() { return ["layout", "layoutRoot", "layoutRow", "layoutColumn"].indexOf(this._partclass) !== -1; }
     get partclass() { return this._partclass; }
+    get part() {
+        return this._part;
+    }
 }
 
 export class UimlPartsRepository {

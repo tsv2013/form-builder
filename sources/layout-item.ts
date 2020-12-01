@@ -2,6 +2,7 @@ import * as ko from "knockout";
 
 import { IFormElement } from "./form-element";
 import { UimlLayoutSerializer } from "./uiml-layout-serializer";
+import { UimlPart } from "./uiml-parts";
 
 import "./layout-item.scss";
 var template = require("text-loader!./layout-item.html");
@@ -35,7 +36,7 @@ export class LayoutItem {
     get elements() { return this.formElement.elements; }
     get isContainer() { return this.formElement.isContainer; }
     get css() {
-        let result = "";
+        let result = this.formElement.content instanceof UimlPart ? this.formElement.content.cssclass : "";
         if(this.isSelected()) {
             result += " " + "bf-item--selected";
         }
@@ -90,9 +91,11 @@ export class LayoutItem {
 ko.components.register("layout-item", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            let itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content")[0]
             let formElement: IFormElement = params.element;
-            formElement.render(<HTMLElement>itemElelemt);
+            if(!formElement.isContainer) {
+                let itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content-holder")[0]
+                formElement.render(<HTMLElement>itemElelemt);
+            }
             return new LayoutItem(formElement);
         }
     },
