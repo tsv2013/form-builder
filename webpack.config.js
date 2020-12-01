@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var packageJson = require('./package.json');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var PascalCaseNamePlugin = require('./webpack-pascal-case-name');
 
 var libraryName = 'FormBuilder';
 var banner = [
@@ -46,7 +47,10 @@ var BASE_CFG = {
       amd: "knockout"
     },
   },
-  entry: './sources/' + packageJson.name + '.ts',
+  entry: {
+    [packageJson.name]: './sources/' + packageJson.name + '.ts',
+    uiml: './uiml/index.ts',
+  }
 };
 
 var DEV_CFG = _.extend({}, BASE_CFG, {
@@ -60,14 +64,15 @@ var DEV_CFG = _.extend({}, BASE_CFG, {
       filename: 'index.debug.html',
       inject: 'head',
       template: 'index.html'
-    })
+    }),
+    new PascalCaseNamePlugin()
   ],
   output: {
-    library: libraryName,
+    library: '[pc-name]',
     libraryTarget: 'umd',
     umdNamedDefine: true,
     path: __dirname + '/dist',
-    filename: packageJson.name + '.js'
+    filename: '[name].js'
   },
   devtool: 'inline-source-map'
 });
@@ -85,14 +90,15 @@ var PROD_CFG = _.extend({}, BASE_CFG, {
       template: 'index.html'
     }),
     new webpack.BannerPlugin(banner),
+    new PascalCaseNamePlugin(),
     //new webpack.optimize.UglifyJsPlugin()
   ],
   output: {
-    library: libraryName,
+    library: '[pc-name]',
     libraryTarget: 'umd',
     umdNamedDefine: true,
     path: __dirname + '/dist',
-    filename: packageJson.name + '.min.js'
+    filename: '[name].min.js'
   }
 });
 
