@@ -6,10 +6,12 @@
     min-width: 50px;
     min-height: 50px;
     line-height: 50px;
+    padding: 0 10px;
     border: 1px solid lightgray;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
+    cursor: grab;
 }
 
 .bf-layout-json {

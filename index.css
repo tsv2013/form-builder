@@ -1,7 +1,40 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --main-color: royalblue;
+    --inactive-color: lightgray;
+}
+
+.test-form {
+    font-size: 14px;
+    padding: 7px;
+    border: 1px dotted var(--main-color);
+    box-sizing: border-box;
+}
+
+.test-group {
+    width: 100%;
+    padding-top: 7px;
+}
+
 .test-item {
-    border: 1px solid orange;
 }
 
 .test-label {
-    border: 1px solid lightgreen;
+    display: inline-block;
+    min-width: 100px;
+}
+
+.test-input {
+    display: inline-block;
+    min-width: 100px;
+    border: none;
+    outline: none;    
+    border-bottom: 1px dotted var(--inactive-color);
+}
+.test-input:focus {
+    border-bottom-style: solid;
+    border-bottom-color: var(--main-color);
 }
