@@ -20,17 +20,11 @@ export class UimlLayoutSerializer {
         });
     }
     static serialize(formElement: IFormElement): any {
+        const uimlPart = <UimlPart>formElement.content;
         var element: any = {
-            partclass: (<UimlPart>formElement.content).partclass,
+            partclass: uimlPart.partclass,
         };
-        var part = formElement.content["part"];
-        if(part) {
-            Object.keys(part).forEach(key => element[key] = part[key]);
-        } else {
-            if((<UimlPart>formElement.content).cssclass) {
-                element.cssClasses = (<UimlPart>formElement.content).cssclass;
-            }
-        }
+        Object.keys(uimlPart.part).forEach(key => element[key] = uimlPart.part[key]);
         if(formElement.elements().length) {
             element.parts = formElement.elements().map(fe => UimlLayoutSerializer.serialize(fe));
         }

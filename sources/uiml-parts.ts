@@ -12,8 +12,8 @@ export class UimlPart implements IRenderable {
     private _part: any;
     constructor(private _partclass: string, ...params: any) {
         this.id = UimlPart.counter++;
-        this._part = params[0];
-        this.cssclass = params[0].cssClasses;
+        this._part = params[0] || {};
+        this.cssclass = this._part.cssClasses;
     }
     render(htmlElement: HTMLElement) {
         if(UimlPart.render) {
