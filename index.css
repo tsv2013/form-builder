@@ -25,11 +25,13 @@ body {
 .test-label {
     display: inline-block;
     min-width: 100px;
+    padding: 2px;
 }
 
 .test-input {
     display: inline-block;
     min-width: 100px;
+    padding: 2px;
     border: none;
     outline: none;    
     border-bottom: 1px dotted var(--inactive-color);

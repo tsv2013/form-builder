@@ -63,6 +63,46 @@ var toolboxItems = [
                 }
             ]
         }
+    },
+    {
+        title: "Name",
+        hint: "Drag to add Name",
+        json: {
+            partclass: "layoutItem",
+            cssClasses: "item test-item test-group",
+            parts: [
+                {
+                    partclass: "label",
+                    cssClasses: "test-label",
+                    data: "Name"
+                },
+                {
+                    partclass: "input",
+                    cssClasses: "test-input",
+                    data: "name"
+                }
+            ]
+        }
+    },
+    {
+        title: "Surname",
+        hint: "Drag to add Surname",
+        json: {
+            partclass: "layoutItem",
+            cssClasses: "item test-item test-group",
+            parts: [
+                {
+                    partclass: "label",
+                    cssClasses: "test-label",
+                    data: "Surname"
+                },
+                {
+                    partclass: "input",
+                    cssClasses: "test-input",
+                    data: "surname"
+                }
+            ]
+        }
     }
 ];
 FormBuilder.render(layoutJson, toolboxItems, model, document.getElementById("form-builder-container"));
