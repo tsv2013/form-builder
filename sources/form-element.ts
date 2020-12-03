@@ -8,7 +8,7 @@ export interface IFormElement extends IRenderable {
     remove(): void;
     elements?: KnockoutObservableArray<IFormElement>;
     content?: IRenderable;
-    width?: KnockoutObservable<string>;
+    context?: any;
 }
 
 export class PlaceHolder implements IFormElement {
@@ -26,17 +26,18 @@ export class PlaceHolder implements IFormElement {
 }
 
 export class FormElement implements IFormElement {
+    private _context:any = undefined;
+
     constructor(public parent: IFormElement) {
-        // ko.computed(() => {       
-        //     let width = 99 / this.elements().length + "%";
-        //     this.elements().forEach(element => {
-        //         if(this.content["partclass"] === "layoutRow") {
-        //             element.width(width);
-        //         } else {
-        //             element.width(undefined);
-        //         }
-        //     });
-        // });
+    }
+    set context(context: any) {
+        this._context = context;
+    }
+    get context() {
+        if(!this._context && this.parent) {
+            this._context = this.parent.context;
+        }
+        return this._context;
     }
     render(htmlElement: HTMLElement) {
         if(this.isContainer) {
@@ -108,5 +109,4 @@ export class FormElement implements IFormElement {
     content: IRenderable = new PlaceHolder(this);
     elements = ko.observableArray<IFormElement>();
     get isContainer() { return this.content.isContainer; }
-    width = ko.observable();
 }

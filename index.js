@@ -3,14 +3,9 @@ var layoutJson = ko.observable({
     cssClasses: "row"
 });
 
-// var model = {
-//     layout: layoutJson,
-//     layoutStr: ko.computed({
-//         read: function() { return JSON.stringify(layoutJson(), 4); },
-//         write: function(val) { layoutJson(JSON.parse(val)) }
-//     })
-// }
-// ko.applyBindings(model, document.getElementById("form-builder-container"));
+var model = {
+    valName: ko.observable("Some text"),
+}
 
 FormBuilder.UimlPart.render = Uiml.render;
 var toolboxItems = [
@@ -65,4 +60,4 @@ var toolboxItems = [
         }
     }
 ];
-FormBuilder.render(layoutJson, toolboxItems, document.getElementById("form-builder-container"));
+FormBuilder.render(layoutJson, toolboxItems, model, document.getElementById("form-builder-container"));

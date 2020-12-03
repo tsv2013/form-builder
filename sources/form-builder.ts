@@ -7,14 +7,15 @@ import "./form-builder.scss";
 var template = require("text-loader!./form-builder.html");
 
 export class FormBuilder {
-    constructor(private layout: KnockoutObservable<any>, toolboxItems: Array<any> = []) {
+    constructor(private _layout: KnockoutObservable<any>, _context?: any, toolboxItems: Array<any> = []) {
+        this.root.context = _context;
         ko.computed(() => {
             this.root.elements([]);
-            var layoutValue: any = ko.unwrap(layout);
+            var layoutValue: any = ko.unwrap(_layout);
             if(!Array.isArray(layoutValue)) {
                 layoutValue = [layoutValue];
             }
-            UimlLayoutSerializer.createElements(this.root.elements, layoutValue, null);
+            UimlLayoutSerializer.createElements(this.root.elements, layoutValue, this.root);
         });
         this.toolbox.push({
             title: "row",
@@ -65,24 +66,24 @@ export class FormBuilder {
         return FormBuilder.defaultText;
     }
     set jsonText(json: string) {
-        this.layout(JSON.parse(json || FormBuilder.defaultText));
+        this._layout(JSON.parse(json || FormBuilder.defaultText));
     }
 }
 
 ko.components.register("form-builder", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            return new FormBuilder(params.layout, params.items);
+            return new FormBuilder(params.layout, params.context, params.items);
         }
     },
     template
 });
 
-export function render(layout: KnockoutObservable<any> | any, items: Array<any>, node?: HTMLElement) {
+export function render(layout: KnockoutObservable<any> | any, items: Array<any>, context?: any, node?: HTMLElement) {
     if(!ko.isWritableObservable(layout)) {
         layout = ko.observable(layout);
     }
-    ko.applyBindings({ layout: layout, items: items }, node);
+    ko.applyBindings({ context: context, layout: layout, items: items }, node);
 }
 
 export * from "./uiml-parts";

@@ -23,8 +23,13 @@ export class UimlLayoutSerializer {
         var element: any = {
             partclass: (<UimlPart>formElement.content).partclass,
         };
-        if((<UimlPart>formElement.content).cssclass) {
-            element.cssClasses = (<UimlPart>formElement.content).cssclass;
+        var part = formElement.content["part"];
+        if(part) {
+            Object.keys(part).forEach(key => element[key] = part[key]);
+        } else {
+            if((<UimlPart>formElement.content).cssclass) {
+                element.cssClasses = (<UimlPart>formElement.content).cssclass;
+            }
         }
         if(formElement.elements().length) {
             element.parts = formElement.elements().map(fe => UimlLayoutSerializer.serialize(fe));

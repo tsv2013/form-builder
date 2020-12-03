@@ -45,7 +45,6 @@ export class LayoutItem {
         }
         return result;
     }
-    get width() { return this.formElement.width && this.formElement.width(); }
     isSelected = ko.observable<boolean>(false);
 
     dragstart(model: LayoutItem, ev: DragEvent) {
@@ -93,8 +92,8 @@ ko.components.register("layout-item", {
         createViewModel: function(params, componentInfo) {
             let formElement: IFormElement = params.element;
             if(!formElement.isContainer) {
-                let itemElelemt = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content-holder")[0]
-                formElement.render(<HTMLElement>itemElelemt);
+                let itemElelemtContainer = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content-holder")[0];
+                formElement.render(<HTMLElement>itemElelemtContainer);
             }
             return new LayoutItem(formElement);
         }
