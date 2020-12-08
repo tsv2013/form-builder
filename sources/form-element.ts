@@ -40,7 +40,7 @@ export class FormElement implements IFormElement {
         return this._context;
     }
     render(htmlElement: HTMLElement) {
-        if(this.isContainer) {
+        if(this.isContainer || this.elements().length === 0) {
             this.content.render(htmlElement);
         }
         else {

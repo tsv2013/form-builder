@@ -1,52 +1,8 @@
 import { UimlLayoutSerializer } from "../sources/uiml-layout-serializer";
+import { UimlPart } from "../sources/uiml-parts";
+import { render } from "../uiml";
 
-test("deserialize/serialize basic uiml", () => {
-    var json = [{
-        partclass: "form",
-        parts: [
-            {
-                partclass: "layoutRow",
-            },
-            {
-                partclass: "layoutRow",
-            }
-        ]
-    }];
-    var elements = [];
-    UimlLayoutSerializer.createElements(elements, json, null);
-    expect(elements.length).toBe(1);
-    expect(elements[0].content.partclass).toBe("layout");
-    expect(elements[0].elements().length).toBe(2);
-    var result = elements.map(el => UimlLayoutSerializer.serialize(el));
-    expect(result).toMatchObject(json);
-});
-
-test("deserialize/serialize custom properties", () => {
-    var json = [{
-        partclass: "form",
-        parts: [
-            {
-                partclass: "layoutRow",
-                customProperty1: "value1"
-            },
-            {
-                partclass: "layoutRow",
-                customProperty2: "value2"
-            }
-        ]
-    }];
-    var elements = [];
-    UimlLayoutSerializer.createElements(elements, json, null);
-    expect(elements.length).toBe(1);
-    expect(elements[0].content.partclass).toBe("layout");
-    expect(elements[0].elements().length).toBe(2);
-    var result = elements.map(el => UimlLayoutSerializer.serialize(el));
-    expect(result).toMatchObject(json);
-    expect(result[0].parts[0].customProperty1).toBe("value1");
-    expect(result[0].parts[1].customProperty2).toBe("value2");
-});
-
-test("deserialize legacy layout - panel", () => {
+test("render legacy layout - panel", () => {
     const json = {
         "id": "customer.public.customer.customer_id.payment.public.payment.customer_idPanel",
         "isRelation": true,
@@ -78,4 +34,10 @@ test("deserialize legacy layout - panel", () => {
     var leafElement = element.elements()[0].elements()[0];
     expect(leafElement.content.partclass).toBe("child");
     expect(leafElement.isContainer).toBeFalsy();
+
+    UimlPart.render = render;
+    var container = document.createElement("div");
+    leafElement.render(container);
+    expect(container).toMatchSnapshot();
+    UimlPart.render = undefined;
 });

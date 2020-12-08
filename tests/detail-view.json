@@ -1,0 +1,454 @@
+{
+    "parts": [
+      {
+        "partclass": "layoutRow",
+        "cssClasses": "abris-detail__resizer-frame"
+      },
+      {
+        "parts": [
+          {
+            "parts": [
+              {
+                "parts": [
+                  {
+                    "partclass": "koWith",
+                    "data": "data",
+                    "parts": [
+                      {
+                        "partclass": "accordion",
+                        "parts": [
+                          {
+                            "parts": [
+                              {
+                                "partclass": "div",
+                                "cssClasses": "captionPart",
+                                "parts": [
+                                  {
+                                    "partclass": "property-indicator",
+                                    "property": "first_name",
+                                    "hideEmptyFields": "hideEmptyFields"
+                                  },
+                                  {
+                                    "partclass": "label",
+                                    "text": "First name",
+                                    "cssClasses": "label-string"
+                                  },
+                                  {
+                                    "partclass": "meta-control",
+                                    "entity": "projection_property",
+                                    "key": "customer.first_name",
+                                    "name": "first_name"
+                                  },
+                                  {
+                                    "partclass": "property-hint",
+                                    "hint": ""
+                                  }
+                                ]
+                              },
+                              {
+                                "partclass": "readOnly",
+                                "readonly": true,
+                                "lineKey": "1",
+                                "data": "first_name",
+                                "type": "string",
+                                "projection": "customer",
+                                "table": "",
+                                "cssClasses": "valuePart abrs-readonly",
+                                "isnullable": false,
+                                "pattern": "",
+                                "hint": "",
+                                "label": "First name"
+                              }
+                            ],
+                            "cssClasses": "readonly clearfix abris-property abris-property-string abris-property-first_name",
+                            "partclass": "formGroup",
+                            "hint": "",
+                            "section": false
+                          },
+                          {
+                            "parts": [
+                              {
+                                "partclass": "div",
+                                "cssClasses": "captionPart",
+                                "parts": [
+                                  {
+                                    "partclass": "property-indicator",
+                                    "property": "last_name",
+                                    "hideEmptyFields": "hideEmptyFields"
+                                  },
+                                  {
+                                    "partclass": "label",
+                                    "text": "Last name",
+                                    "cssClasses": "label-string"
+                                  },
+                                  {
+                                    "partclass": "meta-control",
+                                    "entity": "projection_property",
+                                    "key": "customer.last_name",
+                                    "name": "last_name"
+                                  },
+                                  {
+                                    "partclass": "property-hint",
+                                    "hint": ""
+                                  }
+                                ]
+                              },
+                              {
+                                "partclass": "textInput",
+                                "readonly": false,
+                                "lineKey": "1",
+                                "data": "last_name",
+                                "type": "string",
+                                "projection": "customer",
+                                "table": "",
+                                "cssClasses": "valuePart",
+                                "isnullable": false,
+                                "pattern": "",
+                                "hint": "",
+                                "label": "Last name"
+                              }
+                            ],
+                            "cssClasses": "readwrite clearfix abris-property abris-property-string abris-property-last_name",
+                            "partclass": "formGroup",
+                            "hint": "",
+                            "section": false
+                          },
+                          {
+                            "parts": [
+                              {
+                                "partclass": "div",
+                                "cssClasses": "captionPart",
+                                "parts": [
+                                  {
+                                    "partclass": "property-indicator",
+                                    "property": "email",
+                                    "hideEmptyFields": "hideEmptyFields"
+                                  },
+                                  {
+                                    "partclass": "label",
+                                    "text": "Email",
+                                    "cssClasses": "label-plain"
+                                  },
+                                  {
+                                    "partclass": "meta-control",
+                                    "entity": "projection_property",
+                                    "key": "customer.email",
+                                    "name": "email"
+                                  },
+                                  {
+                                    "partclass": "property-hint",
+                                    "hint": ""
+                                  }
+                                ]
+                              },
+                              {
+                                "partclass": "plainEditor",
+                                "readonly": false,
+                                "lineKey": "1",
+                                "data": "email",
+                                "type": "plain",
+                                "projection": "customer",
+                                "table": "",
+                                "cssClasses": "valuePart",
+                                "isnullable": true,
+                                "pattern": "",
+                                "hint": "",
+                                "label": "Email"
+                              }
+                            ],
+                            "cssClasses": "readwrite clearfix abris-property abris-property-plain abris-property-email",
+                            "partclass": "formGroup",
+                            "hint": "",
+                            "section": false
+                          },
+                          {
+                            "parts": [
+                              {
+                                "partclass": "div",
+                                "cssClasses": "captionPart",
+                                "parts": [
+                                  {
+                                    "partclass": "property-indicator",
+                                    "property": "store_id",
+                                    "hideEmptyFields": "hideEmptyFields"
+                                  },
+                                  {
+                                    "partclass": "label",
+                                    "text": "Store",
+                                    "cssClasses": "label-ref"
+                                  },
+                                  {
+                                    "partclass": "meta-control",
+                                    "entity": "projection_property",
+                                    "key": "customer.store_id",
+                                    "name": "store_id"
+                                  },
+                                  {
+                                    "partclass": "property-hint",
+                                    "hint": ""
+                                  }
+                                ]
+                              },
+                              {
+                                "partclass": "select",
+                                "readonly": false,
+                                "data": "store_id",
+                                "type": "ref",
+                                "displayRefToDetail": true,
+                                "processRefHandler": "processSelectRef",
+                                "lookupEntity": "store",
+                                "lookupId": "store_id",
+                                "lookupText": "lookupText",
+                                "jumpEntity": "store",
+                                "extensionPartVisible": "extensionPartVisible",
+                                "isnullable": false,
+                                "pattern": "",
+                                "hint": "",
+                                "label": "Store",
+                                "cssClasses": "valuePart"
+                              }
+                            ],
+                            "cssClasses": "readwrite clearfix abris-property abris-property-ref abris-property-store_id",
+                            "partclass": "formGroup",
+                            "hint": "",
+                            "section": false
+                          },
+                          {
+                            "parts": [
+                              {
+                                "partclass": "div",
+                                "cssClasses": "captionPart",
+                                "parts": [
+                                  {
+                                    "partclass": "property-indicator",
+                                    "property": "address_id",
+                                    "hideEmptyFields": "hideEmptyFields"
+                                  },
+                                  {
+                                    "partclass": "label",
+                                    "text": "Address",
+                                    "cssClasses": "label-ref"
+                                  },
+                                  {
+                                    "partclass": "meta-control",
+                                    "entity": "projection_property",
+                                    "key": "customer.address_id",
+                                    "name": "address_id"
+                                  },
+                                  {
+                                    "partclass": "property-hint",
+                                    "hint": ""
+                                  }
+                                ]
+                              },
+                              {
+                                "partclass": "select",
+                                "readonly": false,
+                                "data": "address_id",
+                                "type": "ref",
+                                "displayRefToDetail": true,
+                                "processRefHandler": "processSelectRef",
+                                "lookupEntity": "address",
+                                "lookupId": "address_id",
+                                "lookupText": "lookupText",
+                                "jumpEntity": "address",
+                                "extensionPartVisible": "extensionPartVisible",
+                                "isnullable": false,
+                                "pattern": "",
+                                "hint": "",
+                                "label": "Address",
+                                "cssClasses": "valuePart"
+                              }
+                            ],
+                            "cssClasses": "readwrite clearfix abris-property abris-property-ref abris-property-address_id",
+                            "partclass": "formGroup",
+                            "hint": "",
+                            "section": false
+                          },
+                          {
+                            "parts": [
+                              {
+                                "partclass": "div",
+                                "cssClasses": "captionPart",
+                                "parts": [
+                                  {
+                                    "partclass": "property-indicator",
+                                    "property": "activebool",
+                                    "hideEmptyFields": "hideEmptyFields"
+                                  }
+                                ]
+                              },
+                              {
+                                "partclass": "div",
+                                "cssClasses": "valuePart",
+                                "parts": [
+                                  {
+                                    "partclass": "checkbox",
+                                    "readonly": false,
+                                    "lineKey": "1",
+                                    "data": "activebool",
+                                    "type": "bool",
+                                    "projection": "customer",
+                                    "table": "",
+                                    "cssClasses": "valuePart",
+                                    "isnullable": false,
+                                    "pattern": "",
+                                    "hint": "",
+                                    "label": "Active"
+                                  },
+                                  {
+                                    "partclass": "meta-control",
+                                    "entity": "projection_property",
+                                    "key": "customer.activebool",
+                                    "name": "activebool"
+                                  }
+                                ]
+                              }
+                            ],
+                            "cssClasses": "readwrite clearfix abris-property abris-property-bool abris-property-activebool",
+                            "partclass": "formGroup",
+                            "hint": "",
+                            "section": false
+                          },
+                          {
+                            "partclass": "meta-control",
+                            "entity": "projection_property",
+                            "key": "customer",
+                            "add": true,
+                            "foreignKey": "projection_entity"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "partclass": "actions",
+                    "action": "actions",
+                    "cssClasses": "abris-view-bottom-actions"
+                  }
+                ],
+                "cssClasses": "detail-view-col",
+                "partclass": "container"
+              },
+              {
+                "parts": [
+                  {
+                    "partclass": "childView",
+                    "model": "extensionModel",
+                    "cssClasses": "abris-view-extension-part abris-child-view-container"
+                  }
+                ],
+                "cssClasses": "detail-view-col abris-view-extension",
+                "partclass": "container",
+                "visible": "extensionPartVisible"
+              }
+            ],
+            "cssClasses": "row detail",
+            "partclass": "container"
+          }
+        ],
+        "cssClasses": "",
+        "partclass": "form",
+        "id": "16074485964397os5678f4",
+        "submitMethod": "submitHandler"
+      },
+      {
+        "parts": [
+          {
+            "partclass": "koWith",
+            "data": "data",
+            "parts": [
+              {
+                "parts": [
+                  {
+                    "id": "customer.public.customer.customer_id.payment.public.payment.customer_idPanel",
+                    "isRelation": true,
+                    "partclass": "panel",
+                    "visibleIndex": "customer.public.customer.customer_id.payment.public.payment.customer_id",
+                    "expanded": false,
+                    "cssClasses": "relation",
+                    "text": "payment",
+                    "customHeaderTemplate": "child-view-context-actions-template",
+                    "customBodyHeaderTemplate": "child-view-body-actions-template",
+                    "customHeaderData": "customer.public.customer.customer_id.payment.public.payment.customer_id",
+                    "parts": [
+                      {
+                        "id": "row2",
+                        "partclass": "layoutRow",
+                        "parts": [
+                          {
+                            "id": "customer.public.customer.customer_id.payment.public.payment.customer_idListView",
+                            "partclass": "child",
+                            "model": "customer.public.customer.customer_id.payment.public.payment.customer_id"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "partclass": "meta-control",
+                    "entity": "projection_relation",
+                    "key": "customer.public.customer.customer_id.payment.public.payment.customer_id"
+                  }
+                ],
+                "cssClasses": "detail-relation",
+                "partclass": "layoutRow"
+              },
+              {
+                "parts": [
+                  {
+                    "id": "customer.public.customer.customer_id.rental.public.rental.customer_idPanel",
+                    "isRelation": true,
+                    "partclass": "panel",
+                    "visibleIndex": "customer.public.customer.customer_id.rental.public.rental.customer_id",
+                    "expanded": false,
+                    "cssClasses": "relation",
+                    "text": "rental",
+                    "customHeaderTemplate": "child-view-context-actions-template",
+                    "customBodyHeaderTemplate": "child-view-body-actions-template",
+                    "customHeaderData": "customer.public.customer.customer_id.rental.public.rental.customer_id",
+                    "parts": [
+                      {
+                        "id": "row2",
+                        "partclass": "layoutRow",
+                        "parts": [
+                          {
+                            "id": "customer.public.customer.customer_id.rental.public.rental.customer_idListView",
+                            "partclass": "child",
+                            "model": "customer.public.customer.customer_id.rental.public.rental.customer_id"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "partclass": "meta-control",
+                    "entity": "projection_relation",
+                    "key": "customer.public.customer.customer_id.rental.public.rental.customer_id"
+                  }
+                ],
+                "cssClasses": "detail-relation",
+                "partclass": "layoutRow"
+              },
+              {
+                "parts": [
+                  {
+                    "partclass": "relation-show"
+                  }
+                ],
+                "cssClasses": "",
+                "partclass": "layoutRow"
+              }
+            ]
+          }
+        ],
+        "cssClasses": "detail-relations",
+        "partclass": "layoutRow"
+      }
+    ],
+    "cssClasses": "abris-detail abris-detail-customer",
+    "partclass": "view",
+    "dataBind": {
+      "event": "{ focusin: formActivateHandler }"
+    }
+  }

@@ -6,18 +6,32 @@ export interface IRenderable {
 }
 
 export class UimlPart implements IRenderable {
+    public static layoutParts = ["layout", "layoutRow", "layoutColumn"];
+    public static layoutConvertableParts = {
+        "view": "layout",
+        "form": "layout",
+        "koWith": "layoutRow",
+        "container": "layoutRow",
+        "accordion": "layoutRow", // TODO: implement layout component
+        "panel": "layoutRow", // TODO: implement layout component
+        "div": "container",
+        "formGroup": "layoutItem"
+    };
     public static render: (part: any, container?: HTMLElement) => HTMLElement = undefined;
     private static counter = 1;
     private id: number;
     private _part: any;
+    private _partToUse: any;
     constructor(private _partclass: string, ...params: any) {
         this.id = UimlPart.counter++;
         this._part = params[0] || {};
+        this._partToUse = Object.assign({}, this._part);
+        this._partToUse.partclass = this.partclass;
         this.cssclass = this._part.cssClasses;
     }
     render(htmlElement: HTMLElement) {
         if(UimlPart.render) {
-            UimlPart.render(this.part, htmlElement);
+            UimlPart.render(this._partToUse, htmlElement);
         } else {
             htmlElement.className += (" " + this.cssclass);
             if(!this.isContainer) {
@@ -26,8 +40,12 @@ export class UimlPart implements IRenderable {
         }
     }
     cssclass = "";
-    get isContainer() { return ["layout", "layoutRoot", "layoutRow", "layoutColumn"].indexOf(this._partclass) !== -1; }
-    get partclass() { return this._partclass; }
+    get isContainer() {
+        return UimlPart.layoutParts.indexOf(this.partclass) !== -1;
+    }
+    get partclass() {
+        return UimlPart.layoutConvertableParts[this._partclass] || this._partclass;
+    }
     get part() {
         return this._part;
     }

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render legacy layout - panel 1`] = `
+<div>
+  <component-stub
+    class=" "
+    params="{ message: 'Error: Component child is not installed.'}"
+  />
+</div>
+`;
