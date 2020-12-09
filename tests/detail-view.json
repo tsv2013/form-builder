@@ -46,7 +46,7 @@
                                 ]
                               },
                               {
-                                "partclass": "readOnly",
+                                "partclass": "input",
                                 "readonly": true,
                                 "lineKey": "1",
                                 "data": "first_name",

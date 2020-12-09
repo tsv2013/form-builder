@@ -3,6 +3,32 @@ var layoutJson = ko.observable({
     cssClasses: "row test-form"
 });
 
+// layoutJson({
+//     "id": "customer.public.customer.customer_id.payment.public.payment.customer_idPanel",
+//     "isRelation": true,
+//     "partclass": "panel",
+//     "visibleIndex": "customer.public.customer.customer_id.payment.public.payment.customer_id",
+//     "expanded": false,
+//     "cssClasses": "relation",
+//     "text": "payment",
+//     "customHeaderTemplate": "child-view-context-actions-template",
+//     "customBodyHeaderTemplate": "child-view-body-actions-template",
+//     "customHeaderData": "customer.public.customer.customer_id.payment.public.payment.customer_id",
+//     "parts": [
+//       {
+//         "id": "row2",
+//         "partclass": "layoutRow",
+//         "parts": [
+//           {
+//             "id": "customer.public.customer.customer_id.payment.public.payment.customer_idListView",
+//             "partclass": "child",
+//             "model": "customer.public.customer.customer_id.payment.public.payment.customer_id"
+//           }
+//         ]
+//       }
+//     ]
+//   });
+
 var model = {
     name: ko.observable("Tom"),
     surname: ko.observable("Young"),
@@ -10,7 +36,17 @@ var model = {
     city: ko.observable("Kanzas"),
     adress: ko.observable("Mountain drive, 754"),
     phone: ko.observable("2-300-765-11-22"),
+    data: {
+        first_name: ko.observable("Bob"),
+        last_name: ko.observable("Sallivan"),
+        email: ko.observable("bob@sallivan-family.org"),
+    }
 }
+
+var renderedsMap = Uiml.htmlUiRendererPeers[0].dclasses;
+renderedsMap.push({ id: "textInput", mapsto: "InputRenderer" });
+renderedsMap.push({ id: "plainEditor", mapsto: "InputRenderer" });
+Uiml.refresh();
 
 FormBuilder.UimlPart.render = Uiml.render;
 var toolboxItems = [
