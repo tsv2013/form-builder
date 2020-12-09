@@ -12,3 +12,7 @@ export function render(part: IPart, container?: HTMLElement) {
     const renderer = uimlWrapper.createRenderer(part);
     return renderer.render(container);
 }
+
+export function refresh() {
+    uimlWrapper.refresh();
+}

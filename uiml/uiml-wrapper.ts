@@ -8,8 +8,11 @@ export class UIMLWrapper {
         return (typeof typeConstructor === "function") ? typeConstructor : Renderer.InterfaceRenderer;
     }
     constructor(private _uiml: IUML) {
+        this.refresh();
+    }
+    refresh() {
         var htmlPresentation = null;
-        _uiml.peers.forEach((peer: IPeer) => {
+        this._uiml.peers.forEach((peer: IPeer) => {
             if(peer.peername === "presentation" && peer.id === "HTMLUIRenderer") {
                 htmlPresentation = peer;
             }
