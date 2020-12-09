@@ -49,6 +49,9 @@ export class UimlPart implements IRenderable {
     get part() {
         return this._part;
     }
+    get data() {
+        return this._part.data;
+    }
 }
 
 export class UimlPartsRepository {

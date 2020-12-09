@@ -35,9 +35,9 @@ test("render legacy layout - panel", () => {
     expect(leafElement.content.partclass).toBe("child");
     expect(leafElement.isContainer).toBeFalsy();
 
-    UimlPart.render = render;
     var container = document.createElement("div");
+    UimlPart.render = render;
     leafElement.render(container);
-    expect(container).toMatchSnapshot();
     UimlPart.render = undefined;
+    expect(container).toMatchSnapshot();
 });
