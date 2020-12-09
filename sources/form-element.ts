@@ -9,11 +9,15 @@ export interface IFormElement extends IRenderable {
     elements?: KnockoutObservableArray<IFormElement>;
     content?: IRenderable;
     context?: any;
+    isDesignMode: boolean;
 }
 
 export class PlaceHolder implements IFormElement {
     constructor(public parent: IFormElement) {
 
+    }
+    get isDesignMode() {
+        return true;
     }
     render(htmlElement: HTMLElement) {
         htmlElement.innerHTML = "Drop items here";
@@ -27,9 +31,21 @@ export class PlaceHolder implements IFormElement {
 
 export class FormElement implements IFormElement {
     private _context:any = undefined;
+    private _isDesignMode = ko.observable(false);
 
     constructor(public parent: IFormElement) {
     }
+
+    set isDesignMode(value: boolean) {
+        this._isDesignMode(value);
+    }
+    get isDesignMode() {
+        if(!!this.parent) {
+            return this.parent.isDesignMode;
+        }
+        return this._isDesignMode();
+    }
+
     set context(context: any) {
         this._context = context;
     }

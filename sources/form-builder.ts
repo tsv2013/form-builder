@@ -68,6 +68,15 @@ export class FormBuilder {
     set jsonText(json: string) {
         this._layout(JSON.parse(json || FormBuilder.defaultText));
     }
+    set isDesignMode(value: boolean) {
+        this.root.isDesignMode = value;
+    }
+    get isDesignMode() {
+        return this.root.isDesignMode;
+    }
+    toggleDesignMode(builder: FormBuilder) {
+        builder.isDesignMode = !builder.isDesignMode;
+    }
 }
 
 ko.components.register("form-builder", {
