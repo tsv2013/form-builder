@@ -36,10 +36,12 @@ export class FormElement implements IFormElement {
     get context() {
         if(!this._context && this.parent) {
             this._context = this.parent.context;
-            let dataPath = this.content["data"];
-            if(!!dataPath) {
-                // TODO: support complex path
-                this._context = this.parent.context[dataPath];
+            if(this.isContainer) {
+                let dataPath = this.content["data"];
+                if(!!dataPath) {
+                    // TODO: support complex path
+                    this._context = this.parent.context[dataPath];
+                }
             }
         }
         return this._context;
