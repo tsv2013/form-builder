@@ -17,10 +17,10 @@ export class PlaceHolder implements IFormElement {
 
     }
     get isDesignMode() {
-        return true;
+        return this.parent.isDesignMode;
     }
     render(htmlElement: HTMLElement) {
-        htmlElement.innerHTML = "Drop items here";
+        htmlElement.innerHTML = "<span data-bind='if: formElement.isDesignMode'>Drop items here</span>";
     }
     addElement(json: any, location: string = "bottom") {
         this.parent.addElement(json, location);
