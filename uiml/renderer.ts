@@ -107,28 +107,6 @@ export class ComponentRenderer extends InterfaceRenderer {
     }
 }
 
-ko.bindingHandlers["lazyWidget"] = {
-    init: function(element: HTMLElement, valueAccessor, allBindings, viewModel, bindingContext) {
-        let options = ko.unwrap(valueAccessor());
-        let widgetName = options.name;
-        let loader = htmlUiRendererPeers[0].wloaders[widgetName];
-        loader().then(module => {
-            var html = "";
-            if(ko.components.isRegistered(widgetName)) {
-                html = "<" + widgetName + " params='{ model: $data, context: $context, options: " + JSON.stringify(options.options) + "}'/>";
-            } else {
-                html = "<component-stub params=\"{ message: 'Error: Component " + widgetName + " is not installed.'}\"/>";
-            }
-            element.innerHTML = html;
-            ko.applyBindingsToDescendants(bindingContext, element); 
-        });
-        element.innerHTML = "Widget is loading. Please wait...";
-        return { controlsDescendantBindings: true };
-    },
-    update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-    }
-};
-
 ko.components.register("component-stub", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
