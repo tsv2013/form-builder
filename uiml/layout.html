@@ -1,0 +1,6 @@
+﻿<!-- ko foreach: elements -->
+<layout-item params="element: $data" data-bind="style: {  }"></layout-item>
+<!-- /ko -->
+<!-- ko if: elements().length === 0 -->
+<placeholder-item params="element: formElement"></placeholder-item>
+<!-- /ko -->

@@ -27,10 +27,13 @@ test("data context", () => {
     expect(element.context.a).toBe(1);
     expect(element.context.data).toBeDefined();
     expect(element.context.b).toBeUndefined();
-    expect(element.elements()[0].context.a).toBeUndefined();
-    expect(element.elements()[0].context.data).toBeUndefined();
-    expect(element.elements()[0].context.b).toBe(2);
-    var leafElement = element.elements()[0].elements()[0];
+    expect(element.elements()[0].context.a).toBe(1);
+    expect(element.elements()[0].context.data).toBeDefined();
+    expect(element.elements()[0].context.b).toBeUndefined();
+    expect(element.elements()[0].elements()[0].context.a).toBeUndefined();
+    expect(element.elements()[0].elements()[0].context.data).toBeUndefined();
+    expect(element.elements()[0].elements()[0].context.b).toBe(2);
+    var leafElement = element.elements()[0].elements()[0].elements()[0];
     expect(leafElement.context.a).toBeUndefined();
     expect(leafElement.context.data).toBeUndefined();
     expect(leafElement.context.b).toBe(2);

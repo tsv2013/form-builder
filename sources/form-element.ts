@@ -27,6 +27,7 @@ export class PlaceHolder implements IFormElement {
     }
     remove() {}
     isContainer = false;
+    hasInnerLayout = false;
 }
 
 export class FormElement implements IFormElement {
@@ -39,6 +40,7 @@ export class FormElement implements IFormElement {
     elements = ko.observableArray<IFormElement>();
 
     get isContainer() { return this.content.isContainer; }
+    get hasInnerLayout() { return this.content.hasInnerLayout; }
 
     set isDesignMode(value: boolean) {
         this._isDesignMode(value);
@@ -67,7 +69,7 @@ export class FormElement implements IFormElement {
         return this._context;
     }
     render(htmlElement: HTMLElement) {
-        if(this.isContainer || this.elements().length === 0) {
+        if(this.content.hasInnerLayout || this.isContainer || this.elements().length === 0) {
             this.content.render(htmlElement);
         }
         else {

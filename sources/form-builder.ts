@@ -50,6 +50,17 @@ export class FormBuilder {
                 ]
             }
         });
+        this.toolbox.push({
+            title: "panel",
+            hint: "Drag to add panel",
+            json: {
+                partclass: "panel",
+                cssClasses: "panel",
+                parts: [
+                    
+                ]
+            }
+        });
         toolboxItems.forEach(item => this.toolbox.push(item));
     }
     toolbox = ko.observableArray();

@@ -27,11 +27,13 @@ test("render legacy layout - panel", () => {
     var elements = [];
     UimlLayoutSerializer.createElements(elements, [json], null);
     var element = elements[0];
-    expect(element.content.partclass).toBe("layoutRow");
+    expect(element.content.partclass).toBe("panel");
     expect(element.elements().length).toBe(1);
-    expect(element.elements()[0].content.partclass).toBe("layoutRow");
+    expect(element.elements()[0].content.partclass).toBe("layout");
     expect(element.elements()[0].elements().length).toBe(1);
-    var leafElement = element.elements()[0].elements()[0];
+    expect(element.elements()[0].elements()[0].content.partclass).toBe("layoutRow");
+    expect(element.elements()[0].elements()[0].elements().length).toBe(1);
+    var leafElement = element.elements()[0].elements()[0].elements()[0];
     expect(leafElement.content.partclass).toBe("child");
     expect(leafElement.isContainer).toBeFalsy();
 

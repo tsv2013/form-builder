@@ -3,17 +3,18 @@ import "./uiml-parts.scss";
 export interface IRenderable {
     render(htmlElement: HTMLElement);
     isContainer: boolean;
+    hasInnerLayout: boolean;
 }
 
 export class UimlPart implements IRenderable {
-    public static layoutParts = ["layout", "layoutRow", "layoutColumn"];
+    public static containerParts = ["layout", "layoutRow", "layoutColumn"];
+    public static layoutHolderParts = ["panel"];
     public static layoutConvertableParts = {
         "view": "layout",
         "form": "layout",
         "koWith": "layoutRow",
         "container": "layoutRow",
-        "accordion": "layoutRow", // TODO: implement layout component
-        "panel": "layoutRow", // TODO: implement layout component
+        "accordion": "layoutRow", // TODO: implement accordion/layout component
         "div": "container",
         "formGroup": "layoutItem"
     };
@@ -40,8 +41,11 @@ export class UimlPart implements IRenderable {
         }
     }
     cssclass = "";
+    get hasInnerLayout() {
+        return UimlPart.layoutHolderParts.indexOf(this.partclass) !== -1;
+    }
     get isContainer() {
-        return UimlPart.layoutParts.indexOf(this.partclass) !== -1;
+        return UimlPart.containerParts.indexOf(this.partclass) !== -1;
     }
     get partclass() {
         return UimlPart.layoutConvertableParts[this._partclass] || this._partclass;
@@ -51,6 +55,10 @@ export class UimlPart implements IRenderable {
     }
     get data() {
         return this._part.data;
+    }
+    setParts(parts: any[]) {
+        this._part.parts = parts;
+        this._partToUse.parts = parts;
     }
 }
 

@@ -1,0 +1,15 @@
+﻿<div class='panel' data-bind="visible: !$data.visible || $data.visible(), css: cssClasses">
+    <div class='panel__header' data-bind="click: function () { collapsed(!collapsed()); ready(true); }, css: { 'collapsed': collapsed }">
+        <!-- ko if: !!$data.visible -->
+        <span class='panel__header-close-icon' data-bind="click: function () { visible(false); }">&#10060;</span>
+        <!-- /ko -->
+        <div class="panel__header-group">
+            <span class='panel__header-caption' data-bind="text: text || 'Panel title'"></span>
+            <span class='panel__header-collapser' data-bind="text: (collapsed() ? '&#709;' : '&#708;')"></span>
+        </div>
+    </div>
+    <div class='panel__body' data-bind="css: { 'panel__body--hidden': collapsed }">
+        <div class="panel__content" data-bind="visible: !collapsed(), with: $parent">
+        </div>
+    </div>
+</div>

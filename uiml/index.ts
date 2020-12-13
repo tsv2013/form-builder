@@ -3,6 +3,8 @@ import { UIMLWrapper } from "./uiml-wrapper";
 
 export * from "./uiml";
 export * from "./renderer";
+export * from "./panel";
+export * from "./layout";
 
 declare var config: IUML;
 

@@ -1,0 +1,20 @@
+panel {
+  display: block;
+  position: relative;
+}
+
+.panel__header {
+  padding: 5px 0;
+  border-bottom: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.panel__body:not(.panel__body--hidden) {
+  padding-top: 10px;
+  border-left: 1px solid lightgray;
+}
+
+.panel__header-collapser {
+  float: right;
+  line-height: 21px;  
+}

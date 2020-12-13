@@ -10,7 +10,16 @@ export class UimlLayoutSerializer {
     static createElement(element: any, parent: IFormElement): IFormElement {
         var part = UimlPartsRepository.create(element.partclass, element);
         var formElement = new FormElement(part, parent);
-        UimlLayoutSerializer.createElements(formElement.elements, element.parts, formElement);
+        if(part.hasInnerLayout) {
+            var groupElement = { partclass: "layout", cssClasses: "group", parts: element.parts };
+            part.setParts([groupElement]);
+            var groupPart = UimlPartsRepository.create("layout", groupElement);
+            var groupFormElement = new FormElement(groupPart, formElement);
+            formElement.elements.push(groupFormElement);
+            UimlLayoutSerializer.createElements(groupFormElement.elements, groupElement.parts, groupFormElement);
+        } else {
+            UimlLayoutSerializer.createElements(formElement.elements, element.parts, formElement);
+        }
         return formElement;
     }
     static createElements(collection: KnockoutObservableArray<IFormElement> | Array<IFormElement>, parts: any[] = [], parent: IFormElement) {

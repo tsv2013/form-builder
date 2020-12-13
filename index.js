@@ -29,6 +29,29 @@ var layoutJson = ko.observable({
 //     ]
 //   });
 
+layoutJson({
+    "partclass": "layoutRow",
+    "cssClasses": "row test-form",
+    "parts": [
+      {
+        "partclass": "panel",
+        "text": "Test panel",
+        "parts": [
+          {
+            "partclass": "label",
+            "cssClasses": "test-label",
+            "data": "Name"
+          },
+          {
+            "partclass": "input",
+            "cssClasses": "test-input",
+            "data": "name"
+          }
+        ]
+      }
+    ]
+  });
+
 var model = {
     name: ko.observable("Tom"),
     surname: ko.observable("Young"),
