@@ -3,14 +3,13 @@ import { UimlPartsRepository, UimlPart } from "./uiml-parts";
 
 export class UimlLayoutSerializer {
     static createRoot(): FormElement {
-        var formElement = new FormElement(null);
-        formElement.content = UimlPartsRepository.create("layout", { cssClasses: "root" });
+        var rootPart = UimlPartsRepository.create("layout", { cssClasses: "root" });
+        var formElement = new FormElement(rootPart, null);
         return formElement;
     }
     static createElement(element: any, parent: IFormElement): IFormElement {
         var part = UimlPartsRepository.create(element.partclass, element);
-        var formElement = new FormElement(parent);
-        formElement.content = part;
+        var formElement = new FormElement(part, parent);
         UimlLayoutSerializer.createElements(formElement.elements, element.parts, formElement);
         return formElement;
     }

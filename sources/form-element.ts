@@ -33,8 +33,12 @@ export class FormElement implements IFormElement {
     private _context:any = undefined;
     private _isDesignMode = ko.observable(false);
 
-    constructor(public parent: IFormElement) {
+    constructor(public content: IRenderable, public parent: IFormElement) {
     }
+
+    elements = ko.observableArray<IFormElement>();
+
+    get isContainer() { return this.content.isContainer; }
 
     set isDesignMode(value: boolean) {
         this._isDesignMode(value);
@@ -129,7 +133,4 @@ export class FormElement implements IFormElement {
             }
         }
     }
-    content: IRenderable = new PlaceHolder(this);
-    elements = ko.observableArray<IFormElement>();
-    get isContainer() { return this.content.isContainer; }
 }
