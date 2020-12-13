@@ -60,6 +60,7 @@ export class LayoutItem {
     }
     dragenter(model: LayoutItem, ev: DragEvent) {
         ev.preventDefault();
+        ev.cancelBubble = true;
     }
     dragover(model: LayoutItem, ev: DragEvent) {
         if(this.formElement.isDesignMode) {
@@ -68,12 +69,14 @@ export class LayoutItem {
             var hoverLocation = getLocation(originalEvent.offsetX, originalEvent.offsetY, (<any>ev.target).clientWidth, (<any>ev.target).clientHeight);
             model._dragPosition(hoverLocation);
             ev.preventDefault();
+            ev.cancelBubble = true;
         }
     }
     dragleave(model: LayoutItem, ev: DragEvent) {
         if(this.formElement.isDesignMode) {
             model._dragPosition("");
             ev.preventDefault();
+            ev.cancelBubble = true;
         }
     }
     drop(model: LayoutItem, ev: DragEvent) {
@@ -88,6 +91,7 @@ export class LayoutItem {
                 }
             }
             model._dragPosition("");
+            ev.cancelBubble = true;
         }
     }
     select(model: LayoutItem, ev: Event) {
