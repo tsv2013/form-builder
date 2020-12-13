@@ -102,7 +102,7 @@ export class FormElement implements IFormElement {
                 } else {
                     holder.elements.splice(holder.elements.indexOf(this) + (location === "right" ? 1 : 0), 0, newElement);
                 }
-            } else if(holder.content["partclass"] === "layoutColumn") {
+            } else if(holder.content["partclass"] === "layout" || holder.content["partclass"] === "layoutColumn") {
                 if(location === "left" || location === "right") {
                     var newRow = UimlLayoutSerializer.createElement({
                         partclass: "layoutRow",
