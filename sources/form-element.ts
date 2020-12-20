@@ -141,6 +141,13 @@ export class FormElement implements IFormElement {
                     var newElement = UimlLayoutSerializer.createElement(json, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "bottom" ? 1 : 0), 0, newElement);
                 }
+                if(this.content["partclass"] === "layout" && this.elements().length > 1) {
+                    const isHorizontalRoot = location === "left" || location === "right";
+                    var rootWrapper = UimlLayoutSerializer.createElement({ partclass: isHorizontalRoot ? "layoutRow" : "layoutColumn", cssClasses: isHorizontalRoot ? "row" : "column" }, this);
+                    this.elements().forEach(element => element.parent = rootWrapper);
+                    rootWrapper.elements(this.elements());
+                    this.elements([rootWrapper]);
+                }
             }
         }
     }
