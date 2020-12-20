@@ -29,7 +29,7 @@ test("render legacy layout - panel", () => {
     var element = elements[0];
     expect(element.content.partclass).toBe("panel");
     expect(element.elements().length).toBe(1);
-    expect(element.elements()[0].content.partclass).toBe("layout");
+    expect(element.elements()[0].content.partclass).toBe( "layout" );
     expect(element.elements()[0].elements().length).toBe(1);
     expect(element.elements()[0].elements()[0].content.partclass).toBe("layoutRow");
     expect(element.elements()[0].elements()[0].elements().length).toBe(1);
