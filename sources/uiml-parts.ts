@@ -25,7 +25,7 @@ export class UimlPart implements IRenderable {
     private _partToUse: any;
     constructor(private _partclass: string, ...params: any) {
         this.id = UimlPart.counter++;
-        this._part = params[0] || {};
+        this._part = Object.assign({}, params[0]);
         this._partToUse = Object.assign({}, this._part);
         this._partToUse.partclass = this.partclass;
         this.cssclass = this._part.cssClasses;

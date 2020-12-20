@@ -7,6 +7,7 @@ import "./form-builder.scss";
 var template = require("text-loader!./form-builder.html");
 
 export class FormBuilder {
+    private static defaultText = '{"partclass": "layoutRow","cssClasses": "row","parts": []}';
     constructor(private _layout: KnockoutObservable<any>, _context?: any, toolboxItems: Array<any> = []) {
         this.root.context = _context;
         ko.computed(() => {
@@ -69,7 +70,6 @@ export class FormBuilder {
         event.dataTransfer.setData("bf-item-json", JSON.stringify(model.json));
         return true;
     }
-    private static defaultText = '{"partclass": "layoutRow","cssClasses": "row","parts": []}';
     get jsonText() {
         if(this.root.elements().length > 0) {
             return JSON.stringify(UimlLayoutSerializer.serialize(this.root.elements()[0]), null, 2);
