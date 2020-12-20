@@ -10,7 +10,6 @@ body {
 .test-form {
     font-size: 14px;
     padding: 7px;
-    border: 1px dotted var(--main-color);
     box-sizing: border-box;
 }
 
