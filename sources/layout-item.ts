@@ -71,6 +71,7 @@ export class LayoutItem {
         if(this.formElement.isDesignMode) {
             ev.dataTransfer.setData("bf-item-json", JSON.stringify(UimlLayoutSerializer.serialize(model.formElement)));
             LayoutItem.draggedElement = model.formElement;
+            ev.cancelBubble = true;
             return true;
         }
     }
