@@ -116,12 +116,12 @@ export class LayoutItem {
         if(model.formElement.isDesignMode) {
             var data = ev.dataTransfer.getData("bf-item-json");
             if(!!data) {
-                const dropTargetElement = model._hoverItems[model._currentHoverIndex];
-                dropTargetElement.addElement(JSON.parse(data), dropTargetElement.dragPosition, model.formElement);
                 if(!!LayoutItem.draggedElement) {
                     LayoutItem.draggedElement.parent.elements.remove(LayoutItem.draggedElement);
                     LayoutItem.draggedElement = null;
                 }
+                const dropTargetElement = model._hoverItems[model._currentHoverIndex];
+                dropTargetElement.addElement(JSON.parse(data), dropTargetElement.dragPosition, model.formElement);
             }
             model.clearHoverIndicator();
             ev.preventDefault();
