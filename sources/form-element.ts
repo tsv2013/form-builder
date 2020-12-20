@@ -4,13 +4,42 @@ import { UimlLayoutSerializer } from "./uiml-layout-serializer";
 
 export interface IFormElement extends IRenderable {
     parent: IFormElement;
-    addElement(json: any, location: string): void;
+    addElement(json: any, location: string, hoveredElement?: IFormElement): void;
     remove(): void;
     elements?: KnockoutObservableArray<IFormElement>;
     content?: IRenderable;
     context?: any;
     isDesignMode: boolean;
     dragPosition?: string;
+}
+
+export function hasParentEdgeInDirection(element: IFormElement, direction: string) {
+    const parent = element && element.parent;
+    if(!parent || !parent.elements) {
+        return false;
+    }
+    const elements = ko.unwrap(parent.elements) || [];
+    const index = elements.indexOf(element);
+    if(parent.content["partclass"] === "layoutRow") {
+        if(direction === "top" || direction === "bottom") {
+            return true;
+        }
+        return index === 0 && direction === "left" || index === elements.length - 1 && direction === "right";
+    } else {
+        if(direction === "left" || direction === "right") {
+            return true;
+        }
+        return index === 0 && direction === "top" || index === elements.length - 1 && direction === "bottom";
+    }
+}
+
+export function fillDraggedOverInDirection(current: IFormElement, direction: string, elements: IFormElement[] = []) {
+    if(current && current.content["partclass"] !== "layout") {
+        elements.push(current);
+        if(hasParentEdgeInDirection(current, direction)) {
+            fillDraggedOverInDirection(current.parent, direction, elements);
+        }
+    }
 }
 
 export class PlaceHolder implements IFormElement {
@@ -85,54 +114,33 @@ export class FormElement implements IFormElement {
             this.elements().forEach(element => element.content.render(htmlElement));
         }
     }
-    addElement(json: any, location: string = "bottom") {
-        if((this.content["partclass"] === "layoutRow" && json.partclass === "layoutColumn") || (this.isContainer && json.partclass === "layoutItem")) {
-            this.elements.push(UimlLayoutSerializer.createElement(json, this));
+    addElement(json: any, location: string = "bottom", hoveredElement?: IFormElement) {
+        if(!this.isContainer || this === hoveredElement) {
+            this.parent.addElement(json, location, this);
         } else {
-            var holder =  this.parent;
-            var newElement = UimlLayoutSerializer.createElement(json, holder);
-            if(holder.content["partclass"] === "layoutRow") {
+            if(this.content["partclass"] === "layoutRow") {
                 if(location === "top" || location === "bottom") {
-                    var newRow = UimlLayoutSerializer.createElement({
-                        partclass: "layoutColumn",
-                        cssClasses: "column",
-                        parts: [ ]
-                    }, holder);
-                    holder.elements.splice(holder.elements.indexOf(this), 1, newRow);
-                    this.parent = newRow;
-                    newElement.parent = newRow;
-                    if(location === "bottom") {
-                        newRow.elements.push(this);
-                        newRow.elements.push(newElement);
-                    } else {
-                        newRow.elements.push(newElement);
-                        newRow.elements.push(this);
-                    }
+                    // var newColumn = UimlLayoutSerializer.createElement({ partclass: "layoutColumn", cssClasses: "column" }, this);
+                    // this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
+                    // hoveredElement.parent = newColumn;
+                    // newColumn.elements.push(hoveredElement);
+                    // newColumn.addElement(json, location, hoveredElement);
+                    this.parent.addElement(json, location, this);
                 } else {
-                    holder.elements.splice(holder.elements.indexOf(this) + (location === "right" ? 1 : 0), 0, newElement);
-                }
-            } else if(holder.content["partclass"] === "layout" || holder.content["partclass"] === "layoutColumn") {
-                if(location === "left" || location === "right") {
-                    var newRow = UimlLayoutSerializer.createElement({
-                        partclass: "layoutRow",
-                        cssClasses: "row",
-                        parts: [ ]
-                    }, holder);
-                    holder.elements.splice(holder.elements.indexOf(this), 1, newRow);
-                    this.parent = newRow;
-                    newElement.parent = newRow;
-                    if(location === "left") {
-                        newRow.elements.push(newElement);
-                        newRow.elements.push(this);
-                    } else {
-                        newRow.elements.push(this);
-                        newRow.elements.push(newElement);
-                    }
-                } else {
-                    holder.elements.splice(holder.elements.indexOf(this) + (location === "bottom" ? 1 : 0), 0, newElement);
+                    var newElement = UimlLayoutSerializer.createElement(json, this);
+                    this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "right" ? 1 : 0), 0, newElement);
                 }
             } else {
-                throw new Error("Invalid layout configuration.");
+                if(location === "left" || location === "right") {
+                    var newRow = UimlLayoutSerializer.createElement({ partclass: "layoutRow", cssClasses: "row" }, this);
+                    this.elements.splice(this.elements().indexOf(hoveredElement), 1, newRow);
+                    hoveredElement.parent = newRow;
+                    newRow.elements.push(hoveredElement);
+                    newRow.addElement(json, location, hoveredElement);
+                } else {
+                    var newElement = UimlLayoutSerializer.createElement(json, this);
+                    this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "bottom" ? 1 : 0), 0, newElement);
+                }
             }
         }
     }

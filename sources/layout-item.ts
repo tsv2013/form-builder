@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 
-import { IFormElement } from "./form-element";
+import { fillDraggedOverInDirection, IFormElement } from "./form-element";
 import { UimlLayoutSerializer } from "./uiml-layout-serializer";
 import { UimlPart } from "./uiml-parts";
 
@@ -27,8 +27,25 @@ function getLocation(x: number, y: number, width: number, height: number) {
 }
 export class LayoutItem {
     private static draggedElement: IFormElement = null;
+    private static draggedOverElement: IFormElement = null;
+    private static draggedOverPosition: string = null;
     private static selectedElement = ko.observable<LayoutItem>();
     private _isSelected = ko.observable<boolean>(false);
+    private _hoverItems: IFormElement[] = [];
+    private _currentHoverIndex = 0;
+    private _hoverIndicatorTimer = undefined;
+
+    private clearHoverIndicator() {
+        LayoutItem.draggedOverElement = null;
+        LayoutItem.draggedOverPosition = null;
+        if(this._hoverIndicatorTimer) {
+            clearTimeout(this._hoverIndicatorTimer);
+            this._hoverIndicatorTimer = undefined;
+        }
+        if(Array.isArray(this._hoverItems)) {
+            this._hoverItems.forEach(item => item.dragPosition = "");
+        }
+    }
 
     constructor(private formElement: IFormElement) {
         this.isSelected = ko.computed(() => this.formElement.isDesignMode && this._isSelected());
@@ -66,30 +83,47 @@ export class LayoutItem {
             var originalEvent = <DragEvent>(ev || (<any>ev).originalEvent),
             targetItem = ko.dataFor(<any>originalEvent.target);
             var hoverLocation = getLocation(originalEvent.offsetX, originalEvent.offsetY, (<any>ev.target).clientWidth, (<any>ev.target).clientHeight);
-            model.formElement.dragPosition = hoverLocation;
+            
+            if(LayoutItem.draggedOverElement !== model.formElement || LayoutItem.draggedOverPosition !== hoverLocation) {
+                model.clearHoverIndicator();
+                LayoutItem.draggedOverElement = model.formElement;
+                LayoutItem.draggedOverPosition = hoverLocation;
+                model._hoverItems = [];
+                fillDraggedOverInDirection(model.formElement, hoverLocation, model._hoverItems);
+                model._currentHoverIndex = model._hoverItems.length - 1;
+                const hoverIndicatorUpdater = () => {
+                    model._hoverItems[model._currentHoverIndex].dragPosition = "";
+                    model._currentHoverIndex = (model._currentHoverIndex + 1) % model._hoverItems.length;
+                    model._hoverItems[model._currentHoverIndex].dragPosition = hoverLocation;
+                    model._hoverIndicatorTimer = setTimeout(hoverIndicatorUpdater, 1000);
+                }
+                hoverIndicatorUpdater();
+            }
+
             ev.preventDefault();
             ev.cancelBubble = true;
         }
     }
     dragleave(model: LayoutItem, ev: DragEvent) {
         if(model.formElement.isDesignMode) {
-            model.formElement.dragPosition = "";
+            model.clearHoverIndicator();
             ev.preventDefault();
             ev.cancelBubble = true;
         }
     }
     drop(model: LayoutItem, ev: DragEvent) {
         if(model.formElement.isDesignMode) {
-            ev.preventDefault();
             var data = ev.dataTransfer.getData("bf-item-json");
             if(!!data) {
-                model.formElement.addElement(JSON.parse(data), model.formElement.dragPosition);
+                const dropTargetElement = model._hoverItems[model._currentHoverIndex];
+                dropTargetElement.addElement(JSON.parse(data), dropTargetElement.dragPosition, model.formElement);
                 if(!!LayoutItem.draggedElement) {
                     LayoutItem.draggedElement.parent.elements.remove(LayoutItem.draggedElement);
                     LayoutItem.draggedElement = null;
                 }
             }
-            model.formElement.dragPosition = "";
+            model.clearHoverIndicator();
+            ev.preventDefault();
             ev.cancelBubble = true;
         }
     }
