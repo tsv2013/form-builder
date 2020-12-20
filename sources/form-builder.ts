@@ -67,7 +67,8 @@ export class FormBuilder {
     toolbox = ko.observableArray();
     root: FormElement = UimlLayoutSerializer.createRoot();
     dragstart(model, event) {
-        event.dataTransfer.setData("bf-item-json", JSON.stringify(model.json));
+        var originalEvent = <DragEvent>((<any>event).originalEvent || event);
+        originalEvent.dataTransfer.setData("bf-item-json", JSON.stringify(model.json));
         return true;
     }
     get jsonText() {

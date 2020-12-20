@@ -69,7 +69,8 @@ export class LayoutItem {
 
     dragstart(model: LayoutItem, ev: DragEvent) {
         if(this.formElement.isDesignMode) {
-            ev.dataTransfer.setData("bf-item-json", JSON.stringify(UimlLayoutSerializer.serialize(model.formElement)));
+            var originalEvent = <DragEvent>((<any>ev).originalEvent || ev);
+            originalEvent.dataTransfer.setData("bf-item-json", JSON.stringify(UimlLayoutSerializer.serialize(model.formElement)));
             LayoutItem.draggedElement = model.formElement;
             ev.cancelBubble = true;
             return true;
@@ -81,7 +82,7 @@ export class LayoutItem {
     }
     dragover(model: LayoutItem, ev: DragEvent) {
         if(model.formElement.isDesignMode) {
-            var originalEvent = <DragEvent>(ev || (<any>ev).originalEvent),
+            var originalEvent = <DragEvent>((<any>ev).originalEvent || ev),
             targetItem = ko.dataFor(<any>originalEvent.target);
             var hoverLocation = getLocation(originalEvent.offsetX, originalEvent.offsetY, (<any>ev.target).clientWidth, (<any>ev.target).clientHeight);
             
@@ -114,7 +115,8 @@ export class LayoutItem {
     }
     drop(model: LayoutItem, ev: DragEvent) {
         if(model.formElement.isDesignMode) {
-            var data = ev.dataTransfer.getData("bf-item-json");
+            var originalEvent = <DragEvent>((<any>ev).originalEvent || ev);
+            var data = originalEvent.dataTransfer.getData("bf-item-json");
             if(!!data) {
                 if(!!LayoutItem.draggedElement) {
                     LayoutItem.draggedElement.parent.elements.remove(LayoutItem.draggedElement);
