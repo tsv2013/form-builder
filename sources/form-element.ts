@@ -10,6 +10,7 @@ export interface IFormElement extends IRenderable {
     content?: IRenderable;
     context?: any;
     isDesignMode: boolean;
+    dragPosition?: string;
 }
 
 export class PlaceHolder implements IFormElement {
@@ -33,6 +34,7 @@ export class PlaceHolder implements IFormElement {
 export class FormElement implements IFormElement {
     private _context:any = undefined;
     private _isDesignMode = ko.observable(false);
+    private _dragPosition = ko.observable<string>("");
 
     constructor(public content: IRenderable, public parent: IFormElement) {
     }
@@ -41,6 +43,13 @@ export class FormElement implements IFormElement {
 
     get isContainer() { return this.content.isContainer; }
     get hasInnerLayout() { return this.content.hasInnerLayout; }
+
+    get dragPosition() {
+        return this._dragPosition();
+    }
+    set dragPosition(value: string) {
+        this._dragPosition(value);
+    }
 
     set isDesignMode(value: boolean) {
         this._isDesignMode(value);

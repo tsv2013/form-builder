@@ -28,7 +28,6 @@ function getLocation(x: number, y: number, width: number, height: number) {
 export class LayoutItem {
     private static draggedElement: IFormElement = null;
     private static selectedElement = ko.observable<LayoutItem>();
-    private _dragPosition = ko.observable<string>("");
     private _isSelected = ko.observable<boolean>(false);
 
     constructor(private formElement: IFormElement) {
@@ -43,8 +42,8 @@ export class LayoutItem {
             if(this.isSelected()) {
                 result += " " + "bf-item--selected";
             }
-            if(this._dragPosition()) {
-                result += " " + "bf-item--drag-over-" + this._dragPosition();
+            if(this.formElement.dragPosition) {
+                result += " " + "bf-item--drag-over-" + this.formElement.dragPosition;
             }
         }
         return result;
@@ -63,34 +62,34 @@ export class LayoutItem {
         ev.cancelBubble = true;
     }
     dragover(model: LayoutItem, ev: DragEvent) {
-        if(this.formElement.isDesignMode) {
+        if(model.formElement.isDesignMode) {
             var originalEvent = <DragEvent>(ev || (<any>ev).originalEvent),
             targetItem = ko.dataFor(<any>originalEvent.target);
             var hoverLocation = getLocation(originalEvent.offsetX, originalEvent.offsetY, (<any>ev.target).clientWidth, (<any>ev.target).clientHeight);
-            model._dragPosition(hoverLocation);
+            model.formElement.dragPosition = hoverLocation;
             ev.preventDefault();
             ev.cancelBubble = true;
         }
     }
     dragleave(model: LayoutItem, ev: DragEvent) {
-        if(this.formElement.isDesignMode) {
-            model._dragPosition("");
+        if(model.formElement.isDesignMode) {
+            model.formElement.dragPosition = "";
             ev.preventDefault();
             ev.cancelBubble = true;
         }
     }
     drop(model: LayoutItem, ev: DragEvent) {
-        if(this.formElement.isDesignMode) {
+        if(model.formElement.isDesignMode) {
             ev.preventDefault();
             var data = ev.dataTransfer.getData("bf-item-json");
             if(!!data) {
-                this.formElement.addElement(JSON.parse(data), model._dragPosition());
+                model.formElement.addElement(JSON.parse(data), model.formElement.dragPosition);
                 if(!!LayoutItem.draggedElement) {
                     LayoutItem.draggedElement.parent.elements.remove(LayoutItem.draggedElement);
                     LayoutItem.draggedElement = null;
                 }
             }
-            model._dragPosition("");
+            model.formElement.dragPosition = "";
             ev.cancelBubble = true;
         }
     }
