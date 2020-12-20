@@ -34,7 +34,7 @@ export function hasParentEdgeInDirection(element: IFormElement, direction: strin
 }
 
 export function fillDraggedOverInDirection(current: IFormElement, direction: string, elements: IFormElement[] = []) {
-    if(current && current.content["partclass"] !== "layout") {
+    if(current && (!current.content || current.content["partclass"] !== "layout")) {
         elements.push(current);
         if(hasParentEdgeInDirection(current, direction)) {
             fillDraggedOverInDirection(current.parent, direction, elements);
