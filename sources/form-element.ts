@@ -120,12 +120,12 @@ export class FormElement implements IFormElement {
         } else {
             if(this.content["partclass"] === "layoutRow") {
                 if(location === "top" || location === "bottom") {
-                    // var newColumn = UimlLayoutSerializer.createElement({ partclass: "layoutColumn", cssClasses: "column" }, this);
-                    // this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
-                    // hoveredElement.parent = newColumn;
-                    // newColumn.elements.push(hoveredElement);
-                    // newColumn.addElement(json, location, hoveredElement);
-                    this.parent.addElement(json, location, this);
+                    var newColumn = UimlLayoutSerializer.createElement({ partclass: "layoutColumn", cssClasses: "column" }, this);
+                    this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
+                    hoveredElement.parent = newColumn;
+                    newColumn.elements.push(hoveredElement);
+                    newColumn.addElement(json, location, hoveredElement);
+                    // this.parent.addElement(json, location, this);
                 } else {
                     var newElement = UimlLayoutSerializer.createElement(json, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "right" ? 1 : 0), 0, newElement);
