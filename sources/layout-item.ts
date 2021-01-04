@@ -137,6 +137,10 @@ export class LayoutItem {
             }
             model._isSelected(true);
             LayoutItem.selectedElement(model);
+            var originalEvent = ((<any>ev).originalEvent || ev);
+            originalEvent.preventDefault();
+            originalEvent.cancelBubble = true;
+            return true;
         }
     }
 }
