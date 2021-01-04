@@ -123,7 +123,7 @@ export class LayoutItem {
                     LayoutItem.draggedElement = null;
                 }
                 const dropTargetElement = model._hoverItems[model._currentHoverIndex];
-                dropTargetElement.addElement(JSON.parse(data), dropTargetElement.dragPosition, model.formElement);
+                dropTargetElement.addElement(JSON.parse(data), dropTargetElement.dragPosition, dropTargetElement);
             }
             model.clearHoverIndicator();
             ev.preventDefault();

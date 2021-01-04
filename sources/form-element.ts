@@ -118,7 +118,15 @@ export class FormElement implements IFormElement {
         if(!this.isContainer || this === hoveredElement) {
             this.parent.addElement(json, location, this);
         } else {
-            if(this.content["partclass"] === "layoutRow") {
+            if(this.content["partclass"] === "layout") {
+                const isHorizontalRoot = location === "left" || location === "right";
+                var rootWrapper = UimlLayoutSerializer.createElement({ partclass: isHorizontalRoot ? "layoutRow" : "layoutColumn", cssClasses: isHorizontalRoot ? "row" : "column" }, this);
+                this.elements().forEach(element => element.parent = rootWrapper);
+                rootWrapper.elements(this.elements());
+                this.elements([rootWrapper]);
+                rootWrapper.addElement(json, location);
+            }
+            else if(this.content["partclass"] === "layoutRow") {
                 if(location === "top" || location === "bottom") {
                     var newColumn = UimlLayoutSerializer.createElement({ partclass: "layoutColumn", cssClasses: "column" }, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
@@ -140,13 +148,6 @@ export class FormElement implements IFormElement {
                 } else {
                     var newElement = UimlLayoutSerializer.createElement(json, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "bottom" ? 1 : 0), 0, newElement);
-                }
-                if(this.content["partclass"] === "layout" && this.elements().length > 1) {
-                    const isHorizontalRoot = location === "left" || location === "right";
-                    var rootWrapper = UimlLayoutSerializer.createElement({ partclass: isHorizontalRoot ? "layoutRow" : "layoutColumn", cssClasses: isHorizontalRoot ? "row" : "column" }, this);
-                    this.elements().forEach(element => element.parent = rootWrapper);
-                    rootWrapper.elements(this.elements());
-                    this.elements([rootWrapper]);
                 }
             }
         }
