@@ -5,13 +5,13 @@ panel {
 
 .panel__header {
   padding: 5px 0;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid var(--inactive-color);
   cursor: pointer;
 }
 
 .panel__body:not(.panel__body--hidden) {
   padding-top: 10px;
-  border-left: 1px solid lightgray;
+  border-left: 1px solid var(--inactive-color);
 }
 
 .panel__header-collapser {
