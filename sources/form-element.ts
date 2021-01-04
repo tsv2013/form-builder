@@ -127,7 +127,7 @@ export class FormElement implements IFormElement {
                 rootWrapper.addElement(json, location);
             }
             else if(this.content["partclass"] === "layoutRow") {
-                if(location === "top" || location === "bottom") {
+                if(!!hoveredElement && (location === "top" || location === "bottom")) {
                     var newColumn = UimlLayoutSerializer.createElement({ partclass: "layoutColumn", cssClasses: "column" }, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
                     hoveredElement.parent = newColumn;
@@ -139,7 +139,7 @@ export class FormElement implements IFormElement {
                     this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "right" ? 1 : 0), 0, newElement);
                 }
             } else {
-                if(location === "left" || location === "right") {
+                if(!!hoveredElement && (location === "left" || location === "right")) {
                     var newRow = UimlLayoutSerializer.createElement({ partclass: "layoutRow", cssClasses: "row" }, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement), 1, newRow);
                     hoveredElement.parent = newRow;
