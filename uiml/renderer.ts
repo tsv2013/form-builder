@@ -152,7 +152,7 @@ export class InputRenderer extends InterfaceRenderer {
     }
     getRenderResult() {
         if(!!this.getProperty("readonly"))
-            return template("<label data-bind=\"text: $data." + this.getProperty("data") + "\">");
+            return template("<span data-bind=\"text: $data." + this.getProperty("data") + "\">");
         else {
             return template("<input class=\"form-control\" placeholder=\"" + (this.getProperty("pleceholderText")||"") + "\""
                 + " data-bind=\"value: $data." + this.getProperty("data") + ", valueUpdate: 'keyup'\""

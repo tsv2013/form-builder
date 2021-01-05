@@ -1,17 +1,22 @@
 panel {
   display: block;
   position: relative;
+  min-width: 300px;
 }
 
 .panel__header {
-  padding: 5px 0;
-  border-bottom: 1px solid lightgray;
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--inactive-color);
   cursor: pointer;
+}
+
+.panel__header:not(.panel__header--collapsed) {
+  border-bottom-color: var(--main-color);
 }
 
 .panel__body:not(.panel__body--hidden) {
   padding-top: 10px;
-  border-left: 1px solid lightgray;
+  border-left: 1px solid var(--inactive-color);
 }
 
 .panel__header-collapser {

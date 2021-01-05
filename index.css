@@ -1,14 +1,16 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 :root {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+
     --main-color: royalblue;
     --inactive-color: lightgray;
 }
 
 .test-form {
-    font-size: 14px;
     padding: 7px;
     box-sizing: border-box;
 }
@@ -23,17 +25,22 @@ body {
 
 .test-label {
     display: inline-block;
+    width: 100%;
     min-width: 100px;
+    margin: 0;
     padding: 2px;
 }
 
 .test-input {
     display: inline-block;
+    width: 100%;
     min-width: 100px;
+    margin: 0;
     padding: 2px;
     border: none;
     outline: none;    
     border-bottom: 1px dotted var(--inactive-color);
+    font-size: 1rem;
 }
 .test-input:focus {
     border-bottom-style: solid;

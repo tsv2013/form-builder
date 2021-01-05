@@ -1,5 +1,6 @@
 ﻿<div class='panel' data-bind="visible: !$data.visible || $data.visible(), css: cssClasses">
-    <div class='panel__header' data-bind="click: function () { collapsed(!collapsed()); ready(true); }, css: { 'collapsed': collapsed }">
+    <div class='panel__header'
+        data-bind="click: function () { collapsed(!collapsed()); ready(true); }, css: { 'panel__header--collapsed': collapsed }">
         <!-- ko if: !!$data.visible -->
         <span class='panel__header-close-icon' data-bind="click: function () { visible(false); }">&#10060;</span>
         <!-- /ko -->
