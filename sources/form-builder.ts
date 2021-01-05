@@ -18,50 +18,6 @@ export class FormBuilder {
             }
             UimlLayoutSerializer.createElements(this.root.elements, layoutValue, this.root);
         });
-        this.toolbox.push({
-            title: "row",
-            hint: "Drag to add row",
-            json: {
-                partclass: "layoutRow",
-                cssClasses: "row",
-                parts: [
-                    
-                ]
-            }
-        });
-        this.toolbox.push({
-            title: "column",
-            hint: "Drag to add column",
-            json: {
-                partclass: "layoutColumn",
-                cssClasses: "column",
-                parts: [
-                    
-                ]
-            }
-        });
-        this.toolbox.push({
-            title: "item",
-            hint: "Drag to add item",
-            json: {
-                partclass: "layoutItem",
-                cssClasses: "item",
-                parts: [
-                    
-                ]
-            }
-        });
-        this.toolbox.push({
-            title: "panel",
-            hint: "Drag to add panel",
-            json: {
-                partclass: "panel",
-                cssClasses: "panel",
-                parts: [
-                    
-                ]
-            }
-        });
         toolboxItems.forEach(item => this.toolbox.push(item));
     }
     toolbox = ko.observableArray();

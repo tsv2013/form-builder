@@ -1,15 +1,13 @@
-<div>
-    <div class="bf-layout">
-        <layout-item params="element: root" data-bind="css: { 'bf-layout--design-mode': isDesignMode }"></layout-item>
-        <!-- <div class="bf-mode-button fa" data-bind="click: toggleDesignMode, text: isDesignMode ? 'View':'', css: { 'fa-cog': !isDesignMode } "> -->
-        <div class="bf-mode-button" data-bind="click: toggleDesignMode, text: isDesignMode ? 'View':'Design' ">
-        </div>
+<div class="bf-layout">
+    <layout-item params="element: root" data-bind="css: { 'bf-layout--design-mode': isDesignMode }"></layout-item>
+    <!-- <div class="bf-mode-button fa" data-bind="click: toggleDesignMode, text: isDesignMode ? 'View':'', css: { 'fa-cog': !isDesignMode } "> -->
+    <div class="bf-mode-button" data-bind="click: toggleDesignMode, text: isDesignMode ? 'View':'Design' ">
     </div>
-    <div class="bf-toolbox" data-bind="visible: isDesignMode, foreach: toolbox">
-        <div class="bf-toolbox__item" draggable="true" data-bind="text: title, event: { dragstart: $parent.dragstart }, attr: { title: hint }">
-        </div>
+</div>
+<div class="bf-toolbox" data-bind="visible: isDesignMode, foreach: toolbox">
+    <div class="bf-toolbox__item" draggable="true" data-bind="text: title, event: { dragstart: $parent.dragstart }, attr: { title: hint }">
     </div>
-    <div class="bf-layout-json" data-bind="visible: isDesignMode">
-        <textarea data-bind="value: jsonText"></textarea>
-    </div>
+</div>
+<div class="bf-layout-json" data-bind="visible: isDesignMode">
+    <textarea data-bind="value: jsonText"></textarea>
 </div>

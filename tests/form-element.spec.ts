@@ -38,3 +38,72 @@ test("data context", () => {
     expect(leafElement.context.data).toBeUndefined();
     expect(leafElement.context.b).toBe(2);
 });
+
+test("drop above a row", () => {
+    const json = {
+        "partclass": "layoutRow",
+        "cssClasses": "row",
+        "parts": [
+          {
+            "partclass": "label",
+            "cssClasses": "test-label",
+            "data": "Label text"
+          },
+          {
+            "partclass": "label",
+            "cssClasses": "test-label",
+            "data": "Label text"
+          }
+        ]
+      };
+    const inputJson = {
+        "partclass": "input",
+        "cssClasses": "test-input",
+        "data": "valName"
+      };
+    const root: FormElement = UimlLayoutSerializer.createRoot();
+    UimlLayoutSerializer.createElements(root.elements, [json], root);
+
+    const row = <FormElement>root.elements()[0];
+    expect(row.content["partclass"]).toBe("layoutRow");
+
+    row.addElement(inputJson, "top", row);
+    expect(root.elements().length).toBe(1);
+    expect(root.elements()[0].content["partclass"]).toBe("layoutColumn");
+    expect(root.elements()[0].elements().length).toBe(2);
+    expect(root.elements()[0].elements()[0].content["partclass"]).toBe("input");
+    expect(root.elements()[0].elements()[1].content["partclass"]).toBe("layoutRow");
+    expect(root.elements()[0].elements()[1].elements().length).toBe(2);
+    expect(root.elements()[0].elements()[1].elements()[0].content["partclass"]).toBe("label");
+    expect(root.elements()[0].elements()[1].elements()[1].content["partclass"]).toBe("label");
+});
+
+test("drop into a panel", () => {
+    const json = {
+        "partclass": "layoutRow",
+        "cssClasses": "row",
+        "parts": [
+          {
+            "partclass": "panel",
+            "cssClasses": "panel",
+            "parts": []
+          }
+        ]
+    };
+    const inputJson = {
+        "partclass": "input",
+        "cssClasses": "test-input",
+        "data": "valName"
+      };
+    const root: FormElement = UimlLayoutSerializer.createRoot();
+    UimlLayoutSerializer.createElements(root.elements, [json], root);
+
+    const panelLayout = <FormElement>root.elements()[0].elements()[0].elements()[0];
+    expect(panelLayout.content["partclass"]).toBe("layout");
+
+    panelLayout.addElement(inputJson, "left");
+    expect(panelLayout.elements().length).toBe(1);
+    expect(panelLayout.elements()[0].content["partclass"]).toBe("layoutRow");
+    expect(panelLayout.elements()[0].elements().length).toBe(1);
+    expect(panelLayout.elements()[0].elements()[0].content["partclass"]).toBe("input");
+});

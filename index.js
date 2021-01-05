@@ -74,6 +74,50 @@ Uiml.refresh();
 FormBuilder.UimlPart.render = Uiml.render;
 var toolboxItems = [
     {
+        title: "row",
+        hint: "Drag to add row",
+        json: {
+            partclass: "layoutRow",
+            cssClasses: "row",
+            parts: [
+                
+            ]
+        }
+    },
+    {
+        title: "column",
+        hint: "Drag to add column",
+        json: {
+            partclass: "layoutColumn",
+            cssClasses: "column",
+            parts: [
+                
+            ]
+        }
+    },
+    {
+        title: "item",
+        hint: "Drag to add item",
+        json: {
+            partclass: "layoutItem",
+            cssClasses: "item",
+            parts: [
+                
+            ]
+        }
+    },
+    {
+        title: "panel",
+        hint: "Drag to add panel",
+        json: {
+            partclass: "panel",
+            cssClasses: "panel",
+            parts: [
+                
+            ]
+        }
+    },
+    {
         title: "label",
         hint: "Drag to add label",
         json: {
