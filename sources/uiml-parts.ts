@@ -12,9 +12,9 @@ export class UimlPart implements IRenderable {
     public static layoutConvertableParts = {
         "view": "layout",
         "form": "layout",
-        "koWith": "layoutRow",
-        "container": "layoutRow",
-        "accordion": "layoutRow", // TODO: implement accordion/layout component
+        "koWith": "layoutColumn",
+        "container": "layoutColumn",
+        "accordion": "layoutColumn", // TODO: implement accordion/layout component
         "div": "container",
         "formGroup": "layoutItem"
     };
