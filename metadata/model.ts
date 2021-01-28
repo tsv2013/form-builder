@@ -31,7 +31,7 @@ domain["label"] = {
     ]
 };
 
-domain["layoutColumn"] = {
+domain["input"] = {
     name: "input",
     properties: [
         { name: "cssClasses" }
