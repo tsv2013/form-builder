@@ -54,7 +54,7 @@ export class LayoutItem {
     get elements() { return this.formElement.elements; }
     get isContainer() { return this.formElement.isContainer; }
     get css() {
-        let result = this.formElement.content instanceof UimlPart ? this.formElement.content.cssclass : "";
+        let result = this.formElement.content instanceof UimlPart ? this.formElement.content["cssClasses"] : "";
         if(this.formElement.isDesignMode) {
             if(this.isSelected()) {
                 result += " " + "bf-item--selected";
@@ -148,7 +148,10 @@ export class LayoutItem {
 ko.components.register("layout-item", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            let formElement: IFormElement = params.element;
+            let formElement: IFormElement = params.element || UimlLayoutSerializer.createElement(params.uiml, null);
+            if(!!params.context) {
+                formElement.context = params.context;
+            }
             if(!formElement.isContainer) {
                 let itemElelemtContainer = (<HTMLElement>componentInfo.element).getElementsByClassName("bf-item-content-holder")[0];
                 formElement.render(<HTMLElement>itemElelemtContainer);

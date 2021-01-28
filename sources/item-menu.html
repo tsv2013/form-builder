@@ -1,6 +1,10 @@
-<div class="bf-item-menu">
-    <!-- ko foreach: menuItems -->
-    <div class="bf-item-menu__item" data-bind="text: title, click: action, clickBubble: false, visible: !$data.visible || $data.visible()"></div>
-    <!-- /ko -->
+<div class="bf-item-menu" data-bind="click: function() { return true; }, clickBubble: false">
+    <div>
+        <!-- ko foreach: menuItems -->
+        <div class="bf-item-menu__item"
+            data-bind="text: title, click: action, clickBubble: false, visible: !$data.visible || $data.visible()">
+        </div>
+        <!-- /ko -->
+        <object-editor params="context: content"></object-editor>
+    </div>
 </div>
-    

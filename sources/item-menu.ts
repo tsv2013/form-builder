@@ -21,6 +21,9 @@ export class ItemMenu {
     }
 
     menuItems = ko.observableArray<IMenuItem>();
+    get content() {
+        return this.formElement.content;
+    }
 }
 
 ko.components.register("item-menu", {

@@ -68,3 +68,4 @@ export * from "./form-element";
 export * from "./layout-item";
 export * from "./placeholder-item";
 export * from "./item-menu";
+export * from "./object";
