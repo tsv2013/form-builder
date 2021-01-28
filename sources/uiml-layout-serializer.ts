@@ -9,11 +9,11 @@ export class UimlLayoutSerializer {
         return formElement;
     }
     public static createElement(element: any, parent: IFormElement): IFormElement {
-        var part = UimlPartsRepository.create(element.partclass, element);
-        var formElement = new FormElement(part, parent);
-        if(part.hasInnerLayout) {
+        var uimlPart = UimlPartsRepository.create(element.partclass, element);
+        var formElement = new FormElement(uimlPart, parent);
+        if(uimlPart.hasInnerLayout) {
             var groupElement = { partclass: UimlLayoutSerializer.layoutPartClass, cssClasses: "group", parts: element.parts };
-            part.setParts([groupElement]);
+            uimlPart.parts = [groupElement];
             var groupPart = UimlPartsRepository.create(UimlLayoutSerializer.layoutPartClass, groupElement);
             var groupFormElement = new FormElement(groupPart, formElement);
             formElement.elements.push(groupFormElement);
