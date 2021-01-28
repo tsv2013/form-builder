@@ -1,9 +1,22 @@
+import * as ko from "knockout";
+
+import { getObjectDescription } from "../metadata/model";
+import { IObjectDescription, IPropertyDescription } from "../metadata/object";
+
 import "./uiml-parts.scss";
 
 export interface IRenderable {
     render(htmlElement: HTMLElement);
     isContainer: boolean;
     hasInnerLayout: boolean;
+}
+
+export function createProperty(target: Object, propertyDescription: IPropertyDescription, value: any) {
+    const observableValue = ko.observable(value); 
+    Object.defineProperty(target, propertyDescription.name, {
+        get: () => observableValue(),
+        set: val => observableValue(val)
+    });
 }
 
 export class UimlPart implements IRenderable {
@@ -22,25 +35,28 @@ export class UimlPart implements IRenderable {
     private static counter = 1;
     private id: number;
     private _part: any;
-    private _partToUse: any;
+    private _objectDescription: IObjectDescription;
     constructor(private _partclass: string, ...params: any) {
         this.id = UimlPart.counter++;
         this._part = Object.assign({}, params[0]);
-        this._partToUse = Object.assign({}, this._part);
-        this._partToUse.partclass = this.partclass;
-        this.cssclass = this._part.cssClasses;
+        this._objectDescription = getObjectDescription(_partclass);
+        if(this._objectDescription) {
+            this._objectDescription.properties.forEach(pd => {
+                createProperty(this, pd, this._part[pd.name]);
+            });
+        }
+        createProperty(this, { name: "data" }, this._part.data);
     }
     render(htmlElement: HTMLElement) {
         if(UimlPart.render) {
-            UimlPart.render(this._partToUse, htmlElement);
+            UimlPart.render(this, htmlElement);
         } else {
-            htmlElement.className += (" " + this.cssclass);
+            htmlElement.className += (" " + this["cssClasses"]);
             if(!this.isContainer) {
                 htmlElement.innerHTML = this.partclass + this.id;
             }
         }
     }
-    cssclass = "";
     get hasInnerLayout() {
         return UimlPart.layoutHolderParts.indexOf(this.partclass) !== -1;
     }
@@ -51,14 +67,20 @@ export class UimlPart implements IRenderable {
         return UimlPart.layoutConvertableParts[this._partclass] || this._partclass;
     }
     get part() {
-        return this._part;
+        var part = Object.assign({}, this._part);
+        part.data = this["data"];
+        if(this._objectDescription) {
+            this._objectDescription.properties.forEach(pd => {
+                part[pd.name] = this[pd.name];
+            });
+        }        
+        return part;
     }
-    get data() {
-        return this._part.data;
+    get parts() {
+        return this._part.parts;
     }
-    setParts(parts: any[]) {
+    set parts(parts: any[]) {
         this._part.parts = parts;
-        this._partToUse.parts = parts;
     }
 }
 
