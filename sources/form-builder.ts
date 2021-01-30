@@ -44,6 +44,8 @@ export class FormBuilder {
     }
     toggleDesignMode(builder: FormBuilder) {
         builder.isDesignMode = !builder.isDesignMode;
+        // TODO: re-think - how the whole layout will be updated, remove this crutch
+        this.jsonText = this.jsonText;
     }
 }
 

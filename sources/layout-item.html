@@ -9,9 +9,18 @@
 </div>
 <!-- /ko -->
 <!-- ko ifnot: isContainer -->
-<div class="bf-item-content" draggable="true" data-bind="event: { dragenter: dragenter, dragover: dragover, dragleave: dragleave, drop: drop, dragstart: dragstart }, click: select, css: css">
+<div class="bf-item-content" draggable="true"
+    data-bind="event: { dragenter: dragenter, dragover: dragover, dragleave: dragleave, drop: drop, dragstart: dragstart }, click: select, css: css">
+    <!-- ko ifnot: isDesignMode -->
     <div class="bf-item-content-holder" data-bind="with: formElement.context || $data">
     </div>
+    <!-- /ko -->
+    <!-- ko if: isDesignMode -->
+    <div class="bf-item-content-holder" data-bind="let: { $part: part }">
+        <!-- ko template: { name: "bf-item-part", afterRender: afterPartTemplateRender } -->
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
 </div>
 <!-- /ko -->
 <!-- ko if: isSelected -->

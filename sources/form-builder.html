@@ -5,9 +5,14 @@
     </div>
 </div>
 <div class="bf-toolbox" data-bind="visible: isDesignMode, foreach: toolbox">
-    <div class="bf-toolbox__item" draggable="true" data-bind="text: title, event: { dragstart: $parent.dragstart }, attr: { title: hint }">
+    <div class="bf-toolbox__item" draggable="true"
+        data-bind="text: title, event: { dragstart: $parent.dragstart }, attr: { title: hint }">
     </div>
 </div>
 <div class="bf-layout-json" data-bind="visible: isDesignMode">
     <textarea data-bind="value: jsonText"></textarea>
 </div>
+<script type="text/html" id="bf-item-part">
+    <div data-bind="with: formElement.context || $data">
+    </div>
+</script>

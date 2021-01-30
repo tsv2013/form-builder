@@ -143,6 +143,21 @@ export class LayoutItem {
             return true;
         }
     }
+    get isDesignMode() {
+        return this.formElement.isDesignMode;
+    }
+    get part() {
+        return this.formElement.content["part"];
+    }
+    afterPartTemplateRender = (elements: HTMLElement[]) => {
+        if(!this.isContainer) {
+            const holderElement = elements[1];
+            const dataContext = ko.contextFor(holderElement);
+            ko.cleanNode(holderElement);
+            this.formElement.render(holderElement);
+            ko.applyBindings(dataContext, holderElement);
+        }        
+    }
 }
 
 ko.components.register("layout-item", {
