@@ -82,6 +82,9 @@ export class UimlPart implements IRenderable {
     set parts(parts: any[]) {
         this._part.parts = parts;
     }
+    toJSON() {
+        return this.part;
+    }
 }
 
 export class UimlPartsRepository {

@@ -49,8 +49,7 @@ ko.components.register("panel", {
                 var renderResult = [];
                 var containerElement: HTMLElement = componentInfo.element.getElementsByClassName("panel__content")[0];
                 containerElement.innerHTML = "";
-                // TODO: remove this ...
-                (params.options.parts || params.context.$parent.formElement.content.parts || []).forEach(part => {
+                (params.options.parts || []).forEach(part => {
                     var partContent = render(part, containerElement);
                     containerElement.appendChild(partContent);
                     renderResult.push(partContent);
