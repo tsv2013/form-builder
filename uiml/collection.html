@@ -4,10 +4,16 @@
         <span data-bind="text: title"></span>
     </div>
     <div class="collection__content" data-bind="css: { 'collection__content--hidden': collapsed }">
-        <span class="bf-item-menu__button" data-bind="click: add">+ Add</span>
+        <div class="collection__item-menu">
+            <span class="bf-item-menu__button" data-bind="click: add">+ Add</span>
+        </div>
         <!-- ko foreach: items -->
-        <object-editor params="context: $data, type: $parent.elementType"></object-editor>
-        <div class="bf-item-menu__button" data-bind="click: function() { $parent.remove($data); }">- Remove</div>
+        <div class="collection__item">
+            <object-editor params="context: $data, type: $parent.elementType"></object-editor>
+            <div class="collection__item-menu">
+                <div class="bf-item-menu__button" data-bind="click: function() { $parent.remove($data); }">- Remove</div>
+            </div>
+        </div>
         <!-- /ko -->
     </div>
 </div>

@@ -11,3 +11,17 @@ collection-editor {
 .collection__content--hidden {
   display: none;
 }
+
+.collection__item {
+  padding: 7px 0;
+  // background-color: rgb(175, 175, 175);
+  border-left: 2px solid rgb(175, 175, 175);
+  border-right: 2px solid rgb(175, 175, 175);
+}
+.collection__item:not(:first-child) {
+  margin-top: 7px;
+}
+
+.collection__item-menu {
+  padding-top: 7px;
+}
