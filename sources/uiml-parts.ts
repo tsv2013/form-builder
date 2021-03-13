@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 
-import { getObjectDescription } from "../metadata/model";
+import { getObjectDescription, isArrayType } from "../metadata/model";
 import { IObjectDescription, IPropertyDescription } from "../metadata/object";
 
 import "./uiml-parts.scss";
@@ -42,7 +42,10 @@ export class UimlPart implements IRenderable {
         this._objectDescription = getObjectDescription(_partclass);
         if(this._objectDescription) {
             this._objectDescription.properties.forEach(pd => {
-                createProperty(this, pd, this._part[pd.name]);
+                //let propertyType = pd.type || "string";
+                //if(!isArrayType(propertyType)) {
+                    createProperty(this, pd, this._part[pd.name]);
+                //}
             });
         }
         createProperty(this, { name: "data" }, this._part.data);
@@ -68,7 +71,7 @@ export class UimlPart implements IRenderable {
     }
     get part() {
         var part = Object.assign({}, this._part);
-        part.data = this["data"];
+        part.data = this.data;
         if(this._objectDescription) {
             this._objectDescription.properties.forEach(pd => {
                 part[pd.name] = this[pd.name];
@@ -76,14 +79,20 @@ export class UimlPart implements IRenderable {
         }        
         return part;
     }
-    get parts() {
-        return this._part.parts;
-    }
-    set parts(parts: any[]) {
-        this._part.parts = parts;
-    }
+    parts;
+    data;
+    // get parts() {
+    //     return this._part.parts;
+    // }
+    // set parts(parts: any[]) {
+    //     this._part.parts = parts;
+    // }
     toJSON() {
         return this.part;
+    }
+    // TODO: remove, use UimlPartsRepository
+    create(partclass: string) {
+        return new UimlPart(partclass);
     }
 }
 

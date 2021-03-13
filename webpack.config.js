@@ -8,7 +8,7 @@ var PascalCaseNamePlugin = require('./webpack-pascal-case-name');
 var libraryName = 'FormBuilder';
 var banner = [
     "form-builder - Form builder library v" + packageJson.version,
-    "Copyright (c) 2018-2019 TSV  - http://github.com/tsv2013/form-builder",
+    "Copyright (c) 2018-2021 TSV  - http://github.com/tsv2013/form-builder",
     "License: MIT (http://www.opensource.org/licenses/mit-license.php)",
 ].join("\n");
 

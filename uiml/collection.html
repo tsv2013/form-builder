@@ -1,0 +1,13 @@
+﻿<div class='collection' data-bind="">
+    <div class="collection__header"
+        data-bind="click: function () { collapsed(!collapsed()); }, css: { 'collection__header--collapsed': collapsed }">
+        <span data-bind="text: title"></span>
+        <span data-bind="click: add">+ Add</span>
+    </div>
+    <div class="collection__content" data-bind="css: { 'collection__content--hidden': collapsed }">
+        <!-- ko foreach: items -->
+        <div data-bind="click: function() { $parent.remove($data); }">- Remove</div>
+        <object-editor params="context: $data, type: $parent.elementType"></object-editor>
+        <!-- /ko -->
+    </div>
+</div>

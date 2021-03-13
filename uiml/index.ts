@@ -5,6 +5,8 @@ export * from "./uiml";
 export * from "./renderer";
 export * from "./panel";
 export * from "./layout";
+export * from "./object";
+export * from "./collection";
 
 declare var config: IUML;
 

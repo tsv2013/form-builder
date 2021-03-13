@@ -2,10 +2,20 @@ import { IObjectDescription } from "./object";
 
 export var domain: {[index: string]: IObjectDescription} = {};
 
+domain["part"] = {
+    name: "part",
+    properties: [
+        { name: "partclass" },
+        { name: "parts", type: "part[]" },
+        { name: "cssClasses" }
+    ]
+};
+
 domain["panel"] = {
     name: "panel",
     properties: [
         { name: "text" },
+        { name: "parts", type: "part[]" },
         { name: "cssClasses" }
     ]
 };
@@ -13,6 +23,7 @@ domain["panel"] = {
 domain["layoutItem"] = {
     name: "layoutItem",
     properties: [
+        { name: "parts", type: "part[]" },
         { name: "cssClasses" }
     ]
 };
@@ -20,6 +31,7 @@ domain["layoutItem"] = {
 domain["container"] = {
     name: "container",
     properties: [
+        { name: "parts", type: "part[]" },
         { name: "cssClasses" }
     ]
 };
@@ -41,6 +53,7 @@ domain["input"] = {
 domain["layout"] = {
     name: "layout",
     properties: [
+        { name: "parts", type: "part[]" },
         { name: "cssClasses" }
     ]
 };
@@ -48,6 +61,7 @@ domain["layout"] = {
 domain["layoutRow"] = {
     name: "layoutRow",
     properties: [
+        { name: "parts", type: "part[]" },
         { name: "cssClasses" }
     ]
 };
@@ -55,6 +69,7 @@ domain["layoutRow"] = {
 domain["layoutColumn"] = {
     name: "input",
     properties: [
+        { name: "parts", type: "part[]" },
         { name: "cssClasses" }
     ]
 };

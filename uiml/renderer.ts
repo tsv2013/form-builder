@@ -151,15 +151,12 @@ export class InputRenderer extends InterfaceRenderer {
         super(part, uimlWrapper);
     }
     getRenderResult() {
-        if(!!this.getProperty("readonly"))
-            return template("<span data-bind=\"text: $data." + this.getProperty("data") + "\">");
-        else {
-            return template("<input class=\"form-control\" placeholder=\"" + (this.getProperty("pleceholderText")||"") + "\""
-                + " data-bind=\"value: $data." + this.getProperty("data") + ", valueUpdate: 'keyup'\""
-                + (!!this.getProperty("hint") ? (" title=\"" + this.getProperty("hint") + "\"") : "")
-                + (!!this.getProperty("pattern") ? (" pattern=\"" + this.getProperty("pattern") + "\"") : "")
-                + (this.getProperty("isnullable") === false ? " required" : "")
-                + ">");
-        }
+        return template("<input class=\"input-control\" placeholder=\"" + (this.getProperty("pleceholderText")||"") + "\""
+            + " data-bind=\"value: $data." + this.getProperty("data") + ", valueUpdate: 'keyup'\""
+            + (!!this.getProperty("readonly") ? " disabled" : "")
+            + (!!this.getProperty("hint") ? (" title=\"" + this.getProperty("hint") + "\"") : "")
+            + (!!this.getProperty("pattern") ? (" pattern=\"" + this.getProperty("pattern") + "\"") : "")
+            + (this.getProperty("isnullable") === false ? " required" : "")
+            + ">");
     }
 }

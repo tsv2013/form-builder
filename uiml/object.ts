@@ -1,27 +1,37 @@
 import * as ko from "knockout";
 import { IPropertyDescription } from "../metadata/object";
-import { getObjectDescription } from "../metadata/model";
+import { getObjectDescription, isArrayType } from "../metadata/model";
 
 import "./object.scss";
 
 var objectEditorTemplate = require("text-loader!./object.html");
 
 function createPropertyEditorUiml(propertyDescription: IPropertyDescription) {
+    let propertyType = propertyDescription.type || "string";
+    let parts = [];
+    if(isArrayType(propertyType)) {
+        parts.push({
+            partclass: "collection-editor",
+            cssClasses: "test-input",
+            data: propertyDescription.name,
+            elementType: propertyDescription.type
+        });
+    } else {
+        parts.push({
+            partclass: "label",
+            cssClasses: "test-label",
+            data: propertyDescription.title || propertyDescription.name
+        });
+        parts.push({
+            partclass: "input",
+            cssClasses: "test-input",
+            data: propertyDescription.name
+        });
+    }
     return {
         partclass: "layoutItem",
         cssClasses: "item test-item test-group",
-        parts: [
-            {
-                partclass: "label",
-                cssClasses: "test-label",
-                data: propertyDescription.title || propertyDescription.name
-            },
-            {
-                partclass: "input",
-                cssClasses: "test-input",
-                data: propertyDescription.name
-            }
-        ]
+        parts
     }
 }
 
@@ -39,9 +49,7 @@ export class ObjectWidgetViewModel {
     layoutUiml = {
         partclass: "layoutColumn",
         cssClasses: "column",
-        parts: [
-            
-        ]
+        parts: []
     };
 
     dispose() {

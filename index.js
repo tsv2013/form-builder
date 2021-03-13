@@ -48,6 +48,11 @@ layoutJson({
             "data": "name"
           }
         ]
+      },
+      {
+        "partclass": "input",
+        "cssClasses": "test-input",
+        "data": "name"
       }
     ]
   });
@@ -121,30 +126,18 @@ var toolboxItems = [
         title: "label",
         hint: "Drag to add label",
         json: {
-            partclass: "layoutItem",
-            cssClasses: "item test-item",
-            parts: [
-                {
-                    partclass: "label",
-                    cssClasses: "test-label",
-                    data: "Label text"
-                }
-            ]
+            partclass: "label",
+            cssClasses: "test-label",
+            data: "Label text"
         }
     },
     {
         title: "input",
         hint: "Drag to add input element",
         json: {
-            partclass: "layoutItem",
-            cssClasses: "item test-item",
-            parts: [
-                {
-                    partclass: "input",
-                    cssClasses: "test-input",
-                    data: "valName"
-                }
-            ]
+            partclass: "input",
+            cssClasses: "test-input",
+            data: "valName"
         }
     },
     {
