@@ -14,7 +14,7 @@ export interface IMenuItem {
 export class ItemMenu {
     constructor(private formElement: IFormElement) {
         this.menuItems.push({
-            title: "x",
+            title: "- Remove",
             action: () => formElement.remove(),
             visible: ko.computed(() => !!formElement.parent)
         });

@@ -8,18 +8,15 @@ body {
 
     --main-color: royalblue;
     --inactive-color: lightgray;
+    --hover-color: gray;
     --text-color: black;
     --label-color: rgb(84, 84, 84);
 }
 
 .test-form {
-    padding: 7px;
-    box-sizing: border-box;
 }
 
 .test-group {
-    width: 100%;
-    padding-top: 7px;
 }
 
 .test-item {
@@ -30,7 +27,7 @@ body {
     display: inline-block;
     box-sizing: border-box;    
     width: 100%;
-    min-width: 100px;
+    min-width: 200px;
     margin: 0;
     padding: 2px;
     color: var(--label-color);
@@ -43,7 +40,7 @@ body {
     display: inline-block;
     box-sizing: border-box;    
     width: 100%;
-    min-width: 100px;
+    min-width: 200px;
     margin: 0;
     padding: 2px;
     border: none;

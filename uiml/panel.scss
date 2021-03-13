@@ -1,7 +1,7 @@
 panel {
   display: block;
   position: relative;
-  min-width: 300px;
+  min-width: 200px;
 }
 
 .panel__header {
@@ -11,6 +11,9 @@ panel {
 }
 
 .panel__header:not(.panel__header--collapsed) {
+  border-bottom-color: var(--text-color);
+}
+.panel__header:not(.panel__header--collapsed):focus-within {
   border-bottom-color: var(--main-color);
 }
 

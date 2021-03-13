@@ -2,12 +2,12 @@
     <div class="collection__header"
         data-bind="click: function () { collapsed(!collapsed()); }, css: { 'collection__header--collapsed': collapsed }">
         <span data-bind="text: title"></span>
-        <span data-bind="click: add">+ Add</span>
     </div>
     <div class="collection__content" data-bind="css: { 'collection__content--hidden': collapsed }">
+        <span class="bf-item-menu__button" data-bind="click: add">+ Add</span>
         <!-- ko foreach: items -->
-        <div data-bind="click: function() { $parent.remove($data); }">- Remove</div>
         <object-editor params="context: $data, type: $parent.elementType"></object-editor>
+        <div class="bf-item-menu__button" data-bind="click: function() { $parent.remove($data); }">- Remove</div>
         <!-- /ko -->
     </div>
 </div>
