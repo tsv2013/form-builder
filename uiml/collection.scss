@@ -4,6 +4,10 @@ collection-editor {
   min-width: 200px;
 }
 
+.collection__header {
+  cursor: pointer;
+}
+
 .collection__content--hidden {
   display: none;
 }
