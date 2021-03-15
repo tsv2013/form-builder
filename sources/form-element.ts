@@ -1,11 +1,12 @@
 import * as ko from "knockout";
-import { IRenderable } from "./uiml-parts";
+import { IRenderable, UimlPart } from "./uiml-parts";
 import { UimlLayoutSerializer } from "./uiml-layout-serializer";
 
 export interface IFormElement extends IRenderable {
     parent: IFormElement;
-    addElement(json: any, location: string, hoveredElement?: IFormElement): void;
+    addElement(uimlPart: UimlPart, location: string, hoveredElement?: IFormElement): void;
     remove(): void;
+    dispose(): void;
     elements?: KnockoutObservableArray<IFormElement>;
     content?: IRenderable;
     context?: any;
@@ -56,16 +57,25 @@ export class PlaceHolder implements IFormElement {
         this.parent.addElement(json, location);
     }
     remove() {}
+    dispose() {}
     isContainer = false;
     hasInnerLayout = false;
 }
 
 export class FormElement implements IFormElement {
+    private _elementsSubscription: ko.Computed;
     private _context:any = undefined;
     private _isDesignMode = ko.observable(false);
     private _dragPosition = ko.observable<string>("");
 
     constructor(public content: IRenderable, public parent: IFormElement) {
+        const part = content as UimlPart;
+        this._elementsSubscription = ko.computed(() => {
+            const elements = (part.parts || []).map(part => UimlLayoutSerializer.createElement(part, this));
+            const prevElements = this.elements.peek();
+            this.elements(elements);
+            prevElements.forEach(element => element.dispose());
+        });
     }
 
     elements = ko.observableArray<IFormElement>();
@@ -114,39 +124,39 @@ export class FormElement implements IFormElement {
             this.elements().forEach(element => element.content.render(htmlElement));
         }
     }
-    addElement(json: any, location: string = "bottom", hoveredElement?: IFormElement) {
+    addElement(uimlPart: UimlPart, location: string = "bottom", hoveredElement?: IFormElement) {
         if(!this.isContainer || this === hoveredElement) {
-            this.parent.addElement(json, location, this);
+            this.parent.addElement(uimlPart, location, this);
         } else {
             if(this.content["partclass"] === "layout") {
                 const isHorizontalRoot = location === "left" || location === "right";
-                var rootWrapper = UimlLayoutSerializer.createElement({ partclass: isHorizontalRoot ? "layoutRow" : "layoutColumn", cssClasses: isHorizontalRoot ? "row" : "column" }, this);
+                var rootWrapper = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: isHorizontalRoot ? "layoutRow" : "layoutColumn", cssClasses: isHorizontalRoot ? "row" : "column" }), this);
                 this.elements().forEach(element => element.parent = rootWrapper);
                 rootWrapper.elements(this.elements());
                 this.elements([rootWrapper]);
-                rootWrapper.addElement(json, location);
+                rootWrapper.addElement(uimlPart, location);
             }
             else if(this.content["partclass"] === "layoutRow") {
                 if(!!hoveredElement && (location === "top" || location === "bottom")) {
-                    var newColumn = UimlLayoutSerializer.createElement({ partclass: "layoutColumn", cssClasses: "column" }, this);
+                    var newColumn = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: "layoutColumn", cssClasses: "column" }), this);
                     this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
                     hoveredElement.parent = newColumn;
                     newColumn.elements.push(hoveredElement);
-                    newColumn.addElement(json, location, hoveredElement);
+                    newColumn.addElement(uimlPart, location, hoveredElement);
                     // this.parent.addElement(json, location, this);
                 } else {
-                    var newElement = UimlLayoutSerializer.createElement(json, this);
+                    var newElement = UimlLayoutSerializer.createElement(uimlPart, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "right" ? 1 : 0), 0, newElement);
                 }
             } else {
                 if(!!hoveredElement && (location === "left" || location === "right")) {
-                    var newRow = UimlLayoutSerializer.createElement({ partclass: "layoutRow", cssClasses: "row" }, this);
+                    var newRow = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: "layoutRow", cssClasses: "row" }), this);
                     this.elements.splice(this.elements().indexOf(hoveredElement), 1, newRow);
                     hoveredElement.parent = newRow;
                     newRow.elements.push(hoveredElement);
-                    newRow.addElement(json, location, hoveredElement);
+                    newRow.addElement(uimlPart, location, hoveredElement);
                 } else {
-                    var newElement = UimlLayoutSerializer.createElement(json, this);
+                    var newElement = UimlLayoutSerializer.createElement(uimlPart, this);
                     this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "bottom" ? 1 : 0), 0, newElement);
                 }
             }
@@ -159,5 +169,8 @@ export class FormElement implements IFormElement {
                 this.parent.remove();
             }
         }
+    }
+    dispose() {
+        this._elementsSubscription.dispose();
     }
 }

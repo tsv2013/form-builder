@@ -123,7 +123,7 @@ export class LayoutItem {
                     LayoutItem.draggedElement = null;
                 }
                 const dropTargetElement = model._hoverItems[model._currentHoverIndex];
-                dropTargetElement.addElement(JSON.parse(data), dropTargetElement.dragPosition, dropTargetElement);
+                dropTargetElement.addElement(UimlPart.fromJSON(JSON.parse(data)), dropTargetElement.dragPosition, dropTargetElement);
             }
             model.clearHoverIndicator();
             ev.preventDefault();
@@ -163,7 +163,7 @@ export class LayoutItem {
 ko.components.register("layout-item", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            let formElement: IFormElement = params.element || UimlLayoutSerializer.createElement(params.uiml, null);
+            let formElement: IFormElement = params.element || UimlLayoutSerializer.createElement(UimlPart.fromJSON(params.uiml), null);
             if(!!params.context) {
                 formElement.context = params.context;
             }

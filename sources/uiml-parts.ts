@@ -42,13 +42,14 @@ export class UimlPart implements IRenderable {
         this._objectDescription = getObjectDescription(_partclass);
         if(this._objectDescription) {
             this._objectDescription.properties.forEach(pd => {
-                //let propertyType = pd.type || "string";
-                //if(!isArrayType(propertyType)) {
+                let propertyType = pd.type || "string";
+                if(!isArrayType(propertyType)) {
                     createProperty(this, pd, this._part[pd.name]);
-                //}
+                }
             });
         }
         createProperty(this, { name: "data" }, this._part.data);
+        createProperty(this, { name: "parts", type: "part[]" }, (this._part.parts || []).map(json => UimlPartsRepository.create(json.partclass, json)));
     }
     render(htmlElement: HTMLElement) {
         if(UimlPart.render) {
@@ -79,20 +80,13 @@ export class UimlPart implements IRenderable {
         }        
         return part;
     }
-    parts;
-    data;
-    // get parts() {
-    //     return this._part.parts;
-    // }
-    // set parts(parts: any[]) {
-    //     this._part.parts = parts;
-    // }
+    parts: Array<UimlPart>;
+    data: any;
+    static fromJSON(json: any) {
+        return UimlPartsRepository.create(json.partclass, json);
+    }
     toJSON() {
         return this.part;
-    }
-    // TODO: remove, use UimlPartsRepository
-    create(partclass: string) {
-        return new UimlPart(partclass);
     }
 }
 

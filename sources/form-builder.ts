@@ -4,19 +4,20 @@ import { FormElement } from "./form-element";
 import { UimlLayoutSerializer } from "./uiml-layout-serializer";
 
 import "./form-builder.scss";
+import { UimlPart, UimlPartsRepository } from "./uiml-parts";
 var template = require("text-loader!./form-builder.html");
 
 export class FormBuilder {
+    private _layoutSubscription: ko.Computed;
     private static defaultText = '{"partclass": "layoutRow","cssClasses": "row","parts": []}';
     constructor(private _layout: KnockoutObservable<any>, _context?: any, toolboxItems: Array<any> = []) {
         this.root.context = _context;
-        ko.computed(() => {
-            this.root.elements([]);
+        this._layoutSubscription = ko.computed(() => {
             var layoutValue: any = ko.unwrap(_layout);
             if(!Array.isArray(layoutValue)) {
                 layoutValue = [layoutValue];
             }
-            UimlLayoutSerializer.createElements(this.root.elements, layoutValue, this.root);
+            (<UimlPart>this.root.content).parts = layoutValue.map(part => UimlPart.fromJSON(part));
         });
         toolboxItems.forEach(item => this.toolbox.push(item));
     }
@@ -46,6 +47,9 @@ export class FormBuilder {
         builder.isDesignMode = !builder.isDesignMode;
         // TODO: re-think - how the whole layout will be updated, remove this crutch
         this.jsonText = this.jsonText;
+    }
+    dispose() {
+        this._layoutSubscription.dispose();
     }
 }
 

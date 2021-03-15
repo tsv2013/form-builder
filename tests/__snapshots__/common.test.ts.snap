@@ -2,7 +2,7 @@
 
 exports[`render input 1`] = `
 <input
-  class="form-control "
+  class="input-control "
   data-bind="value: $data.name, valueUpdate: 'keyup'"
   placeholder=""
 />

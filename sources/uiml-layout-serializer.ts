@@ -5,27 +5,20 @@ export class UimlLayoutSerializer {
     private static layoutPartClass = "layout";
     public static createRoot(): FormElement {
         var rootPart = UimlPartsRepository.create(UimlLayoutSerializer.layoutPartClass, { cssClasses: "root" });
-        var formElement = new FormElement(rootPart, null);
-        return formElement;
+        return new FormElement(rootPart, null);
     }
-    public static createElement(element: any, parent: IFormElement): IFormElement {
-        var uimlPart = UimlPartsRepository.create(element.partclass, element);
-        var formElement = new FormElement(uimlPart, parent);
+    public static createElement(uimlPart: UimlPart, parent: IFormElement): IFormElement {
         if(uimlPart.hasInnerLayout) {
-            var groupElement = { partclass: UimlLayoutSerializer.layoutPartClass, cssClasses: "group", parts: element.parts };
+            var groupElementJson = { partclass: UimlLayoutSerializer.layoutPartClass, cssClasses: "group", parts: [] };
+            var groupElement = UimlPart.fromJSON(groupElementJson);
+            groupElement.parts = uimlPart.part.parts || [];
             uimlPart.parts = [groupElement];
-            var groupPart = UimlPartsRepository.create(UimlLayoutSerializer.layoutPartClass, groupElement);
-            var groupFormElement = new FormElement(groupPart, formElement);
-            formElement.elements.push(groupFormElement);
-            UimlLayoutSerializer.createElements(groupFormElement.elements, groupElement.parts, groupFormElement);
-        } else {
-            UimlLayoutSerializer.createElements(formElement.elements, element.parts, formElement);
         }
-        return formElement;
+        return new FormElement(uimlPart, parent);
     }
     public static createElements(collection: KnockoutObservableArray<IFormElement> | Array<IFormElement>, parts: any[] = [], parent: IFormElement) {
-        parts.forEach(element => {
-            collection.push(UimlLayoutSerializer.createElement(element, parent));
+        parts.forEach(elementJson => {
+            collection.push(UimlLayoutSerializer.createElement(UimlPart.fromJSON(elementJson), parent));
         });
     }
     public static serialize(formElement: IFormElement): any {

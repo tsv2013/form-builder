@@ -1,6 +1,7 @@
 import * as ko from "knockout";
 import { FormElement } from "../sources/form-element";
 import { UimlLayoutSerializer } from "../sources/uiml-layout-serializer";
+import { UimlPart } from "../sources/uiml-parts";
 
 test("data context", () => {
     const json = {
@@ -67,7 +68,7 @@ test("drop above a row", () => {
     const row = <FormElement>root.elements()[0];
     expect(row.content["partclass"]).toBe("layoutRow");
 
-    row.addElement(inputJson, "top", row);
+    row.addElement(UimlPart.fromJSON(inputJson), "top", row);
     expect(root.elements().length).toBe(1);
     expect(root.elements()[0].content["partclass"]).toBe("layoutColumn");
     expect(root.elements()[0].elements().length).toBe(2);
@@ -101,7 +102,7 @@ test("drop into a panel", () => {
     const panelLayout = <FormElement>root.elements()[0].elements()[0].elements()[0];
     expect(panelLayout.content["partclass"]).toBe("layout");
 
-    panelLayout.addElement(inputJson, "left");
+    panelLayout.addElement(UimlPart.fromJSON(inputJson), "left");
     expect(panelLayout.elements().length).toBe(1);
     expect(panelLayout.elements()[0].content["partclass"]).toBe("layoutRow");
     expect(panelLayout.elements()[0].elements().length).toBe(1);
