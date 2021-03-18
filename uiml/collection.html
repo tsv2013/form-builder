@@ -5,7 +5,7 @@
     </div>
     <div class="collection__content" data-bind="css: { 'collection__content--hidden': collapsed }">
         <div class="collection__item-menu">
-            <span class="bf-item-menu__button" data-bind="click: add">+ Add</span>
+            <ui-dropdown-button params="item: addAction"></ui-dropdown-button>
         </div>
         <!-- ko foreach: items -->
         <div class="collection__item">

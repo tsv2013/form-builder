@@ -1,15 +1,11 @@
 import * as ko from "knockout";
 
+import { IAction } from "../uiml";
+
 import { IFormElement } from "./form-element";
 
 import "./item-menu.scss";
 var template = require("text-loader!./item-menu.html");
-
-export interface IMenuItem {
-    title: string;
-    action: () => void;
-    visible?: KnockoutObservable<boolean>;
-}
 
 export class ItemMenu {
     constructor(private formElement: IFormElement) {
@@ -20,7 +16,7 @@ export class ItemMenu {
         });
     }
 
-    menuItems = ko.observableArray<IMenuItem>();
+    menuItems = ko.observableArray<IAction>();
     get content() {
         return this.formElement.content;
     }

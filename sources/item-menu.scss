@@ -17,22 +17,6 @@ item-menu {
     overflow-y: auto;    
 }
 
-.bf-item-menu__item {
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-}
-
-.bf-item-menu__button {
-    display: inline-block;
-    padding: 2px 5px;
-    border: 1px solid gray;
-    cursor: pointer;
-}
-.bf-item-menu__button:hover {
-    background-color: gray;
-}
-
 .bf-layout--design-mode {
     item-menu {
         layout-item {

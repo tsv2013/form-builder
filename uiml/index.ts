@@ -8,6 +8,11 @@ export * from "./layout";
 export * from "./object";
 export * from "./collection";
 
+export * from "./ui-action";
+export * from "./ui-button";
+export * from "./ui-dropdown-button";
+
+
 declare var config: IUML;
 
 const uimlWrapper = new UIMLWrapper(typeof config !== "undefined" && config || { uimlinterface: <IUMLInterface>{}, peers: htmlUiRendererPeers });

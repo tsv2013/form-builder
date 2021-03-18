@@ -1,0 +1,44 @@
+ui-dropdown-button {
+    display: inline-block;
+    vertical-align: top;
+    z-index: 0;
+}
+
+.bf-item-menu__dropdown-container {
+    outline: none;
+}
+
+.bf-item-menu__dropdown {
+    display: inline-block;
+    padding: 2px 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+.bf-item-menu__dropdown:hover {
+    background-color: gray;
+}
+
+.bf-item-menu__dropdown-items {
+    display: none;
+    position: absolute;
+    min-width: 100px;
+    max-width: 100%;
+    background-color: white;
+    border: 1px solid gray;
+    z-index: 1;
+}
+
+.bf-item-menu__dropdown-container:focus > .bf-item-menu__dropdown-items {
+    display: block;
+}
+
+.bf-item-menu__dropdown-item {
+    padding: 2px 5px;
+    cursor: pointer;
+    text-align: left;
+    vertical-align: middle;
+}
+.bf-item-menu__dropdown-item:hover {
+    background-color: gray;
+}

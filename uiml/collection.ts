@@ -14,6 +14,14 @@ export class CollectionWidgetViewModel {
         let data = this.model[options.data] || [];
         this.items(data);
         this._itemsSubscription = this.items.subscribe(items => this.model[this.options.data] = items);
+
+        const types = [ "label", "input", "panel" ];
+        types.forEach(type => {
+            this.addAction.items.push({
+                title: type,
+                action: () => this.add(type)
+            });
+        });
     }
 
     collapsed = ko.observable(true);
@@ -28,9 +36,14 @@ export class CollectionWidgetViewModel {
         return this.options.elementType;
     }
 
-    add = (collectionWidget: CollectionWidgetViewModel) => {
+    addAction = {
+        title: "+ Add",
+        items: []
+    }
+
+    add(elementType: string) {
         // TODO: pass creator function as a parameter
-        this.items.push(this.model.create(this.elementType));
+        this.items.push(this.model.create(elementType));
     }
 
     remove = (item: any) => {

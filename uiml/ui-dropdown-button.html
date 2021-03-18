@@ -1,0 +1,10 @@
+<div class="bf-item-menu__dropdown-container" tabindex="-1">
+    <div class="bf-item-menu__dropdown" data-bind="text: title, clickBubble: false, visible: visible">
+    </div>
+    <div class="bf-item-menu__dropdown-items" data-bind="visible: visible">
+        <!-- ko foreach: items -->
+        <div class="bf-item-menu__dropdown-item" data-bind="text: title, click: $parent.click, clickBubble: false, visible: !$data.visible || $data.visible()">
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
