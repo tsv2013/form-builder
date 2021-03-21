@@ -1,0 +1,11 @@
+/*!
+ * form-builder - Form builder library v0.0.1
+ * Copyright (c) 2018-2021 TSV  - http://github.com/tsv2013/form-builder
+ * License: MIT (http://www.opensource.org/licenses/mit-license.php)
+ */
+panel{display:block;position:relative;min-width:200px}.panel__header{padding:5px 4px;border-bottom:1px solid var(--inactive-color);cursor:pointer}.panel__header:not(.panel__header--collapsed){border-bottom-color:var(--text-color)}.panel__header:not(.panel__header--collapsed):focus-within{border-bottom-color:var(--main-color)}.panel__body:not(.panel__body--hidden){padding-top:10px;border-left:1px solid var(--inactive-color)}.panel__header-collapser{float:right;line-height:21px}
+layout{display:block}
+object-editor{display:block;position:relative;min-width:200px}
+collection-editor{display:block;position:relative;min-width:200px}.collection__header{cursor:pointer}.collection__content--hidden{display:none}.collection__item{padding:7px 0;border-left:2px solid #afafaf;border-right:2px solid #afafaf}.collection__item:not(:first-child){margin-top:7px}.collection__item-menu{padding-top:7px}
+.bf-item-menu__button{display:inline-block;padding:2px 5px;border:1px solid gray;cursor:pointer;text-align:center;vertical-align:middle}.bf-item-menu__button:hover{background-color:gray}
+ui-dropdown-button{display:inline-block;vertical-align:top;z-index:0}.bf-item-menu__dropdown-container{outline:none}.bf-item-menu__dropdown{display:inline-block;padding:2px 5px;border:1px solid gray;cursor:pointer}.bf-item-menu__dropdown:hover{background-color:gray}.bf-item-menu__dropdown-items{display:none;position:absolute;min-width:100px;max-width:100%;background-color:white;border:1px solid gray;z-index:1}.bf-item-menu__dropdown-container:focus>.bf-item-menu__dropdown-items{display:block}.bf-item-menu__dropdown-item{padding:2px 5px;cursor:pointer;text-align:left;vertical-align:middle}.bf-item-menu__dropdown-item:hover{background-color:gray}
