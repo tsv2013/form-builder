@@ -1,0 +1,12 @@
+.doc-table {
+    width: 100%;
+    table-layout: fixed;
+    margin-top: 50px;
+    border-top: 1px solid gray;
+}
+.doc-table td {
+    vertical-align: top;
+}
+.doc-table pre {
+    overflow-x: auto;
+}

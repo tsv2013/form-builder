@@ -62,7 +62,7 @@ var model = {
     surname: ko.observable("Young"),
     zipcode: ko.observable("103844"),
     city: ko.observable("Kanzas"),
-    adress: ko.observable("Mountain drive, 754"),
+    address: ko.observable("Mountain drive, 754"),
     phone: ko.observable("2-300-765-11-22"),
     data: {
         first_name: ko.observable("Bob"),
@@ -77,128 +77,20 @@ renderedsMap.push({ id: "plainEditor", mapsto: "InputRenderer" });
 Uiml.refresh();
 
 FormBuilder.UimlPart.render = Uiml.render;
-var toolboxItems = [
-    {
-        title: "row",
-        hint: "Drag to add row",
-        json: {
-            partclass: "layoutRow",
-            cssClasses: "row",
-            parts: [
-                
-            ]
-        }
-    },
-    {
-        title: "column",
-        hint: "Drag to add column",
-        json: {
-            partclass: "layoutColumn",
-            cssClasses: "column",
-            parts: [
-                
-            ]
-        }
-    },
-    {
-        title: "item",
-        hint: "Drag to add item",
-        json: {
-            partclass: "layoutItem",
-            cssClasses: "item",
-            parts: [
-                
-            ]
-        }
-    },
-    {
-        title: "panel",
-        hint: "Drag to add panel",
-        json: {
-            partclass: "panel",
-            cssClasses: "panel",
-            parts: [
-                
-            ]
-        }
-    },
-    {
-        title: "label",
-        hint: "Drag to add label",
-        json: {
-            partclass: "label",
-            cssClasses: "test-label",
-            data: "Label text"
-        }
-    },
-    {
-        title: "input",
-        hint: "Drag to add input element",
-        json: {
-            partclass: "input",
-            cssClasses: "test-input",
-            data: "valName"
-        }
-    },
-    {
-        title: "composite",
-        hint: "Drag to add composite element",
-        json: {
-            partclass: "layoutItem",
-            cssClasses: "item test-item test-group",
-            parts: [
-                {
-                    partclass: "label",
-                    cssClasses: "test-label",
-                    data: "Name"
-                },
-                {
-                    partclass: "input",
-                    cssClasses: "test-input",
-                    data: "name"
-                }
-            ]
-        }
-    },
-    {
-        title: "Name",
-        hint: "Drag to add Name",
-        json: {
-            partclass: "layoutItem",
-            cssClasses: "item test-item test-group",
-            parts: [
-                {
-                    partclass: "label",
-                    cssClasses: "test-label",
-                    data: "Name"
-                },
-                {
-                    partclass: "input",
-                    cssClasses: "test-input",
-                    data: "name"
-                }
-            ]
-        }
-    },
-    {
-        title: "Surname",
-        hint: "Drag to add Surname",
-        json: {
-            partclass: "layoutItem",
-            cssClasses: "item test-item test-group",
-            parts: [
-                {
-                    partclass: "label",
-                    cssClasses: "test-label",
-                    data: "Surname"
-                },
-                {
-                    partclass: "input",
-                    cssClasses: "test-input",
-                    data: "surname"
-                }
-            ]
-        }
+
+var toolboxItems = [].concat(FormBuilder.defaultToolboxItems);
+toolboxItems.push({
+    title: "item",
+    hint: "Drag to add item",
+    json: {
+        partclass: "layoutItem",
+        cssClasses: "item",
+        parts: [
+            
+        ]
     }
-];
+});
+toolboxItems = toolboxItems.concat(FormBuilder.createToolboxItemsFor(model))
+
+
 FormBuilder.render(layoutJson, toolboxItems, model, document.getElementById("form-builder-container"));
