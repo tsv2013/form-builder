@@ -31,7 +31,7 @@ var model = FormBuilder.Form.show(object, document.getElementById("form-builder-
 
 And you will get the following UI:
 
-![FormBuilder Form](https://github.com/tsv2013/form-builder/blob/master/form.png)
+![FormBuilder Form Screen](https://raw.githubusercontent.com/tsv2013/form-builder/master/form.png)
 
 ### Basic functions
 - Create form from a JSON object
