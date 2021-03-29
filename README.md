@@ -1,5 +1,5 @@
 # form-builder
-JavaScript (TypeScript) form builder library
+JavaScript (TypeScript) form builder library. Allows tp create, modify and save layout for JSON object data.
 
 [![Build Status](https://travis-ci.org/tsv2013/form-builder.svg?branch=master)](https://travis-ci.org/tsv2013/form-builder)
 
