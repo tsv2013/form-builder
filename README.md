@@ -33,7 +33,20 @@ var model = FormBuilder.Form.show(object, document.getElementById("form-builder-
 And you will get the following UI:
 
 ![FormBuilder Form](/form.png)
+
 ### Basic functions
+- Create form from a JSON object
+- Modify and save layout to JSON
+- Apply existing JSON layout to a form
+- Built-in object editor
+- Built-in collection editor
+
+### Supported frameworks
+- KnockoutJS
+- something other in plans
+
+## Online demos
+[Demos and documentation](https://tsv2013.github.io/form-builder/)
 
 ## How to compile this repo
  - git clone https://github.com/tsv2013/form-builder.git
@@ -41,6 +54,3 @@ And you will get the following UI:
  - npm i
  - npm test
  - npm run build
-
-## Online demos
-[Demos and documentation](https://tsv2013.github.io/form-builder/)
