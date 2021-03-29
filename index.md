@@ -8,4 +8,4 @@
 
 
 ## Welcome to GitHub Pages
-[Click here to visit default welcome page](about.md)
+[Click here to visit default welcome page](welcome.md)
