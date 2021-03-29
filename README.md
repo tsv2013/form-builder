@@ -32,7 +32,7 @@ var model = FormBuilder.Form.show(object, document.getElementById("form-builder-
 
 And you will get the following UI:
 
-![FormBuilder Form](/form.png)
+![FormBuilder Form Screen](/form.png)
 
 ### Basic functions
 - Create form from a JSON object
