@@ -6,6 +6,7 @@ JavaScript (TypeScript) form builder library
 ## Sample usage
 If you have the following plain JavaScript object (obtained from a database):
 
+```javascript
 var object = {
     name: "Tom",
     surname: "Young",
@@ -19,12 +20,15 @@ var object = {
         email: "bob@sallivan-family.org",
     }
 }
-                
+```
+
 You can pass this object, the DOM element and the update callback function to the Form.show() method:
 
+```javascript
 var model = FormBuilder.Form.show(object, document.getElementById("form-builder-container"), function(object, json) {
     document.getElementById("form-builder-model-container").value = json;
 });
+```
 
 And you will get the following UI:
 
