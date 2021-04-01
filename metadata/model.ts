@@ -39,6 +39,7 @@ domain["container"] = {
 domain["label"] = {
     name: "label",
     properties: [
+        { name: "text" },
         { name: "cssClasses" }
     ]
 };

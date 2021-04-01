@@ -1,9 +1,18 @@
-var layoutJson = ko.observable({
+var renderedsMap = Uiml.htmlUiRendererPeers[0].dclasses;
+renderedsMap.push({ id: "textInput", mapsto: "InputRenderer" });
+renderedsMap.push({ id: "plainEditor", mapsto: "InputRenderer" });
+Uiml.refresh();
+
+FormBuilder.UimlPart.render = Uiml.render;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+var layoutJson = {
     partclass: "layoutRow",
     cssClasses: "row test-form"
-});
+};
 
-// layoutJson({
+// layoutJson = {
 //     "id": "customer.public.customer.customer_id.payment.public.payment.customer_idPanel",
 //     "isRelation": true,
 //     "partclass": "panel",
@@ -27,9 +36,9 @@ var layoutJson = ko.observable({
 //         ]
 //       }
 //     ]
-//   });
+//   };
 
-layoutJson({
+layoutJson = {
     "partclass": "layoutRow",
     "cssClasses": "row test-form",
     "parts": [
@@ -40,7 +49,7 @@ layoutJson({
           {
             "partclass": "label",
             "cssClasses": "test-label",
-            "data": "Name"
+            "text": "Name"
           },
           {
             "partclass": "input",
@@ -55,42 +64,36 @@ layoutJson({
         "data": "name"
       }
     ]
-  });
+  };
 
 var model = {
-    name: ko.observable("Tom"),
-    surname: ko.observable("Young"),
-    zipcode: ko.observable("103844"),
-    city: ko.observable("Kanzas"),
-    address: ko.observable("Mountain drive, 754"),
-    phone: ko.observable("2-300-765-11-22"),
+    name: "Tom",
+    surname: "Young",
+    zipcode: "103844",
+    city: "Kanzas",
+    address: "Mountain drive, 754",
+    phone: "2-300-765-11-22",
     data: {
-        first_name: ko.observable("Bob"),
-        last_name: ko.observable("Sallivan"),
-        email: ko.observable("bob@sallivan-family.org"),
+        first_name: "Bob",
+        last_name: "Sallivan",
+        email: "bob@sallivan-family.org",
     }
 }
 
-var renderedsMap = Uiml.htmlUiRendererPeers[0].dclasses;
-renderedsMap.push({ id: "textInput", mapsto: "InputRenderer" });
-renderedsMap.push({ id: "plainEditor", mapsto: "InputRenderer" });
-Uiml.refresh();
+var model = FormBuilder.Form.show(model, layoutJson, document.getElementById("form-builder-container"));
 
-FormBuilder.UimlPart.render = Uiml.render;
-
-var toolboxItems = [].concat(FormBuilder.defaultToolboxItems);
-toolboxItems.push({
-    title: "item",
-    hint: "Drag to add item",
-    json: {
-        partclass: "layoutItem",
-        cssClasses: "item",
-        parts: [
+// var toolboxItems = [].concat(FormBuilder.defaultToolboxItems);
+// toolboxItems.push({
+//     title: "item",
+//     hint: "Drag to add item",
+//     json: {
+//         partclass: "layoutItem",
+//         cssClasses: "item",
+//         parts: [
             
-        ]
-    }
-});
-toolboxItems = toolboxItems.concat(FormBuilder.createToolboxItemsFor(model))
+//         ]
+//     }
+// });
+// toolboxItems = toolboxItems.concat(FormBuilder.createToolboxItemsFor(model))
 
-
-FormBuilder.render(layoutJson, toolboxItems, model, document.getElementById("form-builder-container"));
+// FormBuilder.render(layoutJson, toolboxItems, model, document.getElementById("form-builder-container"));

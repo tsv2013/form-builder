@@ -40,7 +40,7 @@ export const defaultToolboxItems = [
         json: {
             partclass: "label",
             cssClasses: "test-label",
-            data: "Label text"
+            text: "Label text"
         }
     },
     {
@@ -62,7 +62,7 @@ export const defaultToolboxItems = [
                 {
                     partclass: "label",
                     cssClasses: "test-label",
-                    data: "Name"
+                    text: "Name"
                 },
                 {
                     partclass: "input",

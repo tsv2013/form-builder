@@ -1,3 +1,6 @@
+import { IPart } from "../uiml";
+import { createProperty } from "./uiml-parts";
+
 export function capitalize(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -14,7 +17,7 @@ export function createPropertyEditor(propertyName: string) {
             {
                 partclass: "label",
                 cssClasses: "test-label",
-                data: makeTitle(propertyName)
+                text: makeTitle(propertyName)
             },
             {
                 partclass: "input",
@@ -54,12 +57,42 @@ export function createDefaultLayout(model: any) {
 }
 
 export function modelFromJSON(json: any) {
-    return JSON.parse(JSON.stringify(json), (key: string, value: any) => {
-        if(typeof value !== "object") {
-            return ko.observable(value);
+    const model = {};
+    let properties = Object.getOwnPropertyNames(json);
+    properties = properties.concat(Object.keys(json));
+    properties.forEach(key => {
+        if(typeof json[key] !== "object") {
+            model[key] = ko.observable(json[key]);
+        } else {
+            model[key] = modelFromJSON(json[key]);
         }
-        return value;
+    })
+    // return JSON.parse(JSON.stringify(json), (key: string, value: any) => {
+    //     if(typeof value !== "object") {
+    //         return ko.observable(value);
+    //     }
+    //     return value;
+    // });
+    return model;
+}
+
+export function traversePart(part: IPart, visit: (part: IPart) => void) {
+    visit(part);
+    (part.parts || []).forEach(child => {
+        traversePart(child, visit);
     });
+}
+
+export function modelFromLayout(layout: any) {
+    const model = {};
+    traversePart(layout, (part: IPart) => {
+        if(part["data"] !== undefined) {
+            createProperty(model, {
+                name: part["data"]
+            });
+        }
+    });
+    return model;
 }
 
 export function modelToJSON(model: any) {

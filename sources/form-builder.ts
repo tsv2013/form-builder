@@ -5,15 +5,19 @@ import { UimlLayoutSerializer } from "./uiml-layout-serializer";
 
 import "./form-builder.scss";
 import { UimlPart, UimlPartsRepository } from "./uiml-parts";
+import { Form } from "./form";
 var template = require("text-loader!./form-builder.html");
 
 export class FormBuilder {
     private _layoutSubscription: ko.Computed;
+    private _modelSubscription: ko.Computed;
     private static defaultText = '{"partclass": "layoutRow","cssClasses": "row","parts": []}';
-    constructor(private _layout: KnockoutObservable<any>, _context?: any, toolboxItems: Array<any> = []) {
-        this.root.context = _context;
+    constructor(private _form: Form, toolboxItems: Array<any> = []) {
+        this._modelSubscription = ko.computed(() => {
+            this.root.context = _form.model;
+        });
         this._layoutSubscription = ko.computed(() => {
-            var layoutValue: any = ko.unwrap(_layout);
+            var layoutValue: any = _form.layout;
             if(!Array.isArray(layoutValue)) {
                 layoutValue = [layoutValue];
             }
@@ -35,7 +39,7 @@ export class FormBuilder {
         return FormBuilder.defaultText;
     }
     set jsonText(json: string) {
-        this._layout(JSON.parse(json || FormBuilder.defaultText));
+        this._form.layout = JSON.parse(json || FormBuilder.defaultText);
     }
     set isDesignMode(value: boolean) {
         this.root.isDesignMode = value;
@@ -49,6 +53,7 @@ export class FormBuilder {
         this.jsonText = this.jsonText;
     }
     dispose() {
+        this._modelSubscription.dispose();
         this._layoutSubscription.dispose();
     }
 }
@@ -56,24 +61,8 @@ export class FormBuilder {
 ko.components.register("form-builder", {
     viewModel: {
         createViewModel: function(params, componentInfo) {
-            return new FormBuilder(params.layout, params.context, params.items);
+            return new FormBuilder(params.form, params.items);
         }
     },
     template
 });
-
-export function render(layout: KnockoutObservable<any> | any, items: Array<any>, context?: any, node?: HTMLElement) {
-    if(!ko.isWritableObservable(layout)) {
-        layout = ko.observable(layout);
-    }
-    ko.applyBindings({ context: context, layout: layout, items: items }, node);
-}
-
-export * from "./uiml-parts";
-export * from "./form-element";
-export * from "./layout-item";
-export * from "./placeholder-item";
-export * from "./item-menu";
-export * from "./utils";
-export * from "./default-toolbox";
-export * from "./form";

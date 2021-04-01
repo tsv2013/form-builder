@@ -1,8 +1,8 @@
-import * as ko from "knockout";
+import { Form } from "../sources/form";
 import { FormBuilder } from "../sources/form-builder";
 
 test("deserialize basic uiml", () => {
-    var fb = new FormBuilder(ko.observable({
+    const form = new Form({}, {
         partclass: "form",
         parts: [
             {
@@ -18,7 +18,8 @@ test("deserialize basic uiml", () => {
                 ]
             }
         ]
-    }));
+    });
+    var fb = new FormBuilder(form, []);
     expect(fb.root.elements().length).toBe(1);
     //expect(fb.root.elements()[0].content.partclass).toBe("form");
     expect(fb.root.elements()[0].elements().length).toBe(2);

@@ -20,7 +20,7 @@ function createPropertyEditorUiml(propertyDescription: IPropertyDescription) {
         parts.push({
             partclass: "label",
             cssClasses: "test-label",
-            data: propertyDescription.title || propertyDescription.name
+            text: propertyDescription.title || propertyDescription.name
         });
         parts.push({
             partclass: "input",

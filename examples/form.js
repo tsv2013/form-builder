@@ -29,7 +29,7 @@ var layout = {
               {
                 "partclass": "label",
                 "cssClasses": "test-label",
-                "data": "Name"
+                "text": "Name"
               },
               {
                 "partclass": "input",
@@ -45,7 +45,7 @@ var layout = {
               {
                 "partclass": "label",
                 "cssClasses": "test-label",
-                "data": "Surname"
+                "text": "Surname"
               },
               {
                 "partclass": "input",
@@ -61,7 +61,7 @@ var layout = {
               {
                 "partclass": "label",
                 "cssClasses": "test-label",
-                "data": "Phone"
+                "text": "Phone"
               },
               {
                 "partclass": "input",
@@ -85,7 +85,7 @@ var layout = {
                       {
                         "partclass": "label",
                         "cssClasses": "test-label",
-                        "data": "Zipcode"
+                        "text": "Zipcode"
                       },
                       {
                         "partclass": "input",
@@ -101,7 +101,7 @@ var layout = {
                       {
                         "partclass": "label",
                         "cssClasses": "test-label",
-                        "data": "City"
+                        "text": "City"
                       },
                       {
                         "partclass": "input",
@@ -117,7 +117,7 @@ var layout = {
                       {
                         "partclass": "label",
                         "cssClasses": "test-label",
-                        "data": "Street"
+                        "text": "Street"
                       },
                       {
                         "partclass": "input",

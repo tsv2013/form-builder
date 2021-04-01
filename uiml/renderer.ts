@@ -142,7 +142,7 @@ export class LabelRenderer extends InterfaceRenderer {
         super(part, uimlWrapper);
     }
     getRenderResult() {
-        return template(`<label>${this.getProperty("data")}</label>`);
+        return template(`<label>${this.getProperty("text")}</label>`);
     }
 }
 

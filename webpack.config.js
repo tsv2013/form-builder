@@ -48,7 +48,7 @@ var BASE_CFG = {
     },
   },
   entry: {
-    [packageJson.name]: './sources/' + packageJson.name + '.ts',
+    [packageJson.name]: './sources/index.ts',
     uiml: './uiml/index.ts',
   }
 };

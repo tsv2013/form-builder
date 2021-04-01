@@ -11,7 +11,7 @@ export interface IRenderable {
     hasInnerLayout: boolean;
 }
 
-export function createProperty(target: Object, propertyDescription: IPropertyDescription, value: any) {
+export function createProperty(target: Object, propertyDescription: IPropertyDescription, value?: any) {
     const observableValue = ko.observable(value); 
     Object.defineProperty(target, propertyDescription.name, {
         get: () => observableValue(),

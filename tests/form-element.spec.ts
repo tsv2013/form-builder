@@ -48,12 +48,12 @@ test("drop above a row", () => {
           {
             "partclass": "label",
             "cssClasses": "test-label",
-            "data": "Label text"
+            "text": "Label text"
           },
           {
             "partclass": "label",
             "cssClasses": "test-label",
-            "data": "Label text"
+            "text": "Label text"
           }
         ]
       };
