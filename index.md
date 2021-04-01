@@ -28,10 +28,10 @@ You can pass this object, the layout (if you have one), the DOM element and the 
 ```javascript
 var model = FormBuilder.Form.show(object, layout, document.getElementById("form-builder-container"),
     function(object, json) {
-        document.getElementById("form-builder-model-container").value = json;
+        // handle model changes here
     },
     function(layout) {
-        document.getElementById("form-builder-layout-container").value = JSON.stringify(layout, null, 4);
+        // handle layout changes here
     }
 );
 ```
