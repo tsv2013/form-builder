@@ -45,7 +45,9 @@ And you will get the following UI:
 - something other in plans
 
 ## Online demos
-- [Form](https://tsv2013.github.io/form-builder/examples/form.html)
+- [Form with layout](https://tsv2013.github.io/form-builder/examples/form.html)
+- [Form built from an object](https://tsv2013.github.io/form-builder/examples/object-form.html)
+- [Build object from the form UI](https://tsv2013.github.io/form-builder/examples/form-object.html)
 - [Object Editor](https://tsv2013.github.io/form-builder/examples/object.html)
 - [Collection Editor](https://tsv2013.github.io/form-builder/examples/collection.html)
 

@@ -14,6 +14,133 @@ var object = {
     }
 }
 
-var model = FormBuilder.Form.show(object, document.getElementById("form-builder-container"), function(object, json) {
-    document.getElementById("form-builder-model-container").value = json;
-});
+var layout = {
+    "partclass": "layoutRow",
+    "cssClasses": "row test-form",
+    "parts": [
+      {
+        "partclass": "layoutColumn",
+        "cssClasses": "column",
+        "parts": [
+          {
+            "partclass": "layoutItem",
+            "cssClasses": "item test-item test-group",
+            "parts": [
+              {
+                "partclass": "label",
+                "cssClasses": "test-label",
+                "text": "Name"
+              },
+              {
+                "partclass": "input",
+                "cssClasses": "test-input",
+                "data": "name"
+              }
+            ]
+          },
+          {
+            "partclass": "layoutItem",
+            "cssClasses": "item test-item test-group",
+            "parts": [
+              {
+                "partclass": "label",
+                "cssClasses": "test-label",
+                "text": "Surname"
+              },
+              {
+                "partclass": "input",
+                "cssClasses": "test-input",
+                "data": "surname"
+              }
+            ]
+          },
+          {
+            "partclass": "layoutItem",
+            "cssClasses": "item test-item test-group",
+            "parts": [
+              {
+                "partclass": "label",
+                "cssClasses": "test-label",
+                "text": "Phone"
+              },
+              {
+                "partclass": "input",
+                "cssClasses": "test-input",
+                "data": "phone"
+              }
+            ]
+          },
+          {
+            "partclass": "panel",
+            "cssClasses": "panel",
+            "parts": [
+              {
+                "partclass": "layoutColumn",
+                "cssClasses": "column",
+                "parts": [
+                  {
+                    "partclass": "layoutItem",
+                    "cssClasses": "item test-item test-group",
+                    "parts": [
+                      {
+                        "partclass": "label",
+                        "cssClasses": "test-label",
+                        "text": "Zipcode"
+                      },
+                      {
+                        "partclass": "input",
+                        "cssClasses": "test-input",
+                        "data": "zipcode"
+                      }
+                    ]
+                  },
+                  {
+                    "partclass": "layoutItem",
+                    "cssClasses": "item test-item test-group",
+                    "parts": [
+                      {
+                        "partclass": "label",
+                        "cssClasses": "test-label",
+                        "text": "City"
+                      },
+                      {
+                        "partclass": "input",
+                        "cssClasses": "test-input",
+                        "data": "city"
+                      }
+                    ]
+                  },
+                  {
+                    "partclass": "layoutItem",
+                    "cssClasses": "item test-item test-group",
+                    "parts": [
+                      {
+                        "partclass": "label",
+                        "cssClasses": "test-label",
+                        "text": "Street"
+                      },
+                      {
+                        "partclass": "input",
+                        "cssClasses": "test-input",
+                        "data": "address"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "text": "Address"
+          }
+        ]
+      }
+    ]
+  };
+
+var model = FormBuilder.Form.show(object, layout, document.getElementById("form-builder-container"),
+    function(object, json) {
+        document.getElementById("form-builder-model-container").value = json;
+    },
+    function(layout) {
+        document.getElementById("form-builder-layout-container").value = JSON.stringify(layout, null, 4);
+    }
+);
