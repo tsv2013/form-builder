@@ -129,8 +129,7 @@ var layout = {
                 ]
               }
             ],
-            "text": "Address",
-            "data": "St"
+            "text": "Address"
           }
         ]
       }
