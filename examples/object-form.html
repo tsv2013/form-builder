@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Build form for an object
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <!-- <script src="../node_modules/knockout/build/output/knockout-latest.debug.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js" integrity="sha512-2AL/VEauKkZqQU9BHgnv48OhXcJPx9vdzxN1JrKDVc4FPU/MEE/BZ6d9l0mP7VmvLsjtYwqiYQpDskK9dG8KBA==" crossorigin="anonymous"></script>
+    <script src="../dist/uiml.js"></script>
+    <script src="../dist/form-builder.js"></script>
+    <link href="../dist/uiml.css" rel="stylesheet">
+    <link href="../dist/form-builder.css" rel="stylesheet">
+    <link href="../index.css" rel="stylesheet">
+    <link href="./examples.css" rel="stylesheet">
+</head>
+
+<body>
+    <section class="example-container">
+        <h1>How to create a form for an existing object with the FormBuilder</h1>
+        <h2>This is a ready to use form</h2>
+        <p>If you edit values you will see changes in the content. Click the "Design" button to change the form layout.</p>
+        <div id="form-builder-container" style="max-width: 1000px; border: 1px solid yellow;">
+            <form-builder params="layout: layout, context: context, items: items"></form-builder>
+        </div>
+    </section>
+    <section class="example-container">
+        <table class="doc-table">
+            <tr>
+                <td>
+                    <h2>Source code</h2>
+                    <p>Let's say you have the following plain JavaScript object obtained from a database:</p>
+                    <pre>
+var object = {
+    name: "Tom",
+    surname: "Young",
+    zipcode: "103844",
+    city: "Kanzas",
+    address: "Mountain drive, 754",
+    phone: "2-300-765-11-22",
+    data: {
+        first_name: "Bob",
+        last_name: "Sallivan",
+        email: "bob@sallivan-family.org",
+    }
+}
+                    </pre>
+                    <p>You can pass this object, the DOM element and the update callback function to the Form.show() method:</p>
+                    <pre>
+var model = FormBuilder.Form.show(object, null, document.getElementById("form-builder-container"),
+    function(object, json) {
+        document.getElementById("form-builder-model-container").value = json;
+    },
+    function(layout) {
+        document.getElementById("form-builder-layout-container").value = JSON.stringify(layout, null, 4);
+    }
+);
+                    </pre>
+                    <p>It builds the form and shows the given HTML element. You will get the object changes notifications in the callback function.</p>
+                </td>
+                <td>
+                    <h2>Editing object content</h2>
+                    <p>Here you can see the changes in the content object:</p>
+                    <textarea disabled id="form-builder-model-container" style="display: block; width: 100%; height: 400px;" data-bind="text: data">
+                    </textarea>
+                </td>        
+                <td>
+                    <h2>Auto-generated form layout JSON</h2>
+                    <p>Here you can see the current form layout JSON:</p>
+                    <textarea disabled id="form-builder-layout-container" style="display: block; width: 100%; height: 400px;">
+                    </textarea>
+                </td>        
+            </tr>
+        </table>
+    </section>
+    <script src="./object-form.js"></script>
+</body>
+
+</html>

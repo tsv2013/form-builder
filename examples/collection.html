@@ -15,12 +15,17 @@
     <link href="../dist/uiml.css" rel="stylesheet">
     <link href="../dist/form-builder.css" rel="stylesheet">
     <link href="../index.css" rel="stylesheet">
+    <link href="./examples.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="collection-container" style="max-width: 500px; border: 1px solid yellow;">
-        <collection-editor params="context: context, options: options"></collection-editor>
-    </div>
+    <section class="example-container">
+        <h1>Collection editor from the FormBuilder library</h1>
+        <p>If you pass an array to the collection editor it will create a simple vertical layout for you.</p>
+        <div id="collection-container" style="max-width: 500px; border: 1px solid yellow;">
+            <collection-editor params="context: context, options: options"></collection-editor>
+        </div>
+    </section>
     <script src="./collection.js"></script>
 </body>
 

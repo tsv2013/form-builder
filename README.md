@@ -25,9 +25,14 @@ var object = {
 You can pass this object, the DOM element and the update callback function to the Form.show() method:
 
 ```javascript
-var model = FormBuilder.Form.show(object, document.getElementById("form-builder-container"), function(object, json) {
-    document.getElementById("form-builder-model-container").value = json;
-});
+var model = FormBuilder.Form.show(object, null, document.getElementById("form-builder-container"),
+    function(object, json) {
+        document.getElementById("form-builder-model-container").value = json;
+    },
+    function(layout) {
+        document.getElementById("form-builder-layout-container").value = JSON.stringify(layout, null, 4);
+    }
+);
 ```
 
 And you will get the following UI:

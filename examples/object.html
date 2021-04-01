@@ -15,12 +15,17 @@
     <link href="../dist/uiml.css" rel="stylesheet">
     <link href="../dist/form-builder.css" rel="stylesheet">
     <link href="../index.css" rel="stylesheet">
+    <link href="./examples.css" rel="stylesheet">
 </head>
 
 <body>
-    <div id="object-container" style="max-width: 500px; border: 1px solid yellow;">
-        <object-editor params="context: model"></object-editor>
-    </div>
+    <section class="example-container">
+        <h1>Object editor from the FormBuilder library</h1>
+        <p>If you pass an object to the object editor it will create a simple vertical layout for you.</p>
+        <div id="object-container" style="max-width: 500px; border: 1px solid yellow;">
+            <object-editor params="context: model"></object-editor>
+        </div>
+    </section>
     <script src="./object.js"></script>
 </body>
 
