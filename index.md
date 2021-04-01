@@ -19,14 +19,21 @@ var object = {
         email: "bob@sallivan-family.org",
     }
 }
+
+var layout = null;
 ```
 
-You can pass this object, the DOM element and the update callback function to the Form.show() method:
+You can pass this object, the layout (if you have one), the DOM element and the update callbacks function to the Form.show() method:
 
 ```javascript
-var model = FormBuilder.Form.show(object, document.getElementById("form-builder-container"), function(object, json) {
-    document.getElementById("form-builder-model-container").value = json;
-});
+var model = FormBuilder.Form.show(object, layout, document.getElementById("form-builder-container"),
+    function(object, json) {
+        document.getElementById("form-builder-model-container").value = json;
+    },
+    function(layout) {
+        document.getElementById("form-builder-layout-container").value = JSON.stringify(layout, null, 4);
+    }
+);
 ```
 
 And you will get the following UI:
