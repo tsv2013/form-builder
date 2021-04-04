@@ -22,7 +22,7 @@ export class UimlLayoutSerializer {
         });
     }
     public static serialize(formElement: IFormElement): any {
-        const uimlPart = <UimlPart>formElement.content;
+        const uimlPart = formElement.content;
         var element: any = {
             partclass: uimlPart.partclass,
         };

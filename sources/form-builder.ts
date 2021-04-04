@@ -21,7 +21,7 @@ export class FormBuilder {
             if(!Array.isArray(layoutValue)) {
                 layoutValue = [layoutValue];
             }
-            (<UimlPart>this.root.content).parts = layoutValue.map(part => UimlPart.fromJSON(part));
+            this.root.content.parts = layoutValue.map(part => UimlPart.fromJSON(part));
         });
         toolboxItems.forEach(item => this.toolbox.push(item));
     }

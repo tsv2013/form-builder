@@ -8,7 +8,7 @@ export interface IFormElement extends IRenderable {
     remove(): void;
     dispose(): void;
     elements?: KnockoutObservableArray<IFormElement>;
-    content?: IRenderable;
+    content?: UimlPart;
     context?: any;
     isDesignMode: boolean;
     dragPosition?: string;
@@ -21,7 +21,7 @@ export function hasParentEdgeInDirection(element: IFormElement, direction: strin
     }
     const elements = ko.unwrap(parent.elements) || [];
     const index = elements.indexOf(element);
-    if(parent.content["partclass"] === "layoutRow") {
+    if(parent.content.partclass === "layoutRow") {
         if(direction === "top" || direction === "bottom") {
             return true;
         }
@@ -35,7 +35,7 @@ export function hasParentEdgeInDirection(element: IFormElement, direction: strin
 }
 
 export function fillDraggedOverInDirection(current: IFormElement, direction: string, elements: IFormElement[] = []) {
-    if(current && (!current.content || current.content["partclass"] !== "layout")) {
+    if(current && (!current.content || current.content.partclass !== "layout")) {
         elements.push(current);
         if(hasParentEdgeInDirection(current, direction)) {
             fillDraggedOverInDirection(current.parent, direction, elements);
@@ -53,7 +53,7 @@ export class PlaceHolder implements IFormElement {
     render(htmlElement: HTMLElement) {
         htmlElement.innerHTML = "<span data-bind='if: formElement.isDesignMode'>Drop items here</span>";
     }
-    addElement(json: any, location: string = "bottom") {
+    addElement(json: UimlPart, location: string = "bottom") {
         this.parent.addElement(json, location);
     }
     remove() {}
@@ -68,10 +68,9 @@ export class FormElement implements IFormElement {
     private _isDesignMode = ko.observable(false);
     private _dragPosition = ko.observable<string>("");
 
-    constructor(public content: IRenderable, public parent: IFormElement) {
-        const part = content as UimlPart;
+    constructor(public content: UimlPart, public parent: IFormElement) {
         this._elementsSubscription = ko.computed(() => {
-            const elements = (part.parts || []).map(part => UimlLayoutSerializer.createElement(part, this));
+            const elements = (this.content.parts || []).map(part => UimlLayoutSerializer.createElement(part, this));
             const prevElements = this.elements.peek();
             this.elements(elements);
             prevElements.forEach(element => element.dispose());
@@ -107,7 +106,7 @@ export class FormElement implements IFormElement {
         if(!this._context && this.parent) {
             this._context = this.parent.context;
             if(this.isContainer) {
-                let dataPath = this.content["data"];
+                let dataPath = this.content.data;
                 if(!!dataPath) {
                     // TODO: support complex path
                     this._context = this.parent.context[dataPath];
@@ -128,44 +127,71 @@ export class FormElement implements IFormElement {
         if(!this.isContainer || this === hoveredElement) {
             this.parent.addElement(uimlPart, location, this);
         } else {
-            if(this.content["partclass"] === "layout") {
+            const indexOfHovered = this.elements().indexOf(hoveredElement);
+            const hoveredPart = this.content.parts[indexOfHovered];
+            if(this.content.partclass === "layout") {
                 const isHorizontalRoot = location === "left" || location === "right";
-                var rootWrapper = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: isHorizontalRoot ? "layoutRow" : "layoutColumn", cssClasses: isHorizontalRoot ? "row" : "column" }), this);
-                this.elements().forEach(element => element.parent = rootWrapper);
-                rootWrapper.elements(this.elements());
-                this.elements([rootWrapper]);
-                rootWrapper.addElement(uimlPart, location);
+                const wrapperPart = isHorizontalRoot ? "layoutRow" : "layoutColumn";
+                const wrapperClass = isHorizontalRoot ? "row" : "column";
+                const wrappedPart = UimlPart.fromJSON({ partclass: wrapperPart, cssClasses: wrapperClass });
+                wrappedPart.parts = [uimlPart];
+                if(this.content.parts.length > 0) {
+                    const rootPart = UimlPart.fromJSON({ partclass: wrapperPart, cssClasses: wrapperClass });
+                    rootPart.parts = this.content.parts;
+                    const parts = [rootPart];
+                    parts.splice((location === "right" || location === "bottom" ? 1 : 0), 0, wrappedPart);
+                    this.content.parts = parts;
+                } else {
+                    this.content.parts = [wrappedPart];
+                }
+                // var rootWrapper = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: isHorizontalRoot ? "layoutRow" : "layoutColumn", cssClasses: isHorizontalRoot ? "row" : "column" }), this);
+                // this.elements().forEach(element => element.parent = rootWrapper);
+                // rootWrapper.elements(this.elements());
+                // this.elements([rootWrapper]);
+                // rootWrapper.addElement(uimlPart, location);
             }
-            else if(this.content["partclass"] === "layoutRow") {
-                if(!!hoveredElement && (location === "top" || location === "bottom")) {
-                    var newColumn = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: "layoutColumn", cssClasses: "column" }), this);
-                    this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
-                    hoveredElement.parent = newColumn;
-                    newColumn.elements.push(hoveredElement);
-                    newColumn.addElement(uimlPart, location, hoveredElement);
-                    // this.parent.addElement(json, location, this);
+            else if(this.content.partclass === "layoutRow") {
+                if(!!hoveredPart && (location === "top" || location === "bottom")) {
+                    var newColumnPart = UimlPart.fromJSON({ partclass: "layoutColumn", cssClasses: "column" });
+                    newColumnPart.parts = [hoveredPart];
+                    newColumnPart.parts.splice((location === "bottom" ? 1 : 0), 0, uimlPart);
+                    this.content.parts.splice(indexOfHovered, 1, newColumnPart);
+                    // var newColumn = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: "layoutColumn", cssClasses: "column" }), this);
+                    // this.elements.splice(this.elements().indexOf(hoveredElement), 1, newColumn);
+                    // hoveredElement.parent = newColumn;
+                    // newColumn.elements.push(hoveredElement);
+                    // newColumn.addElement(uimlPart, location, hoveredElement);
+                    // // this.parent.addElement(json, location, this);
                 } else {
-                    var newElement = UimlLayoutSerializer.createElement(uimlPart, this);
-                    this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "right" ? 1 : 0), 0, newElement);
+                    this.content.parts.splice(indexOfHovered + (location === "right" ? 1 : 0), 0, uimlPart);
+                    // var newElement = UimlLayoutSerializer.createElement(uimlPart, this);
+                    // this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "right" ? 1 : 0), 0, newElement);
                 }
+                this.content.parts = this.content.parts;
             } else {
-                if(!!hoveredElement && (location === "left" || location === "right")) {
-                    var newRow = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: "layoutRow", cssClasses: "row" }), this);
-                    this.elements.splice(this.elements().indexOf(hoveredElement), 1, newRow);
-                    hoveredElement.parent = newRow;
-                    newRow.elements.push(hoveredElement);
-                    newRow.addElement(uimlPart, location, hoveredElement);
+                if(!!hoveredPart && (location === "left" || location === "right")) {
+                    var newRowPart = UimlPart.fromJSON({ partclass: "layoutRow", cssClasses: "row" });
+                    newRowPart.parts = [hoveredPart];
+                    newRowPart.parts.splice((location === "right" ? 1 : 0), 0, uimlPart);
+                    this.content.parts.splice(indexOfHovered, 1, newRowPart);
+                    // var newRow = UimlLayoutSerializer.createElement(UimlPart.fromJSON({ partclass: "layoutRow", cssClasses: "row" }), this);
+                    // this.elements.splice(this.elements().indexOf(hoveredElement), 1, newRow);
+                    // hoveredElement.parent = newRow;
+                    // newRow.elements.push(hoveredElement);
+                    // newRow.addElement(uimlPart, location, hoveredElement);
                 } else {
-                    var newElement = UimlLayoutSerializer.createElement(uimlPart, this);
-                    this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "bottom" ? 1 : 0), 0, newElement);
+                    this.content.parts.splice(indexOfHovered + (location === "bottom" ? 1 : 0), 0, uimlPart);
+                    // var newElement = UimlLayoutSerializer.createElement(uimlPart, this);
+                    // this.elements.splice(this.elements().indexOf(hoveredElement) + (location === "bottom" ? 1 : 0), 0, newElement);
                 }
+                this.content.parts = this.content.parts;
             }
         }
     }
     remove() {
         if(!!this.parent) {
             this.parent.elements.remove(this);
-            if((this.parent.content["partclass"] === "layoutRow" || this.parent.content["partclass"] === "layoutColumn") && this.parent.elements().length === 0) {
+            if((this.parent.content.partclass === "layoutRow" || this.parent.content.partclass === "layoutColumn") && this.parent.elements().length === 0) {
                 this.parent.remove();
             }
         }

@@ -1,4 +1,6 @@
 import * as ko from "knockout";
+import { FormBuilder } from "../sources/form-builder";
+import { Form } from "../sources/form";
 import { FormElement } from "../sources/form-element";
 import { UimlLayoutSerializer } from "../sources/uiml-layout-serializer";
 import { UimlPart } from "../sources/uiml-parts";
@@ -62,21 +64,22 @@ test("drop above a row", () => {
         "cssClasses": "test-input",
         "data": "valName"
       };
-    const root: FormElement = UimlLayoutSerializer.createRoot();
-    UimlLayoutSerializer.createElements(root.elements, [json], root);
-
-    const row = <FormElement>root.elements()[0];
-    expect(row.content["partclass"]).toBe("layoutRow");
+    const form = new Form({}, json);
+    const formBuilder = new FormBuilder(form);
+    const root = formBuilder.root;
+    const row = root.elements()[0];
+    expect(row.content.partclass).toBe("layoutRow");
 
     row.addElement(UimlPart.fromJSON(inputJson), "top", row);
-    expect(root.elements().length).toBe(1);
-    expect(root.elements()[0].content["partclass"]).toBe("layoutColumn");
-    expect(root.elements()[0].elements().length).toBe(2);
-    expect(root.elements()[0].elements()[0].content["partclass"]).toBe("input");
-    expect(root.elements()[0].elements()[1].content["partclass"]).toBe("layoutRow");
-    expect(root.elements()[0].elements()[1].elements().length).toBe(2);
-    expect(root.elements()[0].elements()[1].elements()[0].content["partclass"]).toBe("label");
-    expect(root.elements()[0].elements()[1].elements()[1].content["partclass"]).toBe("label");
+    expect(root.elements().length).toBe(2);
+    expect(root.elements()[0].content.partclass).toBe("layoutColumn");
+    expect(root.elements()[0].elements().length).toBe(1);
+    expect(root.elements()[0].elements()[0].content.partclass).toBe("input");
+    expect(root.elements()[1].elements().length).toBe(1);
+    expect(root.elements()[1].elements()[0].content.partclass).toBe("layoutRow");
+    expect(root.elements()[1].elements()[0].elements().length).toBe(2);
+    expect(root.elements()[1].elements()[0].elements()[0].content.partclass).toBe("label");
+    expect(root.elements()[1].elements()[0].elements()[0].content.partclass).toBe("label");
 });
 
 test("drop into a panel", () => {
@@ -100,11 +103,11 @@ test("drop into a panel", () => {
     UimlLayoutSerializer.createElements(root.elements, [json], root);
 
     const panelLayout = <FormElement>root.elements()[0].elements()[0].elements()[0];
-    expect(panelLayout.content["partclass"]).toBe("layout");
+    expect(panelLayout.content.partclass).toBe("layout");
 
     panelLayout.addElement(UimlPart.fromJSON(inputJson), "left");
     expect(panelLayout.elements().length).toBe(1);
-    expect(panelLayout.elements()[0].content["partclass"]).toBe("layoutRow");
+    expect(panelLayout.elements()[0].content.partclass).toBe("layoutRow");
     expect(panelLayout.elements()[0].elements().length).toBe(1);
-    expect(panelLayout.elements()[0].elements()[0].content["partclass"]).toBe("input");
+    expect(panelLayout.elements()[0].elements()[0].content.partclass).toBe("input");
 });
